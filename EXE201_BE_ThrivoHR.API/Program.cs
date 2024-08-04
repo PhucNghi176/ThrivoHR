@@ -1,3 +1,4 @@
+using Carter;
 using EXE201_BE_ThrivoHR.API.Configuration;
 using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
@@ -26,7 +27,8 @@ builder.Services.ConfigureProblemDetails();
 builder.Services.ConfigureApiVersioning();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.ConfigureSwagger();
-
+builder.Services.AddCarter();
+builder.Services.AddEndpointsApiExplorer();
 //allow all cors
 builder.Services.AddCors(options =>
 {
@@ -46,7 +48,7 @@ if (app.Environment.IsDevelopment())
 {
     _ = app.UseDeveloperExceptionPage();
 }
-
+app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 app.UseHttpsRedirection();

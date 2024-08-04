@@ -32,8 +32,4 @@
     <ProjectReference Include="..\EXE201_BE_ThrivoHR.Infrastructure\EXE201_BE_ThrivoHR.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

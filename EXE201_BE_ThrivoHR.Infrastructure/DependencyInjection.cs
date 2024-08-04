@@ -1,4 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
+using EXE201_BE_ThrivoHR.Domain.Repositories;
 using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
 using EXE201_BE_ThrivoHR.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure
                 options.UseLazyLoadingProxies();
             });
             services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
- 
+            services.AddScoped<IUserRepository, UserRepository>();
             return services;
         }
     }

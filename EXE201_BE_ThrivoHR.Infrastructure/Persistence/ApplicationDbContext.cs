@@ -6,25 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext, IUnitOfWork
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IUnitOfWork
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
-        }
-
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new ActionConfiguration());
-            modelBuilder.ApplyConfiguration(new ActionInFunctionConfiguration());
-            modelBuilder.ApplyConfiguration(new PermissionConfiguration());
-            modelBuilder.ApplyConfiguration(new FunctionConfiguration());
-            modelBuilder.ApplyConfiguration(new AppRoleClaimConfiguration());
-            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
-
+            modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
             ConfigureModel(modelBuilder);
 
         }
@@ -47,14 +33,14 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                     UserName = "admin",
                     NormalizedUserName = "ADMIN",
                     Email = "Admin@",
-                    BankAccount="1",
-                    IdentityNumber="1",
-                    PhoneNumber="1",
-                    TaxCode="1",
-                    FirstName="Admin",
-                    LastName="Admin",
-                    FullName="Admin",
-                    EmploeeyCode="0",
+                    BankAccount = "1",
+                    IdentityNumber = "1",
+                    PhoneNumber = "1",
+                    TaxCode = "1",
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    FullName = "Admin",
+                    EmploeeyCode = "0",
 
                 });
             modelBuilder.Entity<Department>().HasData(
@@ -102,8 +88,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                 new Address { Id = 20, AddressLine = "1616, đường Lê Lợi", Ward = "An Nghiệp", District = "Ninh Kiều", City = "Cần Thơ", Country = "Việt Nam", CreatedBy = "1", LastModifiedBy = "1" }
             );
 
-
-
         }
     }
 }
+
