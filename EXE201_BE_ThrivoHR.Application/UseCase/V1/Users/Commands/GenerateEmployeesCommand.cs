@@ -32,7 +32,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
             var lastName = lastNames[random.Next(lastNames.Count)];
             var fullName = $"{firstName} {lastName}";
             var identityNumber = random.Next(100000000, 999999999).ToString();
-            var dob = new DateTime(random.Next(1950, 2000), random.Next(1, 12), random.Next(1, 28));
+            var dob = new DateOnly(random.Next(1950, 2000), random.Next(1, 12), random.Next(1, 28));
             var phoneNumber = random.Next(1000000000, 1999999999).ToString();
             var taxCode = random.Next(1000000, 99999999).ToString();
             var addressId = random.Next(1, 21);
@@ -55,7 +55,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
                 LastName = lastName,
                 FullName = fullName,
                 EmploeeyCode = i.ToString(),
-                DayOfBirth = dob,
+                DateOfBirth = dob,
                 AddressId = addressId,
                 DepartmentId = departmentId,
                 PositionId = positionId

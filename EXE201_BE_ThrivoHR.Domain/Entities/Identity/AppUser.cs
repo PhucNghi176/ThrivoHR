@@ -13,7 +13,7 @@ public class AppUser : IdentityUser<string>
     public string LastName { get; set; }
     public string FullName { get; set; }
     public string IdentityNumber { get; set; }
-    public DateTime? DayOfBirth { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
     public string PhoneNumber { get; set; }
     public string TaxCode { get; set; }
     public int? AddressId { get; set; }
