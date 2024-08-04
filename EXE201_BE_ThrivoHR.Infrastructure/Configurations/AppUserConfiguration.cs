@@ -12,10 +12,6 @@ internal sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
         builder.ToTable(TableNames.AppUsers);
 
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.IsDirector).HasDefaultValue(false);
-        builder.Property(x => x.IsHeadOfDepartment).HasDefaultValue(false);
-        builder.Property(x => x.ManagerId).HasDefaultValue(null);
-        builder.Property(x => x.IsReceipient).HasDefaultValue(-1);
 
         // Each User can have many UserClaims
         builder.HasMany(e => e.Claims)

@@ -2,5 +2,5 @@
 
 public interface IEntity<out Tid>
 {
-    Tid ID { get; }
+    Tid Id { get; }
 }
