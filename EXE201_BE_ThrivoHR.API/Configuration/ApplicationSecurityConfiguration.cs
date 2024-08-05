@@ -15,6 +15,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
             IConfiguration configuration)
         {
             services.AddTransient<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<JwtService>();
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
             services.AddHttpContextAccessor();
 

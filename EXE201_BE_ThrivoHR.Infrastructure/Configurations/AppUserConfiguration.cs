@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Infrastructure.Constants;
-using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Configurations;
 

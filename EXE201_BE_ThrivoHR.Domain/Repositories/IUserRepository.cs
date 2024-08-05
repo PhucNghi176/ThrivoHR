@@ -4,4 +4,5 @@ namespace EXE201_BE_ThrivoHR.Domain.Repositories;
 
 public interface IUserRepository : IEFRepository<AppUser, AppUser>
 {
+    bool VerifyPassword(string password, string passwordHash);
 }
