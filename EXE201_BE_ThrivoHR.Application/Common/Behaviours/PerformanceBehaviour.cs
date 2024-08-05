@@ -27,7 +27,7 @@ namespace EXE201_BE_ThrivoHR.Application.Common.Behaviours
                 string userId = currentUserService.UserId ?? string.Empty;
                 string userName = currentUserService.UserName ?? string.Empty;
 
-                logger.LogWarning("DeerCoffeeShop Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
+                logger.LogWarning("ThrivoHR Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
                     requestName, elapsedMilliseconds, userId, userName, request);
             }
 

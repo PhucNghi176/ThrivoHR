@@ -7,4 +7,6 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories;
 
 public class UserRepository(ApplicationDbContext dbContext, IMapper mapper) : RepositoryBase<AppUser, AppUser, ApplicationDbContext>(dbContext, mapper), IUserRepository
 {
+    public bool VerifyPassword(string password, string passwordHash)
+    => BCrypt.Net.BCrypt.Verify(password, passwordHash);
 }

@@ -17,4 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\EXE201_BE_ThrivoHR.Domain\EXE201_BE_ThrivoHR.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Enumerations\" />
+  </ItemGroup>
 </Project>

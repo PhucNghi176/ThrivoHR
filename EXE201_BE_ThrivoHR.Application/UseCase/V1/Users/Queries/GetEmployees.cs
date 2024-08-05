@@ -1,5 +1,4 @@
-﻿
-namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
+﻿namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
 public record GetEmployees(int PageNumber, int PageSize) : IQuery<PagedResult<EmployeeDto>>;
 
