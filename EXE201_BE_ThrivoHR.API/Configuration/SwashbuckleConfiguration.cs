@@ -70,8 +70,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                     options.OAuthAppName("ThrivoHR API");
                     options.DisplayRequestDuration();
                     options.EnableTryItOutByDefault();
-                    options.DocExpansion(DocExpansion.None);
-                    options.EnableDeepLinking();
+                    options.DocExpansion(DocExpansion.List);
                     options.DisplayOperationId();
                     options.DefaultModelsExpandDepth(-1);
                     options.EnableFilter(string.Empty);

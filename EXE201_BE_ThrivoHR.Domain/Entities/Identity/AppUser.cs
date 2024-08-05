@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EXE201_BE_ThrivoHR.Domain.Entities.Identity;
@@ -13,7 +12,7 @@ public class AppUser : IdentityUser<string>
     public string LastName { get; set; }
     public string FullName { get; set; }
     public string IdentityNumber { get; set; }
-    public DateTime? DayOfBirth { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
     public string PhoneNumber { get; set; }
     public string TaxCode { get; set; }
     public int? AddressId { get; set; }
@@ -23,9 +22,9 @@ public class AppUser : IdentityUser<string>
     [ForeignKey("PositionId")]
     public string BankAccount { get; set; }
     public string? CreatedBy { get; set; }
-    public DateTimeOffset CreatedOn { get; }= DateTimeOffset.UtcNow;
+    public DateTimeOffset CreatedOn { get; } = DateTimeOffset.UtcNow;
     public string? LastModifiedBy { get; set; }
-    public DateTimeOffset? LastModifiedOn { get; set; }= DateTimeOffset.UtcNow;
+    public DateTimeOffset? LastModifiedOn { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
 

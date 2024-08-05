@@ -1,6 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Repositories;
-
-namespace EXE201_BE_ThrivoHR.Application.Common.Pagination
+﻿namespace EXE201_BE_ThrivoHR.Application.Common.Pagination
 {
     public static class PagedResultMappingExtensions
     {

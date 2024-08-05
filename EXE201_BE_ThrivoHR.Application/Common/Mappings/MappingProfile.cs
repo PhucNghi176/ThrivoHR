@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace EXE201_BE_ThrivoHR.Application.Common.Mappings
 {

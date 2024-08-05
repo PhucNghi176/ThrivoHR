@@ -1,5 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
 namespace EXE201_BE_ThrivoHR.Application.Common.Behaviours

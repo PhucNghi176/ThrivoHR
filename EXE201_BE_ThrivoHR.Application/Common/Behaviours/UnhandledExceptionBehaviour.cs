@@ -16,7 +16,7 @@ namespace EXE201_BE_ThrivoHR.Application.Common.Behaviours
             {
                 string requestName = typeof(TRequest).Name;
 
-                logger.LogError(ex, "DeerCoffeeShop Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+                logger.LogError(ex, "ThrivoHR Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
 
                 throw;
             }
