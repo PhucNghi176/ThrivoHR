@@ -77,6 +77,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                     AddSwaggerEndpoints(app, options);
                     options.OAuthScopeSeparator(" ");
                 });
+
         }
 
         private static void AddSwaggerEndpoints(IApplicationBuilder app, SwaggerUIOptions options)
