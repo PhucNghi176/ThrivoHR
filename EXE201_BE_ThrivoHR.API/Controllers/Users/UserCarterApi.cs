@@ -4,7 +4,7 @@ using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 namespace EXE201_BE_ThrivoHR.API.Controllers.Users;
 
 
-public class UserCarterApi : ICarterModule
+public class UserCarterApi
 {
     private const string BaseUrl = "/api/v{version:apiVersion}/users";
     private readonly ISender _sender;

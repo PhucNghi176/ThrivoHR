@@ -16,6 +16,6 @@ internal sealed class GetEmployeesQueryHandler : IQueryHandler<GetEmployees, Pag
     public async Task<Result<PagedResult<EmployeeDto>>> Handle(GetEmployees request, CancellationToken cancellationToken)
     {
         var employees = await _userRepository.FindAllAsync(request.PageNumber, request.PageSize, cancellationToken);
-        return PagedResult<EmployeeDto>.Create(employees.TotalCount,employees.PageCount,employees.PageSize,employees.PageNo,employees.MapTopEmployeeListDto(_mapper));
+        return PagedResult<EmployeeDto>.Create(employees.TotalCount, employees.PageCount, employees.PageSize, employees.PageNo, employees.MapTopEmployeeListDto(_mapper));
     }
 }

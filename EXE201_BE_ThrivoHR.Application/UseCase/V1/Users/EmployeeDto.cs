@@ -1,5 +1,6 @@
 ﻿
 using EXE201_BE_ThrivoHR.Application.Common.Mappings;
+using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
@@ -15,9 +16,9 @@ public class EmployeeDto : IMapFrom<AppUser>
     public string PhoneNumber { get; set; }
     public string TaxCode { get; set; }
     public string BankAccount { get; set; }
-    //  public Address AddressId { get; set; }
-    //  public Department DepartmentId { get; set; }
-    //  public Position PositionId { get; set; }
+    public Address Address { get; set; }
+    public Department Department { get; set; }
+    public Position Position { get; set; }
     public DateOnly? DateOfBirth { get; set; }
 
     public static EmployeeDto Create(AppUser employeeDto)
@@ -32,9 +33,9 @@ public class EmployeeDto : IMapFrom<AppUser>
             PhoneNumber = employeeDto.PhoneNumber,
             TaxCode = employeeDto.TaxCode,
             BankAccount = employeeDto.BankAccount,
-            //  AddressId = employeeDto.Address,
-            // DepartmentId = employeeDto.Department,
-            //  PositionId = employeeDto.Position,
+            Address = employeeDto.Address,
+            Department = employeeDto.Department,
+            Position = employeeDto.Position,
             DateOfBirth = employeeDto.DateOfBirth,
             EmploeeyCode = employeeDto.EmploeeyCode
 

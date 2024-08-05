@@ -25,6 +25,9 @@ namespace EXE201_BE_ThrivoHR.Infrastructure
             });
             services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPositionRepository, PositionRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            
             return services;
         }
     }
