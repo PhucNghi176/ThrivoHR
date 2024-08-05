@@ -1,11 +1,5 @@
-﻿using Carter;
-using EXE201_BE_ThrivoHR.Application.Common.Models;
-using EXE201_BE_ThrivoHR.Application.Common.Pagination;
-using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
+﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EXE201_BE_ThrivoHR.API.Controllers.Users;
 
@@ -27,18 +21,19 @@ public class UserCarterApi : ICarterModule
              .MapGroup(BaseUrl).HasApiVersion(1);
 
         group1.MapGet("generate", GenerateUsers);
-        group1.MapGet(string.Empty, Test);
+        group1.MapGet(string.Empty, GetUsers);
 
     }
 
-    public static async Task<IResult> GenerateUsers(ISender sender)
+    private static async Task<IResult> GenerateUsers(ISender sender)
     {
         var result = await sender.Send(new GenerateEmployeesCommand());
-        return result.IsSuccess ? (IResult)Results.Ok() : Results.BadRequest();
+        return result.IsSuccess ? Results.Ok() : Results.BadRequest();
     }
-    public static async Task<IResult> Test(ISender sender, PaginationFilter filter)
+    private static async Task<IResult> GetUsers(ISender sender, int PageNumber, int PageSize)
     {
-        var result = await sender.Send(new Test(filter));
-        return Results.Ok(result);
+        var result = await sender.Send(new GetEmployees(PageNumber, PageSize));
+        return result.IsSuccess ? Results.Ok(result.Value) : Results.BadRequest();
     }
+
 }

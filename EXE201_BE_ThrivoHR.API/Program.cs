@@ -60,5 +60,5 @@ app.UseEndpoints(endpoints =>
 {
     _ = endpoints.MapControllers();
 });
-app.UseSwashbuckle(); 
+app.UseSwashbuckle();
 await app.RunAsync();

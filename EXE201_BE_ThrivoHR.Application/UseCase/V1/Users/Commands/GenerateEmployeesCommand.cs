@@ -1,7 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
-using EXE201_BE_ThrivoHR.Application.Common.Models;
-using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
-using EXE201_BE_ThrivoHR.Domain.Repositories;
+﻿using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 

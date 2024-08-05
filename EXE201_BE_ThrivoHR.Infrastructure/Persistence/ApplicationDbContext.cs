@@ -1,7 +1,6 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
-using EXE201_BE_ThrivoHR.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence

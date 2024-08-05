@@ -1,5 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace EXE201_BE_ThrivoHR.Application.Common.Interfaces;
 

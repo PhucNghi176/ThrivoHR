@@ -1,5 +1,4 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
-using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Application.Common.Security;
 using MediatR;
 using System.Reflection;
