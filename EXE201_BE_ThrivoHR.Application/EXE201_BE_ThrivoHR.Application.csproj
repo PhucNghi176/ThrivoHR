@@ -20,5 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Enumerations\" />
+    <Folder Include="UseCase\V1\Positions\" />
   </ItemGroup>
 </Project>
