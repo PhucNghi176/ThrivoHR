@@ -16,12 +16,12 @@ public class EmployeeDto : IMapFrom<AppUser>
     public string PhoneNumber { get; set; }
     public string TaxCode { get; set; }
     public string BankAccount { get; set; }
-    public Address AddressId { get; set; }
-    public Department DepartmentId { get; set; }
-    public Position PositionId { get; set; }
-    public DateOnly DateOfBirth { get; set; }
+  //  public Address AddressId { get; set; }
+  //  public Department DepartmentId { get; set; }
+  //  public Position PositionId { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
 
-    public static EmployeeDto Create(EmployeeDto employeeDto)
+    public static EmployeeDto Create(AppUser employeeDto)
     {
         return new EmployeeDto
         {
@@ -33,9 +33,9 @@ public class EmployeeDto : IMapFrom<AppUser>
             PhoneNumber = employeeDto.PhoneNumber,
             TaxCode = employeeDto.TaxCode,
             BankAccount = employeeDto.BankAccount,
-            AddressId = employeeDto.AddressId,
-            DepartmentId = employeeDto.DepartmentId,
-            PositionId = employeeDto.PositionId,
+          //  AddressId = employeeDto.Address,
+           // DepartmentId = employeeDto.Department,
+          //  PositionId = employeeDto.Position,
             DateOfBirth = employeeDto.DateOfBirth,
             EmploeeyCode = employeeDto.EmploeeyCode
 
