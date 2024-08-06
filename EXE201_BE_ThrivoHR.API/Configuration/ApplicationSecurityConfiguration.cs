@@ -15,10 +15,10 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
             IConfiguration configuration)
         {
             services.AddTransient<ICurrentUserService, CurrentUserService>();
-            services.AddTransient<JwtService>();
+            services.AddTransient<ITokenService, TokenService>();
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
             services.AddHttpContextAccessor();
-
+            var jwtSettings = configuration.GetSection("JwtSettings");
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -32,9 +32,9 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                          ValidateIssuer = true,
                          ValidateIssuerSigningKey = true,
                          ValidateLifetime = true,
-                         ValidIssuer = "localhost",
-                         ValidAudience = "api",
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThrivoHR API 123abc456 anh iu em")),
+                         ValidIssuer = jwtSettings["validIssuer"],
+                         ValidAudience = jwtSettings["validAudience"],
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThrivoHR API 123abc456 anh iu em...")),
                      };
                  });
 

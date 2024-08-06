@@ -25,37 +25,21 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         private void ConfigureModel(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<AppUser>().HasData(
-                new AppUser
-                {
-                    Id = "1",
-                    UserName = "admin",
-                    NormalizedUserName = "ADMIN",
-                    Email = "Admin@",
-                    BankAccount = "1",
-                    IdentityNumber = "1",
-                    PhoneNumber = "1",
-                    TaxCode = "1",
-                    FirstName = "Admin",
-                    LastName = "Admin",
-                    FullName = "Admin",
-                    
-
-                });
             modelBuilder.Entity<Department>().HasData(
-                new Department { Id = 1, Name = "HR", Description = "Human Resource" },
+                new Department { Id = 1, Name = "Admin", Description = "Admin" },
                 new Department { Id = 2, Name = "IT", Description = "IT" },
                 new Department { Id = 3, Name = "Accounting", Description = "Accounting" },
                 new Department { Id = 4, Name = "Marketing", Description = "Marketing" },
-                new Department { Id = 5, Name = "Sale", Description = "Sale" }
-
+                new Department { Id = 5, Name = "Sale", Description = "Sale" },
+                new Department { Id = 6, Name = "HR", Description = "Human Resource" }
             );
             modelBuilder.Entity<Position>().HasData(
-                new Position { Id = 1, Name = "Director", Description = "Director" },
+                new Position { Id = 1, Name = "Admin", Description = "Admin" },
                 new Position { Id = 2, Name = "Manager", Description = "Manager" },
                 new Position { Id = 3, Name = "Staff", Description = "Staff" },
                 new Position { Id = 4, Name = "Intern", Description = "Intern" },
-                new Position { Id = 5, Name = "Supervisor", Description = "Supervisor" }
+                new Position { Id = 5, Name = "Supervisor", Description = "Supervisor" },
+                new Position { Id = 6, Name = "Director", Description = "Director" }
             );
             modelBuilder.Entity<Address>().HasData(
                 // TP. Hồ Chí Minh
@@ -86,7 +70,31 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                 new Address { Id = 19, AddressLine = "1515, đường Phạm Ngũ Lão", Ward = "An Cư", District = "Ninh Kiều", City = "Cần Thơ", Country = "Việt Nam", CreatedBy = "1", LastModifiedBy = "1" },
                 new Address { Id = 20, AddressLine = "1616, đường Lê Lợi", Ward = "An Nghiệp", District = "Ninh Kiều", City = "Cần Thơ", Country = "Việt Nam", CreatedBy = "1", LastModifiedBy = "1" }
             );
+            modelBuilder.Entity<AppUser>().HasData(
+                new AppUser
+                {
+                    Id = "1",
+                    UserName = "admin",
+                    NormalizedUserName = "ADMIN",
+                    Email = "Admin@",
+                    BankAccount = "1",
+                    IdentityNumber = "1",
+                    PhoneNumber = "1",
+                    TaxCode = "1",
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    FullName = "Admin",
+                    DepartmentId = 1,
+                    PositionId = 1,
+                    PasswordHash = "$2a$11$dRZA37NpS.thXR9anJXBZehaTb7ezji2i2E5WbHGA2cwMeW4wEXAy"
 
+                });
+            modelBuilder.Entity<AppRole>().HasData(
+                new AppRole { Id = "1", Name = "Admin", Description = "Admin", RoleCode = "Admin" },
+                new AppRole { Id = "2", Name = "HR", Description = "Human Resource", RoleCode = "HR" },
+                new AppRole { Id = "3", Name = "C&B", Description = "Compensation and benefit", RoleCode = "C&B" }
+
+            );
         }
     }
 }

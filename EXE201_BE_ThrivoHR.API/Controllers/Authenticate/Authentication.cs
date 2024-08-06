@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EXE201_BE_ThrivoHR.API.Controllers.Authenticate
 {
 
-    public class Authentication(ISender sender, JwtService jwtService) : BaseController(sender)
+    public class Authentication(ISender sender) : BaseController(sender)
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -14,8 +14,7 @@ namespace EXE201_BE_ThrivoHR.API.Controllers.Authenticate
         public async Task<IActionResult> Authenticate([FromBody] LoginQuery loginQuery)
         {
             var result = await _sender.Send(new LoginQuery(loginQuery.EmployeeCode, loginQuery.Password));
-            var token = jwtService.CreateToken(result.Value);
-            return Ok(token);
+            return Ok(result);
         }
     }
 }

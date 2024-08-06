@@ -1,6 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Infrastructure.Constants;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Configurations;

@@ -4,11 +4,10 @@ using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 namespace EXE201_BE_ThrivoHR.API.Controllers.Users;
 
 
-public class Employee : BaseController
+public class Employee(ISender sender) : BaseController(sender)
 {
-    public Employee(ISender sender) : base(sender)
-    {
-    }
+
+    
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
