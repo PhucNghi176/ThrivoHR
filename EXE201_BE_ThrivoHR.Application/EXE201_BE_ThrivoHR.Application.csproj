@@ -16,9 +16,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EXE201_BE_ThrivoHR.Domain\EXE201_BE_ThrivoHR.Domain.csproj" />
+    <ProjectReference Include="..\EXE201_BE_ThrivoHR.Infrastructure\EXE201_BE_ThrivoHR.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Common\Enumerations\" />
+    <Folder Include="UseCase\V1\Positions\" />
   </ItemGroup>
 </Project>

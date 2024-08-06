@@ -36,5 +36,11 @@ internal sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
             .WithOne()
             .HasForeignKey(ur => ur.UserId)
             .IsRequired();
+
+        builder.HasIndex(x => x.EmployeeId).IsUnique();
+        builder.Property(x => x.EmployeeId).ValueGeneratedOnAdd();
+        builder.HasIndex(x => x.IdentityNumber).IsUnique();
+        builder.HasIndex(x => x.TaxCode).IsUnique();
+        builder.HasIndex(x => x.BankAccount).IsUnique();
     }
 }

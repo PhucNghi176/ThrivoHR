@@ -10,7 +10,7 @@ public static class EmployeeMappiongExstension
         return mapper.Map<EmployeeDto>(appUser);
     }
 
-    public static List<EmployeeDto> MapTopEmployeeListDto(this IEnumerable<AppUser> appUsers, IMapper mapper)
+    public static List<EmployeeDto> MapToEmployeeListDto(this IEnumerable<AppUser> appUsers, IMapper mapper)
     {
         return appUsers.Select(appUser => appUser.MapTopEmployeeDto(mapper)).ToList();
     }

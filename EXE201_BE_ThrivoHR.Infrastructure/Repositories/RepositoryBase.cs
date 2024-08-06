@@ -208,7 +208,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
 
         protected virtual IQueryable<TPersistence> CreateQuery()
         {
-            return GetSet();
+            return GetSet().AsNoTracking();
         }
 
         protected virtual DbSet<TPersistence> GetSet()

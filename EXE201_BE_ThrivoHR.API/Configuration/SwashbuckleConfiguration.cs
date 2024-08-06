@@ -56,7 +56,9 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                         {
                             { securityScheme, Array.Empty<string>() }
                         });
+                   
                 });
+            services.AddRouting(options => options.LowercaseUrls = true);
             return services;
         }
 
