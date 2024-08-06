@@ -13,9 +13,9 @@ public class Employee : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetEmployee([FromQuery] int PageNumber, int PageSize)
+    public async Task<IActionResult> GetEmployee([FromQuery] FilterEmployee filterEmployee)
     {
-        var result = await _sender.Send(new GetEmployees(PageNumber, PageSize));
+        var result = await _sender.Send(filterEmployee);
         return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
     [HttpGet("generate")]
