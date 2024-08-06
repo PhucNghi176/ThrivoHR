@@ -1,8 +1,11 @@
-﻿namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
+﻿using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using MediatR;
 
-public record GetEmployees(int PageNumber, int PageSize) : IQuery<PagedResult<EmployeeDto>>;
+namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
-internal sealed class GetEmployeesQueryHandler : IQueryHandler<GetEmployees, PagedResult<EmployeeDto>>
+public record GetEmployees(int PageNumber, int PageSize) : IRequest<List<AppUser>>;
+
+internal sealed class GetEmployeesQueryHandler : IRequestHandler<GetEmployees, List<AppUser>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -13,9 +16,9 @@ internal sealed class GetEmployeesQueryHandler : IQueryHandler<GetEmployees, Pag
         _mapper = mapper;
     }
 
-    public async Task<Result<PagedResult<EmployeeDto>>> Handle(GetEmployees request, CancellationToken cancellationToken)
+    public async Task<List<AppUser>> Handle(GetEmployees request, CancellationToken cancellationToken)
     {
         var employees = await _userRepository.FindAllAsync(request.PageNumber, request.PageSize, cancellationToken);
-        return PagedResult<EmployeeDto>.Create(employees.TotalCount, employees.PageCount, employees.PageSize, employees.PageNo, employees.MapTopEmployeeListDto(_mapper));
+        return employees.ToList();
     }
 }

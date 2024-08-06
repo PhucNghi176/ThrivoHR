@@ -85,7 +85,15 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
                 pageSize,
                 cancellationToken);
         }
-
+        public virtual async Task<IPagedResult<TDomain>> FindAllAsyncAsNoTracking(int pageNo, int pageSize, CancellationToken cancellationToken = default)
+        {
+            var query = QueryInternalAsNoTracking(x => true);
+            return await PagedList<TDomain>.CreateAsync(
+                query,
+                pageNo,
+                pageSize,
+                cancellationToken);
+        }
         public virtual async Task<IPagedResult<TDomain>> FindAllAsync(
             Expression<Func<TPersistence, bool>> filterExpression,
             int pageNo,
@@ -185,7 +193,15 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
             }
             return queryable;
         }
-
+        protected virtual IQueryable<TPersistence> QueryInternalAsNoTracking(Expression<Func<TPersistence, bool>>? filterExpression)
+        {
+            var queryable = CreateQueryAsTracking();
+            if (filterExpression != null)
+            {
+                queryable = queryable.Where(filterExpression);
+            }
+            return queryable;
+        }
         protected virtual IQueryable<TResult> QueryInternal<TResult>(
             Expression<Func<TPersistence, bool>> filterExpression,
             Func<IQueryable<TPersistence>, IQueryable<TResult>> queryOptions)
@@ -209,6 +225,10 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
         protected virtual IQueryable<TPersistence> CreateQuery()
         {
             return GetSet();
+        }
+        protected virtual IQueryable<TPersistence> CreateQueryAsTracking()
+        {
+            return GetSet().AsNoTracking();
         }
 
         protected virtual DbSet<TPersistence> GetSet()
@@ -253,5 +273,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
             var projection = queryable.ProjectTo<TProjection>(_mapper.ConfigurationProvider);
             return await projection.FirstOrDefaultAsync(cancellationToken);
         }
+
+
     }
 }
