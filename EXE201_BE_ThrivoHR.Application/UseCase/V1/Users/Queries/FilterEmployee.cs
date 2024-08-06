@@ -6,7 +6,7 @@ using EXE201_BE_ThrivoHR.Application.Common.Security;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
 
-[Authorize(Roles = "Manager")]
+[Authorize(Roles = "Admin")]
 public record FilterEmployee
     (
         string? Email,
