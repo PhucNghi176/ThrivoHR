@@ -52,7 +52,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
                 FirstName = firstName,
                 LastName = lastName,
                 FullName = fullName,
-                EmploeeyCode = ECode,
+                
                 DateOfBirth = dob,
                 AddressId = addressId,
                 DepartmentId = departmentId,

@@ -18,6 +18,26 @@ public class Employee : BaseController
         var result = await _sender.Send(filterEmployee);
         return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateEmployee([FromBody] CreateUser createUser)
+    {
+        var result = await _sender.Send(createUser);
+        return result.IsSuccess ? CreatedAtAction(nameof(GetEmployee),result) : BadRequest();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     [HttpGet("generate")]
     [EndpointSummary("Đừng chạy API này nha Đạt")]
     public async Task<IActionResult> GenerateEmployee()

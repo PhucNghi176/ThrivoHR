@@ -39,7 +39,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                     FirstName = "Admin",
                     LastName = "Admin",
                     FullName = "Admin",
-                    EmploeeyCode = "0",
+                    
 
                 });
             modelBuilder.Entity<Department>().HasData(

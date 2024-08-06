@@ -13,7 +13,7 @@ public class JwtService
     {
         List<Claim> claims = new()
             {
-                new(JwtRegisteredClaimNames.Sub, employeeDto.EmploeeyCode.ToString()),
+                new(JwtRegisteredClaimNames.Sub, employeeDto.EmployeeCode),
                // new(ClaimTypes.Role, employeeDto..ToString()),
                 new("Position",employeeDto.Position.Id.ToString()),
                 new("Department",employeeDto.Department.Id.ToString()),

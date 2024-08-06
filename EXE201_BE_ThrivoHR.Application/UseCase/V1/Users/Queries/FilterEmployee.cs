@@ -6,10 +6,8 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
 public record FilterEmployee
     (
-        int PageNumber,
-        int PageSize,
-        string? EmployeeCode,
         string? Email,
+        string? EmployeeCode,
         string? FirstName,
         string? LastName,
         string? FullName,
@@ -19,8 +17,11 @@ public record FilterEmployee
         string? BankAccount,
         string? Address,
         DateOnly? DateOfBirth,
+
         int? DepartmentId = 0,
-        int? PositionId = 0
+        int? PositionId = 0,
+        int PageNumber = 1,
+        int PageSize = 100
     ) : IQuery<PagedResult<EmployeeDto>>;
 
 
@@ -42,7 +43,7 @@ internal sealed class FilterEmployeeHandler : IQueryHandler<FilterEmployee, Page
         {
             // 1. Combine multiple Where clauses
             x = x.Where(x => !x.LockoutEnabled
-                && (string.IsNullOrEmpty(request.EmployeeCode) || x.EmploeeyCode == request.EmployeeCode)
+                && (string.IsNullOrEmpty(request.EmployeeCode) || x.EmployeeId == ConvertEmployeeCodeToId(request.EmployeeCode))
                 && (string.IsNullOrEmpty(request.Email) || x.Email.Contains(request.Email))
                 && (string.IsNullOrEmpty(request.FirstName) || x.FirstName.Contains(request.FirstName))
                 && (string.IsNullOrEmpty(request.LastName) || x.LastName.Contains(request.LastName))
@@ -69,12 +70,18 @@ internal sealed class FilterEmployeeHandler : IQueryHandler<FilterEmployee, Page
             }
 
             // 3. Apply ordering last
-            x = x.OrderBy(x => x.EmploeeyCode);
+            x = x.OrderBy(x => x.EmployeeId);
 
             return x;
         }
         var list = await _userRepository.FindAllAsync(request.PageNumber, request.PageSize, filter, cancellationToken);
         return PagedResult<EmployeeDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToEmployeeListDto(_mapper));
+    }
+
+    private int ConvertEmployeeCodeToId(string employeeCode)
+    {
+        bool check = int.TryParse(employeeCode, out int code);
+        return check ? code : -1;
     }
 }
 

@@ -1,13 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
 public class AppUser : IdentityUser<string>
 {
+    public override string Id { get; set; } = Guid.NewGuid().ToString("N");
     // make coloumn identity 
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string EmploeeyCode { get; set; }
+    public int EmployeeId { get; set; }
+    public string EmployeeCode
+    {
+        get { return EmployeeId.ToString("D6"); }
+    }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string FullName { get; set; }
@@ -22,7 +29,7 @@ public class AppUser : IdentityUser<string>
     [ForeignKey("PositionId")]
     public string BankAccount { get; set; }
     public string? CreatedBy { get; set; }
-    public DateTimeOffset CreatedOn { get; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
     public string? LastModifiedBy { get; set; }
     public DateTimeOffset? LastModifiedOn { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? DeletedOn { get; set; }

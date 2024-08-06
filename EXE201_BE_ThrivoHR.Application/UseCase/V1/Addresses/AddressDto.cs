@@ -1,4 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Mappings;
+using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Domain.Entities;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Addresses;
@@ -29,5 +30,6 @@ public class AddressDto : IMapFrom<Address>
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Address, AddressDto>().ReverseMap();
+        profile.CreateMap<AddressModel, Address>();
     }
 }
