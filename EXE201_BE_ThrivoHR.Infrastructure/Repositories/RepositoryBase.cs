@@ -23,19 +23,22 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
 
         public IUnitOfWork UnitOfWork => _dbContext;
 
-        public virtual void Remove(TDomain entity)
+        public virtual Task Remove(TDomain entity)
         {
             GetSet().Remove((TPersistence)entity);
+            return Task.CompletedTask;
         }
 
-        public virtual void Add(TDomain entity)
+        public virtual Task Add(TDomain entity)
         {
             GetSet().Add((TPersistence)entity);
+            return Task.CompletedTask;
         }
 
-        public virtual void Update(TDomain entity)
+        public virtual Task Update(TDomain entity)
         {
             GetSet().Update((TPersistence)entity);
+            return Task.CompletedTask;
         }
 
         public virtual async Task<TDomain?> FindAsync(

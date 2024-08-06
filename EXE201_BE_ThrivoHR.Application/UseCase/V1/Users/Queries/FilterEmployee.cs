@@ -1,9 +1,12 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-
+using EXE201_BE_ThrivoHR.Application.Common.Method;
+using EXE201_BE_ThrivoHR.Application.Common.Security;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
+
+[Authorize(Roles = "Manager")]
 public record FilterEmployee
     (
         string? Email,
@@ -43,8 +46,8 @@ internal sealed class FilterEmployeeHandler : IQueryHandler<FilterEmployee, Page
         {
             // 1. Combine multiple Where clauses
             x = x.Where(x => !x.LockoutEnabled
-                && (string.IsNullOrEmpty(request.EmployeeCode) || x.EmployeeId == ConvertEmployeeCodeToId(request.EmployeeCode))
-                && (string.IsNullOrEmpty(request.Email) || x.Email.Contains(request.Email))
+                && (string.IsNullOrEmpty(request.EmployeeCode) || x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode))
+                && (string.IsNullOrEmpty(request.Email) || x.Email!.Contains(request.Email))
                 && (string.IsNullOrEmpty(request.FirstName) || x.FirstName.Contains(request.FirstName))
                 && (string.IsNullOrEmpty(request.LastName) || x.LastName.Contains(request.LastName))
                 && (string.IsNullOrEmpty(request.FullName) || x.FullName.Contains(request.FullName))
@@ -76,12 +79,6 @@ internal sealed class FilterEmployeeHandler : IQueryHandler<FilterEmployee, Page
         }
         var list = await _userRepository.FindAllAsync(request.PageNumber, request.PageSize, filter, cancellationToken);
         return PagedResult<EmployeeDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToEmployeeListDto(_mapper));
-    }
-
-    private int ConvertEmployeeCodeToId(string employeeCode)
-    {
-        bool check = int.TryParse(employeeCode, out int code);
-        return check ? code : -1;
     }
 }
 

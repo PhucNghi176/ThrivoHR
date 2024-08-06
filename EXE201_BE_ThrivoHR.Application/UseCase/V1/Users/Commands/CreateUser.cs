@@ -28,10 +28,10 @@ internal sealed class CreateUserHandler : ICommandHandler<CreateUser, string>
 
 
         var address = _mapper.Map<Address>(request.Employee.Address);
-        _addressRepository.Add(address);
+        await _addressRepository.Add(address);
         var employee = _mapper.Map<AppUser>(request.Employee);
         employee.CreatedBy = _currentUserService.UserId;
-        _userRepository.Add(employee);
+        await _userRepository.Add(employee);
         int success = await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         if (success == 0)

@@ -39,7 +39,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
             var bankAccount = random.Next(1000000, 99999999).ToString();
 
 
-            _userRepository.Add(new AppUser
+            await _userRepository.Add(new AppUser
             {
                 Id = Guid.NewGuid().ToString("N"),
                 UserName = $"user{i}",
@@ -52,7 +52,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
                 FirstName = firstName,
                 LastName = lastName,
                 FullName = fullName,
-                
+
                 DateOfBirth = dob,
                 AddressId = addressId,
                 DepartmentId = departmentId,

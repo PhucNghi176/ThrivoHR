@@ -52,7 +52,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors("CorsPolicy");
+app.UseCors();
 app.UseEndpoints(endpoints =>
 {
     _ = endpoints.MapControllers();

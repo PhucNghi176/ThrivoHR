@@ -1,9 +1,8 @@
-﻿namespace EXE201_BE_ThrivoHR.Domain.Repositories
+﻿namespace EXE201_BE_ThrivoHR.Domain.Repositories;
+
+public interface IRepository<in TDomain>
 {
-    public interface IRepository<in TDomain>
-    {
-        void Add(TDomain entity);
-        void Update(TDomain entity);
-        void Remove(TDomain entity);
-    }
+    Task Add(TDomain entity);
+    Task Update(TDomain entity);
+    Task Remove(TDomain entity);
 }

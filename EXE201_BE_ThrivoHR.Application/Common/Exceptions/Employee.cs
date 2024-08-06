@@ -14,4 +14,10 @@ public static class Employee
     public class CreateFailureException(string name, object key) : BadRequestException($"Failed to create {name} with key {key}")
     {
     }
+    public class RoleNotFoundException : BadRequestException
+    {
+        public RoleNotFoundException() : base("Role not found")
+        {
+        }
+    }
 }

@@ -16,7 +16,7 @@ public class CurrentUserService : ICurrentUserService
         _authorizationService = authorizationService;
     }
 
-    public string? UserId => _claimsPrincipal?.FindFirst(JwtClaimTypes.Subject)?.Value;
+    public string? UserId => _claimsPrincipal?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     public string? UserName => _claimsPrincipal?.FindFirst(JwtClaimTypes.Name)?.Value;
 
     public async Task<bool> AuthorizeAsync(string policy)
