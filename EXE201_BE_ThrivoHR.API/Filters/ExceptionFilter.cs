@@ -1,7 +1,6 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
 using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Diagnostics;
 
@@ -23,8 +22,15 @@ public class ExceptionFilter : IExceptionFilter
                 context.ExceptionHandled = true;
                 break;
             case ForbiddenAccessException:
-            case UnauthorizedAccessException:
                 context.Result = new ForbidResult();
+                context.ExceptionHandled = true;
+                break;
+            case UnauthorizedAccessException exception:
+                context.Result = new UnauthorizedObjectResult(new ProblemDetails
+                {
+                    Detail = exception.Message
+                })
+                .AddContextInformation(context);
                 context.ExceptionHandled = true;
                 break;
             case NotFoundException exception:
@@ -45,7 +51,7 @@ public class ExceptionFilter : IExceptionFilter
                 context.ExceptionHandled = true;
                 break;
 
-            
+
         }
     }
 }

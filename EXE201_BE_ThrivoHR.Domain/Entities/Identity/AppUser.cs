@@ -35,6 +35,9 @@ public class AppUser : IdentityUser<string>
     public DateTimeOffset? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
 
+    public string? RefreshToken { get; set; }
+    public DateTimeOffset? RefreshTokenExpiryTime { get; set; }
+
 
     public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
     public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }

@@ -20,4 +20,10 @@ public static class Employee
         {
         }
     }
+    public class InvalidTokenException : UnauthorizedAccessException
+    {
+        public InvalidTokenException() : base("Invalid token")
+        {
+        }
+    }
 }

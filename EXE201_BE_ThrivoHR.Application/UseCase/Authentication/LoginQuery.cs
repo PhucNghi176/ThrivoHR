@@ -1,14 +1,15 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
 using EXE201_BE_ThrivoHR.Application.Common.Method;
+using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.Authentication;
 
-public record LoginQuery(string EmployeeCode, string Password) : IQuery<string>;
+public record LoginQuery(string EmployeeCode, string Password) : IQuery<TokenModel>;
 
-internal sealed class LoginQueryHandler : IQueryHandler<LoginQuery, string>
+internal sealed class LoginQueryHandler : IQueryHandler<LoginQuery, TokenModel>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -21,9 +22,9 @@ internal sealed class LoginQueryHandler : IQueryHandler<LoginQuery, string>
         _tokenService = tokenService;
     }
 
-    public async Task<Result<string>> Handle(LoginQuery request, CancellationToken cancellationToken)
+    public async Task<Result<TokenModel>> Handle(LoginQuery request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode) && !x.LockoutEnabled, cancellationToken)?? throw new Employee.NotFoundException(request.EmployeeCode);
+        var user = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode) && !x.LockoutEnabled, cancellationToken) ?? throw new Employee.NotFoundException(request.EmployeeCode);
         var PasswordMatched = await _userRepository.VerifyPasswordAsync(request.Password, user.PasswordHash!);
         if (!PasswordMatched)
         {
@@ -37,7 +38,10 @@ internal sealed class LoginQueryHandler : IQueryHandler<LoginQuery, string>
             _ => throw new Employee.RoleNotFoundException()
         };
         var token = await _tokenService.GenerateTokenAsync(user.EmployeeCode, RoleName);
-        user.Tokens.Add(new IdentityUserToken<string> { Name = "Bearer", Value = token });
+        user.RefreshToken = token.RefreshToken;
+        user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+        await _userRepository.Update(user);
+        await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
         return Result<string>.Success(token);
     }
 

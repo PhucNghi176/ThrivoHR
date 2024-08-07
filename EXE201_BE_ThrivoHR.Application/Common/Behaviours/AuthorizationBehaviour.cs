@@ -3,68 +3,67 @@ using EXE201_BE_ThrivoHR.Application.Common.Security;
 using MediatR;
 using System.Reflection;
 
-namespace EXE201_BE_ThrivoHR.Application.Common.Behaviours
+namespace EXE201_BE_ThrivoHR.Application.Common.Behaviours;
+
+public class AuthorizationBehaviour<TRequest, TResponse>(
+    ICurrentUserService currentUserService) : IPipelineBehavior<TRequest, TResponse>
+   where TRequest : notnull
 {
-    public class AuthorizationBehaviour<TRequest, TResponse>(
-        ICurrentUserService currentUserService) : IPipelineBehavior<TRequest, TResponse>
-       where TRequest : notnull
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        IEnumerable<AuthorizeAttribute> authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
+
+        if (authorizeAttributes.Any())
         {
-            IEnumerable<AuthorizeAttribute> authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
-
-            if (authorizeAttributes.Any())
+            // Must be authenticated user
+            if (currentUserService.UserId == null)
             {
-                // Must be authenticated user
-                if (currentUserService.UserId == null)
-                {
-                    throw new UnauthorizedAccessException();
-                }
+                throw new UnauthorizedAccessException();
+            }
 
-                // Role-based authorization
-                IEnumerable<AuthorizeAttribute> authorizeAttributesWithRoles = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Roles));
+            // Role-based authorization
+            IEnumerable<AuthorizeAttribute> authorizeAttributesWithRoles = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Roles));
 
-                if (authorizeAttributesWithRoles.Any())
+            if (authorizeAttributesWithRoles.Any())
+            {
+                foreach (string[]? roles in authorizeAttributesWithRoles.Select(a => a.Roles.Split(',')))
                 {
-                    foreach (string[]? roles in authorizeAttributesWithRoles.Select(a => a.Roles.Split(',')))
+                    bool authorized = false;
+                    foreach (string? role in roles)
                     {
-                        bool authorized = false;
-                        foreach (string? role in roles)
+                        bool isInRole = await currentUserService.IsInRoleAsync(role.Trim());
+                        if (isInRole)
                         {
-                            bool isInRole = await currentUserService.IsInRoleAsync(role.Trim());
-                            if (isInRole)
-                            {
-                                authorized = true;
-                                break;
-                            }
-                        }
-
-                        // Must be a member of at least one role in roles
-                        if (!authorized)
-                        {
-                            throw new ForbiddenAccessException();
+                            authorized = true;
+                            break;
                         }
                     }
-                }
 
-                // Policy-based authorization
-                IEnumerable<AuthorizeAttribute> authorizeAttributesWithPolicies = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
-                if (authorizeAttributesWithPolicies.Any())
-                {
-                    foreach (string? policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
+                    // Must be a member of at least one role in roles
+                    if (!authorized)
                     {
-                        bool authorized = await currentUserService.AuthorizeAsync(policy);
-
-                        if (!authorized)
-                        {
-                            throw new ForbiddenAccessException();
-                        }
+                        throw new ForbiddenAccessException();
                     }
                 }
             }
 
-            // User is authorized / authorization not required
-            return await next();
+            // Policy-based authorization
+            IEnumerable<AuthorizeAttribute> authorizeAttributesWithPolicies = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
+            if (authorizeAttributesWithPolicies.Any())
+            {
+                foreach (string? policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
+                {
+                    bool authorized = await currentUserService.AuthorizeAsync(policy);
+
+                    if (!authorized)
+                    {
+                        throw new ForbiddenAccessException();
+                    }
+                }
+            }
         }
+
+        // User is authorized / authorization not required
+        return await next();
     }
 }

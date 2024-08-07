@@ -34,7 +34,8 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                          ValidateLifetime = true,
                          ValidIssuer = jwtSettings["validIssuer"],
                          ValidAudience = jwtSettings["validAudience"],
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThrivoHR API 123abc456 anh iu em...")),
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThrivoHR API 123abc456 anh iu em....")),
+                         ClockSkew = TimeSpan.Zero
                      };
                  });
 
