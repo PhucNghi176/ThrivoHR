@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using EXE201_BE_ThrivoHR.API.Configuration;
 using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
@@ -26,7 +27,8 @@ builder.Services.ConfigureProblemDetails();
 builder.Services.ConfigureApiVersioning();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.ConfigureSwagger();
-
+builder.Services.ConfigureRateLimit();
+builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
 //allow all cors
 builder.Services.AddCors(options =>
 {
@@ -52,10 +54,12 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseIpRateLimiting();
 app.UseCors();
 app.UseEndpoints(endpoints =>
 {
     _ = endpoints.MapControllers();
 });
 app.UseSwashbuckle();
+
 await app.RunAsync();

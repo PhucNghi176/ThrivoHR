@@ -1,4 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
+﻿using AspNetCoreRateLimit;
+using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Repositories;
 using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
 using EXE201_BE_ThrivoHR.Infrastructure.Repositories;
@@ -29,7 +30,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IAppRoleRepository, AppRoleRepository>();
-
+            
             return services;
         }
     }
