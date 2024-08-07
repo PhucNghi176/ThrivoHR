@@ -3,10 +3,12 @@ using EXE201_BE_ThrivoHR.API.Configuration;
 using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
 using EXE201_BE_ThrivoHR.Infrastructure;
+
 using Serilog;
+using System.Text.Json;
 
 // Create the builder
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Configure logging (Serilog)
 builder.Host.UseSerilog((context, services, configuration) => configuration
@@ -19,47 +21,61 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
 // Add services
 builder.Services.AddControllers(opt =>
 {
-    _ = opt.Filters.Add<ExceptionFilter>();
+    opt.Filters.Add<ExceptionFilter>();
+    opt.CacheProfiles.Add("120", new CacheProfile { Duration = 120 });
 });
-builder.Services.AddApplication(); // Note: 'Configuration' is available on the builder
+
+builder.Services.AddApplication(); // Assuming this registers your application services
 builder.Services.ConfigureApplicationSecurity(builder.Configuration);
 builder.Services.ConfigureProblemDetails();
 builder.Services.ConfigureApiVersioning();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.ConfigureSwagger();
+builder.Services.AddResponseCaching();
+builder.Services.HttpCacheHeadersConfiguration();
 builder.Services.ConfigureRateLimit();
 builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
-//allow all cors
+
+// Allow all CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
-               builder =>
-               {
-                   _ = builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-               });
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
 });
+
 // Build the app
-WebApplication app = builder.Build();
+var app = builder.Build();
 
 // Configure the middleware pipeline
 if (app.Environment.IsDevelopment())
 {
-    _ = app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
 app.UseSerilogRequestLogging();
-app.UseExceptionHandler();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseIpRateLimiting();
-app.UseCors();
-app.UseEndpoints(endpoints =>
-{
-    _ = endpoints.MapControllers();
-});
+app.UseResponseCaching();
+app.UseHttpCacheHeaders();
+
+app.MapControllers();
+
 app.UseSwashbuckle();
 
+// Run the app
 await app.RunAsync();

@@ -29,15 +29,14 @@ public class AppUser : IdentityUser<string>
     [ForeignKey("PositionId")]
     public string BankAccount { get; set; }
     public string? CreatedBy { get; set; }
-    public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
+    public DateTime? CreatedOn { get; set; } = DateTime.UtcNow.AddHours(7);
     public string? LastModifiedBy { get; set; }
-    public DateTimeOffset? LastModifiedOn { get; set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset? DeletedOn { get; set; }
+    public DateTime? LastModifiedOn { get; set; } = DateTime.UtcNow.AddHours(7);
+    public DateTime? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
 
     public string? RefreshToken { get; set; }
-    public DateTimeOffset? RefreshTokenExpiryTime { get; set; }
-
+    public DateTime? RefreshTokenExpiryTime { get; set; }
 
     public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
     public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }

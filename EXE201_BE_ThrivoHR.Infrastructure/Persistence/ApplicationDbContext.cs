@@ -1,6 +1,7 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
@@ -70,6 +71,11 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                 new Address { Id = 19, AddressLine = "1515, đường Phạm Ngũ Lão", Ward = "An Cư", District = "Ninh Kiều", City = "Cần Thơ", Country = "Việt Nam", CreatedBy = "1", LastModifiedBy = "1" },
                 new Address { Id = 20, AddressLine = "1616, đường Lê Lợi", Ward = "An Nghiệp", District = "Ninh Kiều", City = "Cần Thơ", Country = "Việt Nam", CreatedBy = "1", LastModifiedBy = "1" }
             );
+            modelBuilder.Entity<AppRole>().HasData(
+                new AppRole { Id = "1", Name = "Admin", Description = "Admin", RoleCode = "Admin" },
+                new AppRole { Id = "2", Name = "HR", Description = "Human Resource", RoleCode = "HR" },
+                new AppRole { Id = "3", Name = "C&B", Description = "Compensation and benefit", RoleCode = "C&B" });
+
             modelBuilder.Entity<AppUser>().HasData(
                 new AppUser
                 {
@@ -86,15 +92,16 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                     FullName = "Admin",
                     DepartmentId = 1,
                     PositionId = 1,
-                    PasswordHash = "$2a$11$dRZA37NpS.thXR9anJXBZehaTb7ezji2i2E5WbHGA2cwMeW4wEXAy"
+                    PasswordHash = "$2a$11$dRZA37NpS.thXR9anJXBZehaTb7ezji2i2E5WbHGA2cwMeW4wEXAy",
+                   
 
                 });
-            modelBuilder.Entity<AppRole>().HasData(
-                new AppRole { Id = "1", Name = "Admin", Description = "Admin", RoleCode = "Admin" },
-                new AppRole { Id = "2", Name = "HR", Description = "Human Resource", RoleCode = "HR" },
-                new AppRole { Id = "3", Name = "C&B", Description = "Compensation and benefit", RoleCode = "C&B" }
-
+            // Seeding data for IdentityUserRole<string>
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { RoleId = "1", UserId = "1" }
             );
+
+
         }
     }
 }

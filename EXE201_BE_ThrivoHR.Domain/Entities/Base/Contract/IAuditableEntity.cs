@@ -3,7 +3,7 @@
 public interface IAuditableEntity
 {
     public string CreatedBy { get; set; }
-    public DateTimeOffset CreatedOn { get; }
+    public DateTime? CreatedOn { get; set; }
     public string LastModifiedBy { get; set; }
-    public DateTimeOffset? LastModifiedOn { get; set; }
+    public DateTime? LastModifiedOn { get; set; }
 }

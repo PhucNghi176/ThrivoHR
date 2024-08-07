@@ -11,7 +11,8 @@
 	  <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
 	  <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
 	  <PackageReference Include="Carter" Version="8.2.1" />  
-	  <PackageReference Include="IdentityModel" Version="7.0.0" />
+	  <PackageReference Include="IdentityModel" Version="7.0.0" />  
+	  <PackageReference Include="Marvin.Cache.Headers" Version="7.1.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
 	  <PackageReference Include="Microsoft.CodeAnalysis" Version="4.10.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
