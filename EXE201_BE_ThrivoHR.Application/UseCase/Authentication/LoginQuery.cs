@@ -23,7 +23,7 @@ internal sealed class LoginQueryHandler : IQueryHandler<LoginQuery, string>
 
     public async Task<Result<string>> Handle(LoginQuery request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode) && !x.LockoutEnabled, cancellationToken);
+        var user = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode) && !x.LockoutEnabled, cancellationToken)?? throw new Employee.NotFoundException(request.EmployeeCode);
         var PasswordMatched = await _userRepository.VerifyPasswordAsync(request.Password, user.PasswordHash!);
         if (!PasswordMatched)
         {
