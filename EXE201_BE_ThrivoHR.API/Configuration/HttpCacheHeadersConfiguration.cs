@@ -11,10 +11,15 @@ public static class HttpCacheHeaders
             {
                 expirationModelOptions.MaxAge = 65;
                 expirationModelOptions.CacheLocation = CacheLocation.Private;
+
             },
             (validationModelOptions) =>
             {
                 validationModelOptions.MustRevalidate = true;
+            },
+            (middlewareOptions) =>
+            {
+                middlewareOptions.DisableGlobalHeaderGeneration = false;
             });
 
         return services;

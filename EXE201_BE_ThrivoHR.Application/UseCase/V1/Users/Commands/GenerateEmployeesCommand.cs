@@ -28,15 +28,15 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
             var firstName = firstNames[random.Next(firstNames.Count)];
             var lastName = lastNames[random.Next(lastNames.Count)];
             var fullName = $"{firstName} {lastName}";
-            var identityNumber = random.Next(100000000, 999999999).ToString();
-            var ECode = random.Next(1000, 999999).ToString();
+            var identityNumber = random.Next(0, 999999999).ToString();
+            
             var dob = new DateOnly(random.Next(1950, 2000), random.Next(1, 12), random.Next(1, 28));
-            var phoneNumber = random.Next(1000000000, 1999999999).ToString();
-            var taxCode = random.Next(1000000, 99999999).ToString();
+            var phoneNumber = random.Next(0, 1999999999).ToString();
+            var taxCode = random.Next(0, 99999999).ToString();
             var addressId = random.Next(1, 21);
             var departmentId = random.Next(1, 6);
             var positionId = random.Next(1, 6);
-            var bankAccount = random.Next(1000000, 99999999).ToString();
+            var bankAccount = random.Next(0, 99999999).ToString();
 
 
             await _userRepository.Add(new AppUser

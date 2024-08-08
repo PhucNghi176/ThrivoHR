@@ -11,8 +11,8 @@ public class Employee(ISender sender) : BaseController(sender)
     
     [HttpGet]
     //[ResponseCache(CacheProfileName ="120")]
-    //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 120)]
-    //[HttpCacheValidation(MustRevalidate = false)]
+    [HttpCacheExpiration(CacheLocation = CacheLocation.Private, MaxAge = 300)]
+    [HttpCacheValidation(MustRevalidate = true)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -23,6 +23,8 @@ public class Employee(ISender sender) : BaseController(sender)
         return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
     [HttpPost]
+    [HttpCacheValidation(MustRevalidate = true)]
+    [HttpCacheExpiration(CacheLocation = CacheLocation.Private, MaxAge = 60)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateEmployee([FromBody] CreateUser createUser)
