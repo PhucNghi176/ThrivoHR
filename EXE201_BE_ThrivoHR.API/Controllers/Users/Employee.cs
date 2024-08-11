@@ -33,7 +33,15 @@ public class Employee(ISender sender) : BaseController(sender)
         return result.IsSuccess ? CreatedAtAction(nameof(GetEmployee), result) : BadRequest();
     }
 
-
+    [HttpPut]
+    
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateEmployee([FromBody] UpdateUser updateUser, CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(updateUser, cancellationToken);
+        return result.IsSuccess ? NoContent() : BadRequest();
+    }
 
 
 

@@ -11,10 +11,11 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
 public class EmployeeDto : IMapFrom<AppUser>
 {
     public string EmployeeCode { get; set; }
-    public string Email { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string FullName { get; set; }
+    public string Email { get; set; }
+   
     public string IdentityNumber { get; set; }
     public string PhoneNumber { get; set; }
     public string TaxCode { get; set; }
