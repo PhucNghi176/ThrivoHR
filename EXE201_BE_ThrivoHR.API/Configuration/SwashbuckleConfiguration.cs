@@ -49,7 +49,6 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                             Type = ReferenceType.SecurityScheme
                         }
                     };
-
                     options.AddSecurityDefinition("Bearer", securityScheme);
                     options.AddSecurityRequirement(
                         new OpenApiSecurityRequirement
@@ -78,6 +77,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                     options.EnableFilter(string.Empty);
                     AddSwaggerEndpoints(app, options);
                     options.OAuthScopeSeparator(" ");
+                    
                 });
 
         }
@@ -107,5 +107,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
             }
         }
     }
+
+  
 }
 

@@ -22,7 +22,6 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
 builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add<ExceptionFilter>();
-    opt.CacheProfiles.Add("120", new CacheProfile { Duration = 120 });
 });
 
 builder.Services.AddApplication(); // Assuming this registers your application services
