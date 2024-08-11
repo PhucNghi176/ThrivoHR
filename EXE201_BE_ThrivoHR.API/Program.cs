@@ -22,7 +22,8 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
 builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add<ExceptionFilter>();
-});
+
+}).AddNewtonsoftJson();
 
 builder.Services.AddApplication(); // Assuming this registers your application services
 builder.Services.ConfigureApplicationSecurity(builder.Configuration);

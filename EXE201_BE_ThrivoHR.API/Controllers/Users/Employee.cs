@@ -8,7 +8,7 @@ namespace EXE201_BE_ThrivoHR.API.Controllers.Users;
 public class Employee(ISender sender) : BaseController(sender)
 {
 
-    
+
     [HttpGet]
     //[ResponseCache(CacheProfileName ="120")]
     [HttpCacheExpiration(CacheLocation = CacheLocation.Private, MaxAge = 300)]
@@ -19,7 +19,6 @@ public class Employee(ISender sender) : BaseController(sender)
     public async Task<IActionResult> GetEmployee([FromQuery] FilterEmployee filterEmployee)
     {
         var result = await _sender.Send(filterEmployee);
-        Console.WriteLine("\n\n\n\n\n\n"+DateTimeOffset.Now);
         return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
     [HttpPost]
@@ -30,9 +29,18 @@ public class Employee(ISender sender) : BaseController(sender)
     public async Task<IActionResult> CreateEmployee([FromBody] CreateUser createUser)
     {
         var result = await _sender.Send(createUser);
-        return result.IsSuccess ? CreatedAtAction(nameof(GetEmployee),result) : BadRequest();
+        return result.IsSuccess ? CreatedAtAction(nameof(GetEmployee), result) : BadRequest();
     }
 
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateEmployee([FromBody] UpdateUser updateUser)
+    {
+        var result = await _sender.Send(updateUser);
+        return result.IsSuccess ? NoContent() : NotFound();
+    }
 
 
 
