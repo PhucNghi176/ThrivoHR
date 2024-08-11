@@ -3,79 +3,84 @@ using EXE201_BE_ThrivoHR.API.Configuration;
 using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
 using EXE201_BE_ThrivoHR.Infrastructure;
-
+using Newtonsoft.Json.Serialization;
 using Serilog;
-using System.Text.Json;
 
-// Create the builder
-var builder = WebApplication.CreateBuilder(args);
+namespace EXE201_BE_ThrivoHR.API;
 
-// Configure logging (Serilog)
-builder.Host.UseSerilog((context, services, configuration) => configuration
-    .ReadFrom.Configuration(context.Configuration)
-    .ReadFrom.Services(services)
-    .Enrich.FromLogContext()
-    .WriteTo.File("Logs/logs.txt", rollingInterval: RollingInterval.Day)
-    .WriteTo.Console());
-
-// Add services
-builder.Services.AddControllers(opt =>
+public class Program
 {
-    opt.Filters.Add<ExceptionFilter>();
+    public static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-}).AddNewtonsoftJson();
+        // Configure logging (Serilog)
+        builder.Host.UseSerilog((context, services, configuration) => configuration
+            .ReadFrom.Configuration(context.Configuration)
+            .ReadFrom.Services(services)
+            .Enrich.FromLogContext()
+            .WriteTo.File("Logs/logs.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.Console());
 
-builder.Services.AddApplication(); // Assuming this registers your application services
-builder.Services.ConfigureApplicationSecurity(builder.Configuration);
-builder.Services.ConfigureProblemDetails();
-builder.Services.ConfigureApiVersioning();
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.ConfigureSwagger();
-builder.Services.AddResponseCaching();
-builder.Services.HttpCacheHeadersConfiguration();
-builder.Services.ConfigureRateLimit();
-builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
-
-// Allow all CORS
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        builder =>
+        // Add services
+        builder.Services.AddControllers(opt =>
         {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
+            opt.Filters.Add<ExceptionFilter>();
+        }).AddNewtonsoftJson();
+
+        builder.Services.AddApplication(); // Assuming this registers your application services
+        builder.Services.ConfigureApplicationSecurity(builder.Configuration);
+        builder.Services.ConfigureProblemDetails();
+        builder.Services.ConfigureApiVersioning();
+        builder.Services.AddInfrastructure(builder.Configuration);
+        builder.Services.ConfigureSwagger();
+        builder.Services.AddResponseCaching();
+        builder.Services.HttpCacheHeadersConfiguration();
+        builder.Services.ConfigureRateLimit();
+        builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
+
+        // Allow all CORS
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
         });
-});
 
-// Build the app
-var app = builder.Build();
+        // Build the app
+        var app = builder.Build();
 
-// Configure the middleware pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
+        // Configure the middleware pipeline
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+
+        app.UseSerilogRequestLogging();
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseCors();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseIpRateLimiting();
+        app.UseResponseCaching();
+        app.UseHttpCacheHeaders();
+
+        app.MapControllers();
+
+        app.UseSwashbuckle();
+
+        // Run the app
+        await app.RunAsync();
+    }
 }
-else
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-
-app.UseSerilogRequestLogging();
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-app.UseCors();
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseIpRateLimiting();
-app.UseResponseCaching();
-app.UseHttpCacheHeaders();
-
-app.MapControllers();
-
-app.UseSwashbuckle();
-
-// Run the app
-await app.RunAsync();

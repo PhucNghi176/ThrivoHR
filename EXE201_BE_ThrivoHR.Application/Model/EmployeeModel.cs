@@ -1,7 +1,7 @@
 ﻿namespace EXE201_BE_ThrivoHR.Application.Model;
 
-public class EmployeeModel
-{
+public record EmployeeModel
+{   
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
     public required string FullName { get; set; }

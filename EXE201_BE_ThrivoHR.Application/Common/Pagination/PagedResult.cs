@@ -10,6 +10,7 @@ public class PagedResult<T>
         Data = null!;
     }
 
+
     public static PagedResult<T> Create(
         int totalCount,
         int pageCount,

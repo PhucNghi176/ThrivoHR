@@ -11,9 +11,7 @@ public static class Employee
         {
         }
     }
-    public class CreateFailureException(string name, object key) : BadRequestException($"Failed to create {name} with key {key}")
-    {
-    }
+    public class CreateFailureException(string name) : BadRequestException($"Failed to create {name}");
     public class RoleNotFoundException : BadRequestException
     {
         public RoleNotFoundException() : base("Role not found")
@@ -26,4 +24,9 @@ public static class Employee
         {
         }
     }
+
+    public class DuplicateException(string name, object key) : BadRequestException($"Failed to create {name} with dupplication key {key}")
+    {
+    }
+
 }

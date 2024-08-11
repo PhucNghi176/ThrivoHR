@@ -1,6 +1,7 @@
 ﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 using Marvin.Cache.Headers;
+using System.Threading;
 
 namespace EXE201_BE_ThrivoHR.API.Controllers.Users;
 
@@ -16,9 +17,9 @@ public class Employee(ISender sender) : BaseController(sender)
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetEmployee([FromQuery] FilterEmployee filterEmployee)
+    public async Task<IActionResult> GetEmployee([FromQuery] FilterEmployee filterEmployee, CancellationToken cancellationToken = default)
     {
-        var result = await _sender.Send(filterEmployee);
+        var result = await _sender.Send(filterEmployee, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
     [HttpPost]
@@ -26,20 +27,10 @@ public class Employee(ISender sender) : BaseController(sender)
     [HttpCacheExpiration(CacheLocation = CacheLocation.Private, MaxAge = 60)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateEmployee([FromBody] CreateUser createUser)
+    public async Task<IActionResult> CreateEmployee([FromBody] CreateUser createUser, CancellationToken cancellationToken)
     {
-        var result = await _sender.Send(createUser);
+        var result = await _sender.Send(createUser, cancellationToken);
         return result.IsSuccess ? CreatedAtAction(nameof(GetEmployee), result) : BadRequest();
-    }
-
-    [HttpPatch]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateEmployee([FromBody] UpdateUser updateUser)
-    {
-        var result = await _sender.Send(updateUser);
-        return result.IsSuccess ? NoContent() : NotFound();
     }
 
 

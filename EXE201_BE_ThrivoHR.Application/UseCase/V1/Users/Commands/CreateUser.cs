@@ -1,7 +1,9 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
+﻿using EXE201_BE_ThrivoHR.Application.Common.Method;
 using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
@@ -32,12 +34,22 @@ internal sealed class CreateUserHandler : ICommandHandler<CreateUser, string>
         var employee = _mapper.Map<AppUser>(request.Employee);
         employee.CreatedBy = _currentUserService.UserId;
         await _userRepository.Add(employee);
-        int success = await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-        if (success == 0)
+        try
         {
-            throw new CreateFailureException(nameof(AppUser), request.Employee);
+            int success = await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
+        catch (DbUpdateException ex)//Handle dupplication exception
+        {
+
+            throw new DuplicateException(nameof(AppUser), ExceptionMethod.GetKeyString(ex.ToString()));
+        }
+        catch (Exception ex)
+        {
+            throw new CreateFailureException(nameof(AppUser));
+        }
+
+
+
         return Result.Success(employee.EmployeeCode);
 
 

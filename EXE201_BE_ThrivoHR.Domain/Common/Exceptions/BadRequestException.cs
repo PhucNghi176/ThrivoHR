@@ -6,4 +6,6 @@ public abstract class BadRequestException : DomainException
         : base("Bad Request", message)
     {
     }
+   
+
 }

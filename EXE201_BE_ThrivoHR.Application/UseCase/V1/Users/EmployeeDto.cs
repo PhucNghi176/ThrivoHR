@@ -4,6 +4,7 @@ using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Addresses;
 using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using System.Text.Json.Serialization;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
 
