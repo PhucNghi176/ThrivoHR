@@ -1,4 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
+﻿
+using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
 using EXE201_BE_ThrivoHR.Application.Common.Method;
 using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
@@ -24,7 +25,7 @@ internal sealed class LoginQueryHandler : IQueryHandler<LoginQuery, TokenModel>
 
     public async Task<Result<TokenModel>> Handle(LoginQuery request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode) && !x.LockoutEnabled, cancellationToken) ?? throw new Employee.NotFoundException(request.EmployeeCode);
+        var user = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode), cancellationToken) ?? throw new Employee.NotFoundException(request.EmployeeCode);
         var PasswordMatched = await _userRepository.VerifyPasswordAsync(request.Password, user.PasswordHash!);
         if (!PasswordMatched)
         {
@@ -37,10 +38,10 @@ internal sealed class LoginQueryHandler : IQueryHandler<LoginQuery, TokenModel>
             "3" => "C&B",
             _ => throw new Employee.RoleNotFoundException()
         };
-        var token = await _tokenService.GenerateTokenAsync(user.EmployeeCode, RoleName);
+        var token = await _tokenService.GenerateTokenAsync(user.EmployeeCode, RoleName!);
         user.RefreshToken = token.RefreshToken;
         user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
-        await _userRepository.Update(user);
+        await _userRepository.UpdateAsync(user);
         await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
         return Result<string>.Success(token);
     }

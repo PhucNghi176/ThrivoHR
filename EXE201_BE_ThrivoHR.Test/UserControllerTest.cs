@@ -54,6 +54,7 @@ public class UserControllerTest : IClassFixture<TestFixture>
             DepartmentId = 1,
             PositionId = 1,
             BankAccount = "string112354",
+            Email = "string41",
             Address = new AddressModel
             {
                 City = "string",

@@ -1,4 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
+﻿using EXE201_BE_ThrivoHR.Application.Common.Models;
+using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 using Marvin.Cache.Headers;
 using System.Threading;
@@ -34,7 +35,7 @@ public class Employee(ISender sender) : BaseController(sender)
     }
 
     [HttpPut]
-    
+
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateEmployee([FromBody] UpdateUser updateUser, CancellationToken cancellationToken)
@@ -42,7 +43,14 @@ public class Employee(ISender sender) : BaseController(sender)
         var result = await _sender.Send(updateUser, cancellationToken);
         return result.IsSuccess ? NoContent() : BadRequest();
     }
-
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Result<string>>> DeleteEmployee([FromBody] DeleteUser deleteUser, CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(deleteUser, cancellationToken);
+        return result.IsSuccess ? result : BadRequest();
+    }
 
 
 

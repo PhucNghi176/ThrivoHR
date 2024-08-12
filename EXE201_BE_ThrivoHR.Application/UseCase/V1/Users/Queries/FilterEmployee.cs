@@ -46,8 +46,8 @@ internal sealed class FilterEmployeeHandler : IQueryHandler<FilterEmployee, Page
         IQueryable<AppUser> filter(IQueryable<AppUser> x)
         {
             // 1. Combine multiple Where clauses
-            x = x.Where(x => !x.LockoutEnabled
-                && (string.IsNullOrEmpty(request.EmployeeCode) || x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode))
+            x = x.Where(x =>
+                   (string.IsNullOrEmpty(request.EmployeeCode) || x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode))
                 && (string.IsNullOrEmpty(request.Email) || x.Email!.Contains(request.Email))
                 && (string.IsNullOrEmpty(request.FirstName) || x.FirstName.Contains(request.FirstName))
                 && (string.IsNullOrEmpty(request.LastName) || x.LastName.Contains(request.LastName))
