@@ -14,8 +14,8 @@ public static class RateLimitConfiguration
             [
                 new() {
                     Endpoint = "*",
-                    Limit = 100,
-                    Period = "1m"
+                    Limit = 20,
+                    Period = "10s"
                 }
 
             ];

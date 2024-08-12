@@ -14,6 +14,7 @@ public abstract class AuditableEntity<T> : BaseEntity<T>, IAuditableEntity, ISof
     public DateTime? LastModifiedOn { get; set; }
     public DateTime? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
+    public bool IsDeleted { get ; set ; } =false;
 
     protected AuditableEntity()
     {

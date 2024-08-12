@@ -67,6 +67,8 @@ public sealed class UpdateUserValidator : AbstractValidator<UpdateUser>
         RuleFor(x => x.employeeModel.PositionId).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Position is required");
         RuleFor(x => x.employeeModel.BankAccount).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Bank Account is required");
         RuleFor(x => x.employeeModel.Address).Cascade(CascadeMode.Stop).NotNull().WithMessage("Address is required");
+        RuleFor(x => x.employeeModel.Address!.AddressLine).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Address Line is required");
+
     }
 }
 
