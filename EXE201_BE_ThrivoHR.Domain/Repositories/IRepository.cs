@@ -2,7 +2,7 @@
 
 public interface IRepository<in TDomain>
 {
-    Task Add(TDomain entity);
-    Task Update(TDomain entity);
-    Task Remove(TDomain entity);
+    Task AddAsync(TDomain entity);
+    Task UpdateAsync(TDomain entity);
+    Task RemoveAsync(TDomain entity);
 }

@@ -29,11 +29,11 @@ internal sealed class UpdateUserHandler : ICommandHandler<UpdateUser>
         var address = _mapper.Map(request.employeeModel.Address, employee.Address);
         address!.LastModifiedBy = _currentUserService.UserId;
         address.LastModifiedOn = DateTime.UtcNow.AddHours(7);
-        await _addressRepository.Update(address);
+        await _addressRepository.UpdateAsync(address);
         employee = _mapper.Map(request.employeeModel, employee);
         employee.LastModifiedBy = _currentUserService.UserId;
         employee.LastModifiedOn = DateTime.UtcNow.AddHours(7);
-        await _userRepository.Update(employee);
+        await _userRepository.UpdateAsync(employee);
         try
         {
             await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

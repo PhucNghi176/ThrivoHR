@@ -25,6 +25,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public DbSet<Address> Addresses { get; set; }
         private void ConfigureModel(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AppUser>().HasQueryFilter(x => !x.LockoutEnabled);
 
             modelBuilder.Entity<Department>().HasData(
                 new Department { Id = 1, Name = "Admin", Description = "Admin" },
