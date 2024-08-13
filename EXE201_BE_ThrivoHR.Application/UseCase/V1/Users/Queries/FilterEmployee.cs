@@ -29,17 +29,11 @@ public record FilterEmployee
     ) : IQuery<PagedResult<EmployeeDto>>;
 
 
-internal sealed class FilterEmployeeHandler : IQueryHandler<FilterEmployee, PagedResult<EmployeeDto>>
+internal sealed class FilterEmployeeHandler(ApplicationDbContext context, IUserRepository userRepository, IMapper mapper) : IQueryHandler<FilterEmployee, PagedResult<EmployeeDto>>
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-    public FilterEmployeeHandler(ApplicationDbContext context, IUserRepository userRepository, IMapper mapper)
-    {
-        _context = context;
-        _userRepository = userRepository;
-        _mapper = mapper;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<Result<PagedResult<EmployeeDto>>> Handle(FilterEmployee request, CancellationToken cancellationToken)
     {
@@ -52,7 +46,7 @@ internal sealed class FilterEmployeeHandler : IQueryHandler<FilterEmployee, Page
                 && (string.IsNullOrEmpty(request.FirstName) || x.FirstName.Contains(request.FirstName))
                 && (string.IsNullOrEmpty(request.LastName) || x.LastName.Contains(request.LastName))
                 && (string.IsNullOrEmpty(request.FullName) || x.FullName.Contains(request.FullName))
-                && (string.IsNullOrEmpty(request.PhoneNumber) || x.PhoneNumber.Contains(request.PhoneNumber))
+                && (string.IsNullOrEmpty(request.PhoneNumber) || x.PhoneNumber!.Contains(request.PhoneNumber))
                 && (string.IsNullOrEmpty(request.IdentityNumber) || x.IdentityNumber.Contains(request.IdentityNumber))
                 && (string.IsNullOrEmpty(request.TaxCode) || x.TaxCode.Contains(request.TaxCode))
                 && (string.IsNullOrEmpty(request.BankAccount) || x.BankAccount.Contains(request.BankAccount))

@@ -2,7 +2,7 @@
 
 public class Permission
 {
-    public string RoleId { get; set; }
-    public string FunctionId { get; set; }
-    public string ActionId { get; set; }
+    public string? RoleId { get; set; }
+    public string? FunctionId { get; set; }
+    public string? ActionId { get; set; }
 }

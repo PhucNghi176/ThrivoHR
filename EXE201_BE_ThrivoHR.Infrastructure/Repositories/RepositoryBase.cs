@@ -1,25 +1,17 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
 {
-    public class RepositoryBase<TDomain, TPersistence, TDbContext> : IEFRepository<TDomain, TPersistence>
+    public class RepositoryBase<TDomain, TPersistence, TDbContext>(TDbContext dbContext, IMapper mapper) : IEFRepository<TDomain, TPersistence>
        where TDbContext : DbContext, IUnitOfWork
        where TPersistence : class, TDomain
        where TDomain : class
     {
-        private readonly TDbContext _dbContext;
-        private readonly IMapper _mapper;
-
-        public RepositoryBase(TDbContext dbContext, IMapper mapper)
-        {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _mapper = mapper;
-        }
+        private readonly TDbContext _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        private readonly IMapper _mapper = mapper;
 
         public IUnitOfWork UnitOfWork => _dbContext;
 

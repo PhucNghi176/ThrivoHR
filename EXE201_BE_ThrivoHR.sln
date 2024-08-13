@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EXE201_BE_ThrivoHR.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EXE201_BE_ThrivoHR.Application", "EXE201_BE_ThrivoHR.Application\EXE201_BE_ThrivoHR.Application.csproj", "{1176E435-697E-43B6-9C67-2ED300706CD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EXE201_BE_ThrivoHR.Test", "EXE201_BE_ThrivoHR.Test\EXE201_BE_ThrivoHR.Test.csproj", "{6251BD8E-BA7C-43F6-AB3B-C243917E7F4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EXE201_BE_ThrivoHR.Test", "EXE201_BE_ThrivoHR.Test\EXE201_BE_ThrivoHR.Test.csproj", "{6251BD8E-BA7C-43F6-AB3B-C243917E7F4B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F57BECE4-08E3-4CF4-B2D3-B6182B519F65}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

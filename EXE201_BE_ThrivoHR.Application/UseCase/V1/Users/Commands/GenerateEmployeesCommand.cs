@@ -6,16 +6,8 @@ public record GenerateEmployeesCommand : ICommand
 {
 }
 
-internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<GenerateEmployeesCommand>
+internal sealed class GenerateEmployeesCommandHandler(IUserRepository userRepository) : ICommandHandler<GenerateEmployeesCommand>
 {
-
-    private readonly IUserRepository _userRepository;
-
-    public GenerateEmployeesCommandHandler(IUserRepository userRepository)
-    {
-        _userRepository = userRepository;
-    }
-
     public async Task<Result> Handle(GenerateEmployeesCommand request, CancellationToken cancellationToken)
     {
         var firstNames = new List<string> { "John", "Jane", "Alex", "Emily", "Chris", "Anna", "Michael", "Laura", "David", "Sara" };
@@ -29,7 +21,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
             var lastName = lastNames[random.Next(lastNames.Count)];
             var fullName = $"{firstName} {lastName}";
             var identityNumber = random.Next(0, 999999999).ToString();
-            
+
             var dob = new DateOnly(random.Next(1950, 2000), random.Next(1, 12), random.Next(1, 28));
             var phoneNumber = random.Next(0, 1999999999).ToString();
             var taxCode = random.Next(0, 99999999).ToString();
@@ -39,7 +31,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
             var bankAccount = random.Next(0, 99999999).ToString();
 
 
-            await _userRepository.AddAsync(new AppUser
+            await userRepository.AddAsync(new AppUser
             {
                 Id = Guid.NewGuid().ToString("N"),
                 UserName = $"user{i}",
@@ -61,7 +53,7 @@ internal sealed class GenerateEmployeesCommandHandler : ICommandHandler<Generate
 
 
         }
-        await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
 }

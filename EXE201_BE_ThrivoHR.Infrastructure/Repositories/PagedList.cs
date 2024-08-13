@@ -1,5 +1,4 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories
 {

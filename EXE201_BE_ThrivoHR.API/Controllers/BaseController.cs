@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace EXE201_BE_ThrivoHR.API.Controllers
+﻿namespace EXE201_BE_ThrivoHR.API.Controllers
 {
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     [ApiController]

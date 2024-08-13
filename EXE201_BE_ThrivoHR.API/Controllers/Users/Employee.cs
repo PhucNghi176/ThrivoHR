@@ -2,7 +2,6 @@
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 using Marvin.Cache.Headers;
-using System.Threading;
 
 namespace EXE201_BE_ThrivoHR.API.Controllers.Users;
 

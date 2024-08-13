@@ -1,7 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.API.Services;
-using EXE201_BE_ThrivoHR.Application.Model;
+﻿using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Application.UseCase.Authentication;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EXE201_BE_ThrivoHR.API.Controllers.Authenticate
 {

@@ -2,6 +2,6 @@
 
 public class ActionInFunction
 {
-    public string ActionId { get; set; }
-    public string FunctionId { get; set; }
+    public required string ActionId { get; set; }
+    public required string FunctionId { get; set; }
 }

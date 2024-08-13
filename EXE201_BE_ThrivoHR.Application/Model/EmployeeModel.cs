@@ -1,7 +1,7 @@
 ﻿namespace EXE201_BE_ThrivoHR.Application.Model;
 
 public record EmployeeModel
-{   
+{
     public string? EmployeeCode { get; set; }
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
@@ -13,8 +13,8 @@ public record EmployeeModel
     public required int DepartmentId { get; set; }
     public required int PositionId { get; set; }
     public required string BankAccount { get; set; }
-    public required string Email { get; set;}
-    
+    public required string Email { get; set; }
+
     public required AddressModel Address { get; set; }
 
 }

@@ -2,7 +2,6 @@
 using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Application.Common.Method;
 using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Domain.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,7 +14,7 @@ namespace EXE201_BE_ThrivoHR.API.Services;
 public class TokenService(IConfiguration configuration, IUserRepository userRepository) : ITokenService
 {
     private readonly IConfiguration _configuration = configuration;
-    private readonly IUserRepository _userRepository=userRepository;
+    private readonly IUserRepository _userRepository = userRepository;
 
     public async Task<TokenModel> GenerateTokenAsync(string EmployeeCode, string RoleName)
     {

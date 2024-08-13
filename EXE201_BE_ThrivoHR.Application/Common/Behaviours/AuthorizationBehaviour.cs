@@ -11,59 +11,62 @@ public class AuthorizationBehaviour<TRequest, TResponse>(
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        IEnumerable<AuthorizeAttribute> authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
-
-        if (authorizeAttributes.Any())
+        var authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
+        if (!authorizeAttributes.Any())
         {
-            // Must be authenticated user
-            if (currentUserService.UserId == null)
-            {
-                throw new UnauthorizedAccessException();
-            }
-
-            // Role-based authorization
-            IEnumerable<AuthorizeAttribute> authorizeAttributesWithRoles = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Roles));
-
-            if (authorizeAttributesWithRoles.Any())
-            {
-                foreach (string[]? roles in authorizeAttributesWithRoles.Select(a => a.Roles.Split(',')))
-                {
-                    bool authorized = false;
-                    foreach (string? role in roles)
-                    {
-                        bool isInRole = await currentUserService.IsInRoleAsync(role.Trim());
-                        if (isInRole)
-                        {
-                            authorized = true;
-                            break;
-                        }
-                    }
-
-                    // Must be a member of at least one role in roles
-                    if (!authorized)
-                    {
-                        throw new ForbiddenAccessException();
-                    }
-                }
-            }
-
-            // Policy-based authorization
-            IEnumerable<AuthorizeAttribute> authorizeAttributesWithPolicies = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
-            if (authorizeAttributesWithPolicies.Any())
-            {
-                foreach (string? policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
-                {
-                    bool authorized = await currentUserService.AuthorizeAsync(policy);
-
-                    if (!authorized)
-                    {
-                        throw new ForbiddenAccessException();
-                    }
-                }
-            }
+            return await next();
         }
 
-        // User is authorized / authorization not required
+        EnsureAuthenticatedUserAsync();
+        await PerformRoleBasedAuthorizationAsync(authorizeAttributes);
+        await PerformPolicyBasedAuthorizationAsync(authorizeAttributes);
+
         return await next();
     }
+
+    private void EnsureAuthenticatedUserAsync()
+    {
+        if (currentUserService.UserId == null)
+        {
+            throw new UnauthorizedAccessException();
+        }
+    }
+
+    private async Task PerformRoleBasedAuthorizationAsync(IEnumerable<AuthorizeAttribute> authorizeAttributes)
+    {
+        var authorizeAttributesWithRoles = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Roles));
+        foreach (var attribute in authorizeAttributesWithRoles)
+        {
+            var roles = attribute.Roles.Split(',').Select(r => r.Trim());
+            if (!await IsInAnyRoleAsync(roles))
+            {
+                throw new ForbiddenAccessException();
+            }
+        }
+    }
+
+    private async Task<bool> IsInAnyRoleAsync(IEnumerable<string> roles)
+    {
+        foreach (var role in roles)
+        {
+            if (await currentUserService.IsInRoleAsync(role))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private async Task PerformPolicyBasedAuthorizationAsync(IEnumerable<AuthorizeAttribute> authorizeAttributes)
+    {
+        var authorizeAttributesWithPolicies = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
+        foreach (var attribute in authorizeAttributesWithPolicies)
+        {
+            if (!await currentUserService.AuthorizeAsync(attribute.Policy))
+            {
+                throw new ForbiddenAccessException();
+            }
+        }
+    }
 }
+    

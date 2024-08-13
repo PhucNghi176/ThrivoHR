@@ -1,8 +1,6 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Infrastructure.Constants;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Configurations;
 
@@ -39,7 +37,7 @@ internal sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
             .IsRequired();
 
         builder.HasIndex(x => x.EmployeeId).IsUnique();
-        builder.Property(x=>x.EmployeeId).ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+        builder.Property(x => x.EmployeeId).ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
         builder.Property(x => x.EmployeeId).ValueGeneratedOnAdd();
         builder.HasIndex(x => x.IdentityNumber).IsUnique();
         builder.HasIndex(x => x.TaxCode).IsUnique();

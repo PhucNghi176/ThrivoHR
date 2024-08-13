@@ -1,7 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Infrastructure.Constants;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Configurations;
 

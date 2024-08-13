@@ -6,12 +6,12 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities;
 public class Address : AuditableEntity<int>
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-    public string AddressLine { get; set; }
-    public string Ward { get; set; }
-    public string District { get; set; }
-    public string City { get; set; }
-    public string Country { get; set; }
+    public new int Id { get; set; }
+    public required string AddressLine { get; set; }
+    public required string Ward { get; set; }
+    public required string District { get; set; }
+    public required string City { get; set; }
+    public required string Country { get; set; }
     public string FullAddress
     {
         get

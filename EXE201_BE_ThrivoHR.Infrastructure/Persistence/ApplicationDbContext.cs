@@ -2,7 +2,6 @@
 using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 {
@@ -15,17 +14,16 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 
         }
 
-        public DbSet<AppUser> AppUses { get; set; }
-        public DbSet<Action> Actions { get; set; }
-        public DbSet<Function> Functions { get; set; }
-        public DbSet<ActionInFunction> ActionInFunctions { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Position> Positions { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        private void ConfigureModel(ModelBuilder modelBuilder)
+        public virtual DbSet<AppUser> AppUses { get; set; }
+        public virtual DbSet<Action> Actions { get; set; }
+        public virtual DbSet<Function> Functions { get; set; }
+        public virtual DbSet<ActionInFunction> ActionInFunctions { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        private static void ConfigureModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppUser>().HasQueryFilter(x => !x.LockoutEnabled);
 
             modelBuilder.Entity<Department>().HasData(
                 new Department { Id = 1, Name = "Admin", Description = "Admin" },
@@ -94,7 +92,8 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                     DepartmentId = 1,
                     PositionId = 1,
                     PasswordHash = "$2a$11$dRZA37NpS.thXR9anJXBZehaTb7ezji2i2E5WbHGA2cwMeW4wEXAy",
-                   
+                    DateOfBirth = new DateOnly(1999, 1, 1),
+                    AddressId = 1
 
                 });
             // Seeding data for IdentityUserRole<string>

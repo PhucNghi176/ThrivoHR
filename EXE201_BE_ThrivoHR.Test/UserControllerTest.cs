@@ -1,12 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.API.Services;
-using EXE201_BE_ThrivoHR.Application.Common.Models;
-using EXE201_BE_ThrivoHR.Application.Common.Pagination;
-using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
-using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+﻿using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Test.Base;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Xunit;
@@ -48,13 +41,13 @@ public class UserControllerTest : IClassFixture<TestFixture>
             LastName = "string14",
             FullName = "string14",
             IdentityNumber = "string11423",
-            DateOfBirth = DateOnly.Parse("2024/06/05"),
+            DateOfBirth = DateOnly.FromDateTime(DateTime.Now),
             PhoneNumber = "string41",
             TaxCode = "string41",
             DepartmentId = 1,
             PositionId = 1,
             BankAccount = "string112354",
-            Email = "string41",
+            Email = "string",
             Address = new AddressModel
             {
                 City = "string",
@@ -65,15 +58,13 @@ public class UserControllerTest : IClassFixture<TestFixture>
 
             }
         };
-        var res = await _client.PostAsJsonAsync("/api/v1/employee", new 
+        var res = await _client.PostAsJsonAsync("/api/v1/employee", new
         {
 
 
-             employee
+            employee
         }, cancellationToken: token);
-        
-        
-        var re= await res.Content.ReadAsStringAsync();
+
         Assert.NotNull(res);
         Assert.True(res.IsSuccessStatusCode);
 

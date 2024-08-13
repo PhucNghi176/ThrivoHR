@@ -55,7 +55,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                         {
                             { securityScheme, Array.Empty<string>() }
                         });
-                   
+
                 });
             services.AddRouting(options => options.LowercaseUrls = true);
             return services;
@@ -77,7 +77,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                     options.EnableFilter(string.Empty);
                     AddSwaggerEndpoints(app, options);
                     options.OAuthScopeSeparator(" ");
-                    
+
                 });
 
         }
@@ -108,6 +108,6 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
         }
     }
 
-  
+
 }
 

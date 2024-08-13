@@ -3,12 +3,11 @@ using EXE201_BE_ThrivoHR.API.Configuration;
 using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
 using EXE201_BE_ThrivoHR.Infrastructure;
-using Newtonsoft.Json.Serialization;
 using Serilog;
 
 namespace EXE201_BE_ThrivoHR.API;
 
-public class Program
+public static class Program
 {
     public static async Task Main(string[] args)
     {
