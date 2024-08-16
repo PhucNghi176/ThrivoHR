@@ -55,6 +55,7 @@ public class AuthorizationBehaviour<TRequest, TResponse>(
             }
         }
         return false;
+
     }
 
     private async Task PerformPolicyBasedAuthorizationAsync(IEnumerable<AuthorizeAttribute> authorizeAttributes)
@@ -69,4 +70,3 @@ public class AuthorizationBehaviour<TRequest, TResponse>(
         }
     }
 }
-    

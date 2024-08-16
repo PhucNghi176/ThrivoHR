@@ -15,7 +15,7 @@ internal sealed class GenerateEmployeesCommandHandler(IUserRepository userReposi
 
         var random = new Random();
 
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 1000; i++)
         {
             var firstName = firstNames[random.Next(firstNames.Count)];
             var lastName = lastNames[random.Next(lastNames.Count)];
@@ -23,12 +23,12 @@ internal sealed class GenerateEmployeesCommandHandler(IUserRepository userReposi
             var identityNumber = random.Next(0, 999999999).ToString();
 
             var dob = new DateOnly(random.Next(1950, 2000), random.Next(1, 12), random.Next(1, 28));
-            var phoneNumber = random.Next(0, 1999999999).ToString();
-            var taxCode = random.Next(0, 99999999).ToString();
+            var phoneNumber = Guid.NewGuid().ToString()[..10];
+            var taxCode = Guid.NewGuid().ToString()[..10];
             var addressId = random.Next(1, 21);
             var departmentId = random.Next(1, 6);
             var positionId = random.Next(1, 6);
-            var bankAccount = random.Next(0, 99999999).ToString();
+            var bankAccount = Guid.NewGuid().ToString()[..10];
 
 
             await userRepository.AddAsync(new AppUser

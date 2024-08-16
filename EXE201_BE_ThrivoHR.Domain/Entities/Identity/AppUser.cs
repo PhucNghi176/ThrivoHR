@@ -32,6 +32,7 @@ public class AppUser : IdentityUser<string>
     public DateTime? LastModifiedOn { get; set; } = DateTime.UtcNow.AddHours(7);
     public DateTime? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
+    public 
 
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
