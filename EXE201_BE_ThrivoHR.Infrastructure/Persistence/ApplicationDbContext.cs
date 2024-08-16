@@ -10,6 +10,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
+         
             ConfigureModel(modelBuilder);
 
         }

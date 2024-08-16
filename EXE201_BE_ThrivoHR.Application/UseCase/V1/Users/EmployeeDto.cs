@@ -24,6 +24,8 @@ public class EmployeeDto : IMapFrom<AppUser>
     public Position? Position { get; set; }
     public DateOnly? DateOfBirth { get; set; }
 
+    public string? Manager { get; set; }
+
     public static EmployeeDto Create(AppUser employeeDto)
     {
         return new EmployeeDto
@@ -40,7 +42,8 @@ public class EmployeeDto : IMapFrom<AppUser>
             Department = employeeDto.Department,
             Position = employeeDto.Position,
             DateOfBirth = employeeDto.DateOfBirth,
-            EmployeeCode = employeeDto.EmployeeCode
+            EmployeeCode = employeeDto.EmployeeCode,
+            Manager = employeeDto.Manager?.FullName,
 
         };
     }

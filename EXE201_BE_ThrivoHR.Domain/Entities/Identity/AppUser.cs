@@ -32,8 +32,9 @@ public class AppUser : IdentityUser<string>
     public DateTime? LastModifiedOn { get; set; } = DateTime.UtcNow.AddHours(7);
     public DateTime? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
-    public 
 
+
+    public string? ManagerId { get; set; }
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
 
@@ -44,4 +45,5 @@ public class AppUser : IdentityUser<string>
     public virtual Department? Department { get; set; }
     public virtual Position? Position { get; set; }
     public virtual Address? Address { get; set; }
+    public virtual AppUser? Manager { get; set; }
 }
