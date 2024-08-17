@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
 
-[Authorize(Roles = "Admin")]
+//[Authorize(Roles = "Admin")]
 
 public record FilterEmployee
     (
@@ -73,7 +73,8 @@ internal sealed class FilterEmployeeHandler(ApplicationDbContext context, IUserR
             return x;
         }
         var list = await _userRepository.FindAllAsync(request.PageNumber, request.PageSize, filter, cancellationToken);
-        return PagedResult<EmployeeDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToEmployeeListDto(_mapper));
+       var res = PagedResult<EmployeeDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToEmployeeListDto(_mapper));
+       return Result.Success(res);
     }
 }
 

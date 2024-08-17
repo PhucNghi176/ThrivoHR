@@ -1,4 +1,6 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Models;
+using EXE201_BE_ThrivoHR.Application.Common.Pagination;
+using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 using Marvin.Cache.Headers;
@@ -17,10 +19,10 @@ public class Employee(ISender sender) : BaseController(sender)
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetEmployee([FromQuery] FilterEmployee filterEmployee, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<Result<PagedResult<EmployeeDto>>>> GetEmployee([FromQuery] FilterEmployee filterEmployee, CancellationToken cancellationToken = default)
     {
         var result = await _sender.Send(filterEmployee, cancellationToken);
-        return result.IsSuccess ? Ok(result.Value) : NotFound();
+        return result.IsSuccess ? Ok(result) : NotFound();
     }
     [HttpPost]
     [HttpCacheValidation(MustRevalidate = true)]
