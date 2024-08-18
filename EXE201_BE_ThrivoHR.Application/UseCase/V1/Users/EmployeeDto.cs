@@ -20,8 +20,8 @@ public class EmployeeDto : IMapFrom<AppUser>
     public string? TaxCode { get; set; }
     public string? BankAccount { get; set; }
     public AddressDto? Address { get; set; }
-    public Department? Department { get; set; }
-    public Position? Position { get; set; }
+    public string? Department { get; set; }
+    public string? Position { get; set; }
     public DateOnly? DateOfBirth { get; set; }
 
     public string? Manager { get; set; }
@@ -39,8 +39,8 @@ public class EmployeeDto : IMapFrom<AppUser>
             TaxCode = employeeDto.TaxCode,
             BankAccount = employeeDto.BankAccount,
             Address = AddressDto.Create(employeeDto.Address!),
-            Department = employeeDto.Department,
-            Position = employeeDto.Position,
+            Department = employeeDto.Department!.Name!,
+            Position = employeeDto.Position!.Name,
             DateOfBirth = employeeDto.DateOfBirth,
             EmployeeCode = employeeDto.EmployeeCode,
             Manager = employeeDto.Manager?.FullName,
