@@ -1,4 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
+﻿using EXE201_BE_ThrivoHR.Domain.Services;
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;

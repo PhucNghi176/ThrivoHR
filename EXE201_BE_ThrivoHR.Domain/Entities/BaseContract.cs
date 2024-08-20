@@ -9,7 +9,7 @@ public abstract class BaseContract : AuditableEntity<string>
     public int? DepartmentId { get; set; }
     public int? PositionId { get; set; }
 
-    public DateTime StartDate { get { return CreatedOn!.Value; }}
+    public DateTime StartDate { get { return CreatedOn!.Value; } }
     public DateTime? EndDate { get; set; }
     public int? Duration { get; set; }
 

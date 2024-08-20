@@ -1,6 +1,7 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Method;
 using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using EXE201_BE_ThrivoHR.Domain.Services;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
@@ -19,12 +20,12 @@ internal sealed class UpdateUserHandler(IUserRepository userRepository, IMapper 
     {
         var employee = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeModel.EmployeeCode!), cancellationToken) ?? throw new NotFoundException(request.EmployeeModel.EmployeeCode!);
         var address = _mapper.Map(request.EmployeeModel.Address, employee.Address);
-        address!.LastModifiedBy = _currentUserService.UserId;
-        address.LastModifiedOn = DateTime.UtcNow.AddHours(7);
+        // address!.LastModifiedBy = _currentUserService.UserId;
+        //  address.LastModifiedOn = DateTime.UtcNow.AddHours(7);
         await _addressRepository.UpdateAsync(address);
         employee = _mapper.Map(request.EmployeeModel, employee);
-        employee.LastModifiedBy = _currentUserService.UserId;
-        employee.LastModifiedOn = DateTime.UtcNow.AddHours(7);
+        //employee.LastModifiedBy = _currentUserService.UserId;
+        // employee.LastModifiedOn = DateTime.UtcNow.AddHours(7);
         await _userRepository.UpdateAsync(employee);
         try
         {

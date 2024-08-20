@@ -32,7 +32,6 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\EXE201_BE_ThrivoHR.Application\EXE201_BE_ThrivoHR.Application.csproj" />
 	  <ProjectReference Include="..\EXE201_BE_ThrivoHR.Domain\EXE201_BE_ThrivoHR.Domain.csproj" />
 	</ItemGroup>
 </Project>

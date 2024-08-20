@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using EXE201_BE_ThrivoHR.Domain.Services;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 

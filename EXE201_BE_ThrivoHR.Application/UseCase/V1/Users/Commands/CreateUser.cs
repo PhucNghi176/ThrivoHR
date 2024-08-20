@@ -2,6 +2,7 @@
 using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using EXE201_BE_ThrivoHR.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
 
@@ -18,7 +19,6 @@ internal sealed class CreateUserHandler(IAddressRepository addressRepository, IU
         var address = mapper.Map<Address>(request.Employee.Address);
         await addressRepository.AddAsync(address);
         var employee = mapper.Map<AppUser>(request.Employee);
-        employee.CreatedBy = currentUserService.UserId;
         await userRepository.AddAsync(employee);
         try
         {

@@ -1,16 +1,15 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
-using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
+﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Entities;
-using EXE201_BE_ThrivoHR.Domain.Entities.Base;
 using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+using EXE201_BE_ThrivoHR.Domain.Services;
 using Microsoft.AspNetCore.Identity;
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService) : DbContext(options), IUnitOfWork
     {
-        private readonly ICurrentUserService _currentUserService=currentUserService;
+        private readonly ICurrentUserService _currentUserService = currentUserService;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
@@ -22,7 +21,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var entries = ChangeTracker
-                 .Entries<AuditableEntity>();
+                 .Entries<AppUser>();
             foreach (var entry in entries)
             {
                 switch (entry.State)

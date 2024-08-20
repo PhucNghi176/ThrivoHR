@@ -1,4 +1,4 @@
-﻿namespace EXE201_BE_ThrivoHR.Application.Common.Interfaces;
+﻿namespace EXE201_BE_ThrivoHR.Domain.Services;
 
 public interface ICurrentUserService
 {

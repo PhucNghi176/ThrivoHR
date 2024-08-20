@@ -213,7 +213,7 @@ public class RepositoryBase<TDomain, TPersistence, TDbContext>(TDbContext dbCont
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-       return await _dbContext.SaveChangesAsync(cancellationToken);
+        return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<List<TProjection>> FindAllProjectToAsync<TProjection>(

@@ -1,5 +1,6 @@
 ﻿using EXE201_BE_ThrivoHR.API.Services;
 using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
+using EXE201_BE_ThrivoHR.Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;

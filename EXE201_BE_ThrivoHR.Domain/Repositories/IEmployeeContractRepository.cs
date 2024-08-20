@@ -2,5 +2,5 @@
 
 namespace EXE201_BE_ThrivoHR.Domain.Repositories;
 
-public interface IEmployeeContractRepository :IEFRepository<EmployeeContract,EmployeeContract>;
+public interface IEmployeeContractRepository : IEFRepository<EmployeeContract, EmployeeContract>;
 

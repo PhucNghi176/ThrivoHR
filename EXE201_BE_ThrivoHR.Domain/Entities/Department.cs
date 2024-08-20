@@ -1,5 +1,4 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EXE201_BE_ThrivoHR.Domain.Entities;

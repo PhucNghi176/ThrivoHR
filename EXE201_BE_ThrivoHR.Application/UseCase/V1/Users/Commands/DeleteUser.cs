@@ -1,6 +1,7 @@
 ﻿
 using EXE201_BE_ThrivoHR.Application.Common.Method;
 using EXE201_BE_ThrivoHR.Application.Common.Security;
+using EXE201_BE_ThrivoHR.Domain.Services;
 using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
