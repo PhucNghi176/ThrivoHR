@@ -1,12 +1,16 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
+﻿using EXE201_BE_ThrivoHR.Application.Common.Interfaces;
+using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Entities;
+using EXE201_BE_ThrivoHR.Domain.Entities.Base;
+using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IUnitOfWork
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService) : DbContext(options), IUnitOfWork
     {
+        private readonly ICurrentUserService _currentUserService=currentUserService;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
@@ -15,6 +19,27 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 
         }
 
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker
+                 .Entries<AuditableEntity>();
+            foreach (var entry in entries)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedOn = DateTime.UtcNow.AddHours(7);
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.LastModifiedOn = DateTime.UtcNow.AddHours(7);
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        break;
+                }
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
+        }
         public virtual DbSet<AppUser> AppUses { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<Function> Functions { get; set; }
@@ -23,6 +48,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<EmployeeContract> EmployeeContracts { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
 

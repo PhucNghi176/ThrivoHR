@@ -6,7 +6,6 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities;
 
 public class Department : AuditableEntity<int>
 {
-    [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public new int Id { get; set; }
     public required string Name { get; set; }
