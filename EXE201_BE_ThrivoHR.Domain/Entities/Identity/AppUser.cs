@@ -43,6 +43,8 @@ public class AppUser : IdentityUser<string>, IAuditableEntity
     public virtual ICollection<IdentityUserLogin<string>>? Logins { get; set; }
     public virtual ICollection<IdentityUserToken<string>>? Tokens { get; set; }
     public virtual ICollection<IdentityUserRole<string>>? UserRoles { get; set; }
+
+    public virtual ICollection<BaseContract>? Contracts { get; set; }
     public virtual Department? Department { get; set; }
     public virtual Position? Position { get; set; }
     public virtual Address? Address { get; set; }
