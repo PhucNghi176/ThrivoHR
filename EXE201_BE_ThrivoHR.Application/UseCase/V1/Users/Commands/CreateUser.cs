@@ -10,14 +10,12 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 
 public record CreateUser(EmployeeModel Employee) : ICommand<string>;
 
-internal sealed class CreateUserHandler(IAddressRepository addressRepository, IUserRepository userRepository, IMapper mapper, ICurrentUserService currentUserService) : ICommandHandler<CreateUser, string>
+internal sealed class CreateUserHandler(IUserRepository userRepository, IMapper mapper) : ICommandHandler<CreateUser, string>
 {
     public async Task<Result<string>> Handle(CreateUser request, CancellationToken cancellationToken)
     {
 
 
-        var address = mapper.Map<Address>(request.Employee.Address);
-        await addressRepository.AddAsync(address);
         var employee = mapper.Map<AppUser>(request.Employee);
         await userRepository.AddAsync(employee);
         try

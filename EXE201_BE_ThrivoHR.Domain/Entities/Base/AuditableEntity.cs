@@ -6,7 +6,7 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities.Base;
 public abstract class AuditableEntity : AuditableEntity<string>
 {
 }
-public abstract class AuditableEntity<T> : BaseEntity<T>, IAuditableEntity, ISoftDelete
+public abstract class AuditableEntity<T> : BaseEntity<T>, IAuditableEntity
 {
     public string? CreatedBy { get; set; }
     public DateTime? CreatedOn { get; set; }

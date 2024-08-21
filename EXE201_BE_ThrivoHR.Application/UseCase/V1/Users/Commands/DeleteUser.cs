@@ -24,6 +24,7 @@ internal sealed class DeleteUserCommandHandler : ICommandHandler<DeleteUser, str
     {
         var user = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode), cancellationToken) ?? throw new NotFoundException(request.EmployeeCode);
         user.LockoutEnabled = true;
+        
         user.DeletedOn = DateTime.UtcNow.AddHours(7);
         user.DeletedBy = _currentUserService.UserId;
         await _userRepository.UpdateAsync(user);

@@ -1,5 +1,7 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Entities;
+using EXE201_BE_ThrivoHR.Domain.Entities.Base;
+using EXE201_BE_ThrivoHR.Domain.Entities.Base.Contract;
 using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Domain.Services;
@@ -20,19 +22,29 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var entries = ChangeTracker
-                 .Entries<AppUser>();
+            var entries = ChangeTracker.Entries().Where(e => e.Entity is IAuditableEntity);
             foreach (var entry in entries)
             {
+                var auditableEntity = (IAuditableEntity)entry.Entity;
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedOn = DateTime.UtcNow.AddHours(7);
-                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        auditableEntity.CreatedBy = _currentUserService.UserId;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedOn = DateTime.UtcNow.AddHours(7);
-                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        if (!auditableEntity.IsDeleted)
+                        {
+                            auditableEntity.LastModifiedOn = DateTime.UtcNow.AddHours(7);
+                            auditableEntity.LastModifiedBy = _currentUserService.UserId;
+                        }
+                        else
+                        {
+                            auditableEntity.DeletedOn = DateTime.UtcNow.AddHours(7);
+                            auditableEntity.DeletedBy = _currentUserService.UserId;
+                            auditableEntity.IsDeleted = true;
+                        }
+
+
                         break;
                 }
             }

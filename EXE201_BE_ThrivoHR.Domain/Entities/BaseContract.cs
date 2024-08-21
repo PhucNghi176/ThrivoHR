@@ -5,15 +5,15 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities;
 
 public abstract class BaseContract : AuditableEntity<string>
 {
+    public new string Id { get; set; } = Guid.NewGuid().ToString();
     public string? EmployeeId { get; set; }
     public int? DepartmentId { get; set; }
     public int? PositionId { get; set; }
 
-    public DateTime StartDate { get { return CreatedOn!.Value; } }
-    public DateTime? EndDate { get; set; }
+    public DateOnly StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
     public int? Duration { get; set; }
-
-
+    public string? Notes { get; set; }
 
 
 

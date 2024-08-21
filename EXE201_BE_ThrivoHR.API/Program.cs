@@ -2,8 +2,6 @@ using AspNetCoreRateLimit;
 using EXE201_BE_ThrivoHR.API.Configuration;
 using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
-using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
-using EXE201_BE_ThrivoHR.Domain.Repositories;
 using EXE201_BE_ThrivoHR.Infrastructure;
 using Serilog;
 
@@ -64,22 +62,7 @@ public static class Program
         {
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
-        }
-        app.MapGet("/", async (IEmployeeContractRepository employeeContractRepository) =>
-        {
-            var test = new EmployeeContract
-            {
-                EndDate = DateTime.Now.AddYears(1),
-
-            };
-            await employeeContractRepository.AddAsync(test);
-            await employeeContractRepository.UnitOfWork.SaveChangesAsync();
-
-            return Results.Ok(await employeeContractRepository.FindAsync(x => x.EndDate != null));
-
-
-
-        });
+        }     
         app.UseSerilogRequestLogging();
         app.UseHttpsRedirection();
         app.UseStaticFiles();

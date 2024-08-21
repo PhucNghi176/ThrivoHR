@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EXE201_BE_ThrivoHR.Domain.Entities.Base.Contract;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
-public class AppUser : IdentityUser<string>
+public class AppUser : IdentityUser<string>, IAuditableEntity
 {
     public override string Id { get; set; } = Guid.NewGuid().ToString("N");
     // make coloumn identity 
@@ -33,7 +34,7 @@ public class AppUser : IdentityUser<string>
     public DateTime? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
 
-
+    public bool IsDeleted { get; set; }
     public string? ManagerId { get; set; }
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
@@ -46,4 +47,5 @@ public class AppUser : IdentityUser<string>
     public virtual Position? Position { get; set; }
     public virtual Address? Address { get; set; }
     public virtual AppUser? Manager { get; set; }
+
 }

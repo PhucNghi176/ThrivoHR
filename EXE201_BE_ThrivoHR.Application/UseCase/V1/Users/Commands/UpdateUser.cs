@@ -9,23 +9,15 @@ using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 
 public record UpdateUser(EmployeeModel EmployeeModel) : ICommand;
-internal sealed class UpdateUserHandler(IUserRepository userRepository, IMapper mapper, ICurrentUserService currentUserService, IAddressRepository addressRepository) : ICommandHandler<UpdateUser>
+internal sealed class UpdateUserHandler(IUserRepository userRepository, IMapper mapper) : ICommandHandler<UpdateUser>
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
-    private readonly ICurrentUserService _currentUserService = currentUserService;
-    private readonly IAddressRepository _addressRepository = addressRepository;
 
     public async Task<Result> Handle(UpdateUser request, CancellationToken cancellationToken)
     {
         var employee = await _userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeModel.EmployeeCode!), cancellationToken) ?? throw new NotFoundException(request.EmployeeModel.EmployeeCode!);
-        var address = _mapper.Map(request.EmployeeModel.Address, employee.Address);
-        // address!.LastModifiedBy = _currentUserService.UserId;
-        //  address.LastModifiedOn = DateTime.UtcNow.AddHours(7);
-        await _addressRepository.UpdateAsync(address);
         employee = _mapper.Map(request.EmployeeModel, employee);
-        //employee.LastModifiedBy = _currentUserService.UserId;
-        // employee.LastModifiedOn = DateTime.UtcNow.AddHours(7);
         await _userRepository.UpdateAsync(employee);
         try
         {
