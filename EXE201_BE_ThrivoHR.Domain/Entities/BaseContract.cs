@@ -6,7 +6,7 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities;
 public abstract class BaseContract : AuditableEntity<string>
 {
     public new string Id { get; set; } = Guid.NewGuid().ToString();
-    public string? EmployeeId { get; set; }
+    public required string EmployeeId { get; set; }
     public int? DepartmentId { get; set; }
     public int? PositionId { get; set; }
 
@@ -15,8 +15,9 @@ public abstract class BaseContract : AuditableEntity<string>
     public int? Duration { get; set; }
     public string? Notes { get; set; }
 
+    public bool IsNoExpiry { get; set; } = false;
 
-
+    public bool IsEnded { get; set; } = false;
 
     public virtual AppUser? Employee { get; set; }
     public virtual Department? Department { get; set; }

@@ -28,10 +28,10 @@ public record FilterEmployee
     ) : IQuery<PagedResult<EmployeeDto>>;
 
 
-internal sealed class FilterEmployeeHandler(ApplicationDbContext context, IUserRepository userRepository, IMapper mapper) : IQueryHandler<FilterEmployee, PagedResult<EmployeeDto>>
+internal sealed class FilterEmployeeHandler(ApplicationDbContext context, IEmployeeRepository userRepository, IMapper mapper) : IQueryHandler<FilterEmployee, PagedResult<EmployeeDto>>
 {
     private readonly ApplicationDbContext _context = context;
-    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IEmployeeRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
 
     public async Task<Result<PagedResult<EmployeeDto>>> Handle(FilterEmployee request, CancellationToken cancellationToken)

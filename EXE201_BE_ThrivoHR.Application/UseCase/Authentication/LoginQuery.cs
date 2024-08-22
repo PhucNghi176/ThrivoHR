@@ -7,7 +7,7 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.Authentication;
 
 public record LoginQuery(string EmployeeCode, string Password) : IQuery<TokenModel>;
 
-internal sealed class LoginQueryHandler(IUserRepository userRepository, ITokenService tokenService) : IQueryHandler<LoginQuery, TokenModel>
+internal sealed class LoginQueryHandler(IEmployeeRepository userRepository, ITokenService tokenService) : IQueryHandler<LoginQuery, TokenModel>
 {
     public async Task<Result<TokenModel>> Handle(LoginQuery request, CancellationToken cancellationToken)
     {

@@ -9,9 +9,9 @@ using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 
 public record UpdateUser(EmployeeModel EmployeeModel) : ICommand;
-internal sealed class UpdateUserHandler(IUserRepository userRepository, IMapper mapper) : ICommandHandler<UpdateUser>
+internal sealed class UpdateUserHandler(IEmployeeRepository userRepository, IMapper mapper) : ICommandHandler<UpdateUser>
 {
-    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IEmployeeRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
 
     public async Task<Result> Handle(UpdateUser request, CancellationToken cancellationToken)

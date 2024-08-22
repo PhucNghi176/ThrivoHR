@@ -11,10 +11,10 @@ using System.Text;
 
 namespace EXE201_BE_ThrivoHR.API.Services;
 
-public class TokenService(IConfiguration configuration, IUserRepository userRepository) : ITokenService
+public class TokenService(IConfiguration configuration, IEmployeeRepository userRepository) : ITokenService
 {
     private readonly IConfiguration _configuration = configuration;
-    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IEmployeeRepository _userRepository = userRepository;
 
     public async Task<TokenModel> GenerateTokenAsync(string EmployeeCode, string RoleName)
     {

@@ -15,7 +15,9 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
-            modelBuilder.Entity<AppUser>().HasQueryFilter(x => !x.LockoutEnabled);
+            modelBuilder.Entity<AppUser>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<BaseContract>().HasQueryFilter(x => !x.IsDeleted);
+
             ConfigureModel(modelBuilder);
 
         }

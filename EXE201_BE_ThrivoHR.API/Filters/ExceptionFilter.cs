@@ -51,6 +51,18 @@ public class ExceptionFilter : IExceptionFilter
                 context.ExceptionHandled = true;
                 break;
 
+            default :
+                context.Result = new ObjectResult(new ProblemDetails
+                {
+                    Detail = context.Exception.Message
+                })
+                {
+                    StatusCode = 500
+                }
+                .AddContextInformation(context);
+                context.ExceptionHandled = true;
+                break;
+
 
 
         }

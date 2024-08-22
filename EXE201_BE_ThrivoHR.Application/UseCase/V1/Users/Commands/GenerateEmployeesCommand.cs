@@ -6,7 +6,7 @@ public record GenerateEmployeesCommand : ICommand
 {
 }
 
-internal sealed class GenerateEmployeesCommandHandler(IUserRepository userRepository) : ICommandHandler<GenerateEmployeesCommand>
+internal sealed class GenerateEmployeesCommandHandler(IEmployeeRepository userRepository) : ICommandHandler<GenerateEmployeesCommand>
 {
     public async Task<Result> Handle(GenerateEmployeesCommand request, CancellationToken cancellationToken)
     {
