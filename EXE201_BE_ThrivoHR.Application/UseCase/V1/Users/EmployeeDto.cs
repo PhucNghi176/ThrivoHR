@@ -2,6 +2,7 @@
 using EXE201_BE_ThrivoHR.Application.Common.Mappings;
 using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Addresses;
+using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
@@ -27,6 +28,7 @@ public class EmployeeDto : IMapFrom<AppUser>
 
     public static EmployeeDto Create(AppUser employeeDto)
     {
+
         return new EmployeeDto
         {
             Email = employeeDto.Email,
@@ -38,7 +40,7 @@ public class EmployeeDto : IMapFrom<AppUser>
             TaxCode = employeeDto.TaxCode,
             BankAccount = employeeDto.BankAccount,
             Address = AddressDto.Create(employeeDto.Address!),
-            Department = employeeDto.Department!.Name!,
+            Department = employeeDto.Department!.Name,
             Position = employeeDto.Position!.Name,
             DateOfBirth = employeeDto.DateOfBirth,
             EmployeeCode = employeeDto.EmployeeCode,
@@ -48,7 +50,9 @@ public class EmployeeDto : IMapFrom<AppUser>
     }
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<AppUser, EmployeeDto>();
+        profile.CreateMap<AppUser, EmployeeDto>()
+            .ForMember(x => x.Position, o => o.MapFrom(src => src.Position != null ? src.Position.Name : null))
+            .ForMember(x => x.Department, o => o.MapFrom(src => src.Department != null ? src.Department.Name : null));
         profile.CreateMap<EmployeeModel, AppUser>();
 
 
