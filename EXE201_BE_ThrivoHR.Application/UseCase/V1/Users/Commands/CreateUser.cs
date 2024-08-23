@@ -50,8 +50,6 @@ public sealed class CreateUserValidator : AbstractValidator<CreateUser>
         RuleFor(x => x.Employee.IdentityNumber).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Identity Number is required");
         RuleFor(x => x.Employee.DateOfBirth).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Date of Birth is required");
         RuleFor(x => x.Employee.PhoneNumber).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Phone Number is required");
-        RuleFor(x => x.Employee.DepartmentId).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Department is required");
-        RuleFor(x => x.Employee.PositionId).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Position is required");
         RuleFor(x => x.Employee.BankAccount).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Bank Account is required");
         RuleFor(x => x.Employee.Address).Cascade(CascadeMode.Stop).NotNull().WithMessage("Address is required");
         RuleFor(x => x.Employee.Address!.AddressLine).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Address Line is required");

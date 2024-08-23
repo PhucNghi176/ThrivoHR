@@ -3,38 +3,37 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace EXE201_BE_ThrivoHR.API.Configuration
+namespace EXE201_BE_ThrivoHR.API.Configuration;
+
+public class ApiVersionSwaggerGenOptions : IConfigureOptions<SwaggerGenOptions>
 {
-    public class ApiVersionSwaggerGenOptions : IConfigureOptions<SwaggerGenOptions>
+    private readonly IApiVersionDescriptionProvider _provider;
+
+    public ApiVersionSwaggerGenOptions(IApiVersionDescriptionProvider provider)
     {
-        private readonly IApiVersionDescriptionProvider _provider;
+        _provider = provider;
+    }
 
-        public ApiVersionSwaggerGenOptions(IApiVersionDescriptionProvider provider)
+    public void Configure(SwaggerGenOptions options)
+    {
+        foreach (var description in _provider.ApiVersionDescriptions.OrderByDescending(o => o.ApiVersion))
         {
-            _provider = provider;
+            options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
         }
+    }
 
-        public void Configure(SwaggerGenOptions options)
+    private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+    {
+        var info = new OpenApiInfo()
         {
-            foreach (var description in _provider.ApiVersionDescriptions.OrderByDescending(o => o.ApiVersion))
-            {
-                options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
-            }
-        }
+            Title = "ThrivoHR API",
+            Version = description.ApiVersion.ToString()
+        };
 
-        private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+        if (description.IsDeprecated)
         {
-            var info = new OpenApiInfo()
-            {
-                Title = "ThrivoHR API",
-                Version = description.ApiVersion.ToString()
-            };
-
-            if (description.IsDeprecated)
-            {
-                info.Description = "This API version has been deprecated.";
-            }
-            return info;
+            info.Description = "This API version has been deprecated.";
         }
+        return info;
     }
 }

@@ -21,8 +21,8 @@ public class AppUser : IdentityUser<string>, IAuditableEntity
     public required DateOnly? DateOfBirth { get; set; }
     public override string? PhoneNumber { get; set; }
     public required string TaxCode { get; set; }
-    public required int? AddressId { get; set; }
-    public required int? DepartmentId { get; set; }
+    public int? AddressId { get; set; }
+    public int? DepartmentId { get; set; }
     [ForeignKey("DepartmentId")]
     public int? PositionId { get; set; }
     [ForeignKey("PositionId")]

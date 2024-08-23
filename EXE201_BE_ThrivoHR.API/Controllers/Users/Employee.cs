@@ -61,6 +61,7 @@ public class Employee(ISender sender) : BaseController(sender)
 
     [HttpGet("generate")]
     [EndpointSummary("Đừng chạy API này nha Đạt")]
+    [HttpCacheIgnore]
     public async Task<IActionResult> GenerateEmployee()
     {
         await _sender.Send(new GenerateEmployeesCommand());

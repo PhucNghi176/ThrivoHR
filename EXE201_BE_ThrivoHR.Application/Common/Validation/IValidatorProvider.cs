@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
 
-namespace EXE201_BE_ThrivoHR.Application.Common.Validation
+namespace EXE201_BE_ThrivoHR.Application.Common.Validation;
+
+public interface IValidatorProvider
 {
-    public interface IValidatorProvider
-    {
-        IValidator<T> GetValidator<T>();
-    }
+    IValidator<T> GetValidator<T>();
 }

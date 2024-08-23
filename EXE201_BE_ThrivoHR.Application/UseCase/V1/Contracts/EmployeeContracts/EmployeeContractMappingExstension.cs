@@ -1,6 +1,6 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
 
-namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts;
+namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts;
 
 public static class EmployeeContractMappingExstension
 {

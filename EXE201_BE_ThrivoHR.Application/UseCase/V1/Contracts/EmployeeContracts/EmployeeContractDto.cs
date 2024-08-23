@@ -13,6 +13,9 @@ public class EmployeeContractDto : IMapFrom<EmployeeContract>
     public DateOnly? EndDate { get; set; }
     public string? Notes { get; set; }
 
+    public int? Duration { get; set;}
+    public bool IsNoExpiry { get; set; }
+
     public decimal Salary { get; set; }
 
     public static EmployeeContractDto Create(EmployeeContract employeeContract)
@@ -25,15 +28,20 @@ public class EmployeeContractDto : IMapFrom<EmployeeContract>
             StartDate = employeeContract.StartDate,
             EndDate = employeeContract.EndDate,
             Notes = employeeContract.Notes,
-            Salary = employeeContract.Salary
+            Salary = employeeContract.Salary,
+            Duration = employeeContract.Duration,
+            IsNoExpiry = employeeContract.IsNoExpiry
         };
     }
 
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<EmployeeContract, EmployeeContractDto>();
-        profile.CreateMap<EmployeeContractModel, EmployeeContract>()
-            .ForMember(x => x.Employee, o => o.Ignore());
+        profile.CreateMap<EmployeeContract, EmployeeContractDto>()
+             .ForMember(x => x.Position, o => o.MapFrom(src => src.Position != null ? src.Position.Name : null))
+            .ForMember(x => x.Department, o => o.MapFrom(src => src.Department != null ? src.Department.Name : null))
+            .ForMember(x => x.EmployeeCode, o => o.MapFrom(src => src.Employee != null ? src.Employee.EmployeeCode : null));
+        profile.CreateMap<EmployeeContractModel, EmployeeContract>();
+           
     }
 }
 
