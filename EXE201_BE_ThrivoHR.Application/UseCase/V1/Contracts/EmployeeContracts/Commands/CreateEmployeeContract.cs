@@ -87,23 +87,15 @@ public sealed class CreateEmployeeContractValidator : AbstractValidator<CreateEm
         RuleFor(x => x.EmployeeContractModel.DepartmentId)
             .Cascade(CascadeMode.Stop)
             .NotEmpty().WithMessage("Department ID is required")
-            .MustAsync(ValidateDepartment).WithMessage("Department does not exist");
+            .MustAsync(async (departmentID, cancellation) =>
+                await ValidateMethod.DepartmentExsis(departmentID, _departmentRepository))
+            .WithMessage("Department does not exist");
 
         RuleFor(x => x.EmployeeContractModel.PositionId)
             .Cascade(CascadeMode.Stop)
             .NotEmpty().WithMessage("Position ID is required")
-            .MustAsync(ValidatePosition).WithMessage("Position does not exist");
-    }
-
-    private async Task<bool> ValidateDepartment(int departmentId, CancellationToken cancellationToken)
-    {
-        var department = await _departmentRepository.FindAsync(x => x.Id == departmentId, cancellationToken);
-        return department != null;
-    }
-
-    private async Task<bool> ValidatePosition(int positionId, CancellationToken cancellationToken)
-    {
-        var position = await _positionRepository.FindAsync(x => x.Id == positionId, cancellationToken);
-        return position != null;
+            .MustAsync(async (positionID, cancellation) =>
+                await ValidateMethod.PositionExsis(positionID, _positionRepository))
+            .WithMessage("Position does not exist");
     }
 }

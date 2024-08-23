@@ -17,7 +17,7 @@ public class ExceptionFilter : IExceptionFilter
                 {
                     context.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                 }
-                context.Result = new BadRequestObjectResult(new ValidationProblemDetails(context.ModelState))
+                context.Result = new UnprocessableEntityObjectResult(new ValidationProblemDetails(context.ModelState))
                 .AddContextInformation(context);
                 context.ExceptionHandled = true;
                 break;
@@ -68,7 +68,6 @@ public class ExceptionFilter : IExceptionFilter
         }
     }
 }
-
 internal static class ProblemDetailsExtensions
 {
     public static IActionResult AddContextInformation(this ObjectResult objectResult, ExceptionContext context)
@@ -77,8 +76,7 @@ internal static class ProblemDetailsExtensions
         {
             return objectResult;
         }
-        problemDetails.Extensions.Add("traceId", Activity.Current?.Id ?? context.HttpContext.TraceIdentifier);
-        problemDetails.Type = "https://httpstatuses.io/" + (objectResult.StatusCode ?? problemDetails.Status);
+        problemDetails.Extensions.Add("traceId", Activity.Current?.Id ?? context.HttpContext.TraceIdentifier);       
         return objectResult;
     }
 }
