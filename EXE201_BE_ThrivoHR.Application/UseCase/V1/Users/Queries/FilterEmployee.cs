@@ -72,7 +72,7 @@ internal sealed class FilterEmployeeHandler(ApplicationDbContext context, IEmplo
             return x;
         }
         var list = await _userRepository.FindAllAsync(request.PageNumber, request.PageSize, filter, cancellationToken);
-        var res = PagedResult<EmployeeDto>.Create   (list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToEmployeeListDto(_mapper));
+        var res = PagedResult<EmployeeDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToEmployeeListDto(_mapper));
         return Result.Success(res);
     }
 }

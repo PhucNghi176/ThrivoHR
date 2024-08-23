@@ -25,7 +25,7 @@ public static class Employee
         }
     }
 
-    public class DuplicateException(string name, object key) : BadRequestException($"Failed to create {name} with dupplication key {key}")
+    public class DuplicateException(string name, object key) : BadRequestException($"Failed to create/update {name} with dupplication key {key}")
     {
     }
 

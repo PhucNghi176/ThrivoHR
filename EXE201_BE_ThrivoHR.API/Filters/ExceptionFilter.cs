@@ -51,7 +51,7 @@ public class ExceptionFilter : IExceptionFilter
                 context.ExceptionHandled = true;
                 break;
 
-            default :
+            default:
                 context.Result = new ObjectResult(new ProblemDetails
                 {
                     Detail = context.Exception.Message
@@ -76,7 +76,7 @@ internal static class ProblemDetailsExtensions
         {
             return objectResult;
         }
-        problemDetails.Extensions.Add("traceId", Activity.Current?.Id ?? context.HttpContext.TraceIdentifier);       
+        problemDetails.Extensions.Add("traceId", Activity.Current?.Id ?? context.HttpContext.TraceIdentifier);
         return objectResult;
     }
 }

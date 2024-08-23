@@ -2,7 +2,6 @@
 using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
 using EXE201_BE_ThrivoHR.Application.Common.Method;
 using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,8 +28,11 @@ internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository 
             throw new EmployeeContractExceptions.CurrentContractNotEndedException("Employee Contract", request.EmployeeContractModel.EmployeeCode);
         }
         var contract = _mapper.Map<Domain.Entities.Contracts.EmployeeContract>(request.EmployeeContractModel);
-        await _employeeContractRepository.AddAsync(contract);
+
         contract.EmployeeId = Employee.Id;
+        Employee.DepartmentId = contract.DepartmentId;
+        Employee.PositionId = contract.PositionId;
+
         if (contract.EndDate is not null)
         {
             contract.Duration = (contract.EndDate.Value.Year - contract.StartDate.Year) * 12;
@@ -44,7 +46,14 @@ internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository 
 
         try
         {
+            await Task.WhenAll(
+                    _employeeRepository.UpdateAsync(Employee),
+                    _employeeContractRepository.AddAsync(contract)
+
+
+                );
             await _employeeContractRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
         }
         catch (DbUpdateException ex)//Handle dupplication exception
         {

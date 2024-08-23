@@ -37,7 +37,7 @@ internal sealed class GenerateEmployeeContractHandler : ICommandHandler<Generate
                 DepartmentId = employee.DepartmentId,
                 PositionId = employee.PositionId,
                 StartDate = startDate,
-                EndDate = !IsNoExpiry? endDate:null,
+                EndDate = !IsNoExpiry ? endDate : null,
                 Salary = salary,
                 IsNoExpiry = IsNoExpiry,
                 Duration = duration

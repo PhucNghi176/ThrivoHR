@@ -1,6 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Models;
-
-namespace EXE201_BE_ThrivoHR.API.Controllers
+﻿namespace EXE201_BE_ThrivoHR.API.Controllers
 {
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     [ApiController]
@@ -8,6 +6,6 @@ namespace EXE201_BE_ThrivoHR.API.Controllers
     {
         protected readonly ISender _sender = sender;
 
-     
+
     }
 }

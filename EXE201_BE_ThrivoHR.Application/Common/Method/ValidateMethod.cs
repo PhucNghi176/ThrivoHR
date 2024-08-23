@@ -2,7 +2,7 @@
 
 public static class ValidateMethod
 {
-    public static async Task<bool> DepartmentExsis(int departmentID,IDepartmentRepository departmentRepository)
+    public static async Task<bool> DepartmentExsis(int departmentID, IDepartmentRepository departmentRepository)
     {
         var Exsis = await departmentRepository.FindAsync(x => x.Id == departmentID);
         return Exsis != null;

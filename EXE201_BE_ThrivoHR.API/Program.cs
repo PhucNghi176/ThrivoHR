@@ -62,7 +62,7 @@ public static class Program
         {
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
-        }     
+        }
         app.UseSerilogRequestLogging();
         app.UseHttpsRedirection();
         app.UseStaticFiles();

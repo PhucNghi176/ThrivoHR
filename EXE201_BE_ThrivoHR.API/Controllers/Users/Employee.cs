@@ -1,6 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Application.Common.Models;
-using EXE201_BE_ThrivoHR.Application.Common.Pagination;
-using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
+﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 using Marvin.Cache.Headers;
@@ -38,8 +36,13 @@ public class Employee(ISender sender) : BaseController(sender)
 
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Result>> UpdateEmployee([FromBody] UpdateUser updateUser, CancellationToken cancellationToken)
+    public async Task<ActionResult<Result>> UpdateEmployee([FromQuery] string EmployeeCode, [FromBody] UpdateUser updateUser, CancellationToken cancellationToken)
     {
+        if (updateUser.EmployeeModel.EmployeeCode != EmployeeCode)
+        {
+
+            return Result.Failure(Error.NotFound);
+        }
         var result = await _sender.Send(updateUser, cancellationToken);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }

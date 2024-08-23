@@ -2,7 +2,7 @@
 using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
 
-namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts;
+namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts;
 
 public class EmployeeContractDto : IMapFrom<EmployeeContract>
 {
@@ -13,7 +13,7 @@ public class EmployeeContractDto : IMapFrom<EmployeeContract>
     public DateOnly? EndDate { get; set; }
     public string? Notes { get; set; }
 
-    public int? Duration { get; set;}
+    public int? Duration { get; set; }
     public bool IsNoExpiry { get; set; }
 
     public decimal Salary { get; set; }
@@ -41,7 +41,7 @@ public class EmployeeContractDto : IMapFrom<EmployeeContract>
             .ForMember(x => x.Department, o => o.MapFrom(src => src.Department != null ? src.Department.Name : null))
             .ForMember(x => x.EmployeeCode, o => o.MapFrom(src => src.Employee != null ? src.Employee.EmployeeCode : null));
         profile.CreateMap<EmployeeContractModel, EmployeeContract>();
-           
+
     }
 }
 

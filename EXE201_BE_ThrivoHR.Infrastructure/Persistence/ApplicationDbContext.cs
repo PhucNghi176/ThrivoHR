@@ -1,6 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Entities;
-using EXE201_BE_ThrivoHR.Domain.Entities.Base;
 using EXE201_BE_ThrivoHR.Domain.Entities.Base.Contract;
 using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
@@ -17,7 +16,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
             modelBuilder.Entity<AppUser>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<BaseContract>().HasQueryFilter(x => !x.IsDeleted);
-            
+
             ConfigureModel(modelBuilder);
 
         }

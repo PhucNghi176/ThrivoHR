@@ -1,4 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts;
+﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts.Queries;
 using Marvin.Cache.Headers;

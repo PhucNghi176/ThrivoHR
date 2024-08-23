@@ -2,7 +2,7 @@
 
 public record EmployeeModel
 {
-    public string? EmployeeCode { get; set; }
+
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
     public required string FullName { get; set; }
@@ -14,5 +14,10 @@ public record EmployeeModel
     public required string Email { get; set; }
 
     public required AddressModel Address { get; set; }
-
 }
+public record EmployeeModelRequest : EmployeeModel
+{
+    public string? EmployeeCode { get; set; }
+}
+
+
