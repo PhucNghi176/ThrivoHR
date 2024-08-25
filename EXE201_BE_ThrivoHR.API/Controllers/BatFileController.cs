@@ -8,7 +8,7 @@ namespace EXE201_BE_ThrivoHR.API.Controllers
     [ApiController]
     public class BatFileController : ControllerBase
     {
-        [HttpGet("run")]
+        [HttpPost("run")]
         public IActionResult RunBatFile()
         {
             string filePath = @"C:\Users\xuanghi\Desktop\EXE201_BE_THRIVOHR\Run As Admin.bat";
