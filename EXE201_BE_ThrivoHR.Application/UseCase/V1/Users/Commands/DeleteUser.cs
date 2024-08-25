@@ -5,12 +5,12 @@ using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 
-[Authorize]
-public record DeleteUser(string EmployeeCode) : ICommand<string>;
 
-internal sealed class DeleteUserCommandHandler(IEmployeeRepository userRepository) : ICommandHandler<DeleteUser, string>
+public record DeleteUser(string EmployeeCode) : ICommand;
+
+internal sealed class DeleteUserCommandHandler(IEmployeeRepository userRepository) : ICommandHandler<DeleteUser>
 {
-    public async Task<Result<string>> Handle(DeleteUser request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteUser request, CancellationToken cancellationToken)
     {
         var user = await userRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode), cancellationToken) ?? throw new NotFoundException(request.EmployeeCode);
         user.IsDeleted = true;

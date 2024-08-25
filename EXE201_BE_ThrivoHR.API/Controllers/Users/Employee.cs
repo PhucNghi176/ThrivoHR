@@ -49,8 +49,12 @@ public class Employee(ISender sender) : BaseController(sender)
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Result<string>>> DeleteEmployee([FromBody] DeleteUser deleteUser, CancellationToken cancellationToken)
+    public async Task<ActionResult<Result>> DeleteEmployee([FromQuery] string EmployeeCode, [FromBody] DeleteUser deleteUser, CancellationToken cancellationToken)
     {
+        if (deleteUser.EmployeeCode != EmployeeCode)
+        {
+            return Result.Failure(Error.NotFound);
+        }
         var result = await _sender.Send(deleteUser, cancellationToken);
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
