@@ -21,17 +21,39 @@ public class EmployeeContractController(ISender sender) : BaseController(sender)
         return result.IsSuccess ? result : BadRequest(result.Error);
     }
     [HttpDelete]
+    [EndpointSummary("dùng để xóa hợp đồng lao động")]
     public async Task<ActionResult<Result>> DeleteEmployeeContract(string ContractID, DeleteContract deleteContract, CancellationToken cancellationToken)
     {
         if (deleteContract.ContractID != ContractID)
         {
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(Error.NotFoundID);
         }
 
         var result = await _sender.Send(deleteContract, cancellationToken);
         return result.IsSuccess ? result : BadRequest(result.IsFailure);
     }
+    [HttpPut("end-employee-contract")]
+    [EndpointSummary("dùng để chấm dứt hợp đồng lao động")]
+    public async Task<ActionResult<Result>> EndEmployeeContract(string ContractID, EndEmployeeContract endEmployeeContract, CancellationToken cancellationToken)
+    {
+        if (endEmployeeContract.ContractID != ContractID)
+        {
+            return Result.Failure(Error.NotFoundID);
+        }
+        var result = await _sender.Send(endEmployeeContract, cancellationToken);
+        return result;
+    }
 
+    [HttpPut]
+    public async Task<ActionResult<Result>> UpdateEmployeeContract(string ContractID, UpdateEmployeeContract updateEmployeeContract, CancellationToken cancellationToken)
+    {
+        if (updateEmployeeContract.EmployeeContractModel.ContractId != ContractID)
+        {
+            return Result.Failure(Error.NotFoundID);
+        }
+        var result = await _sender.Send(updateEmployeeContract, cancellationToken);
+        return result;
+    }
     [HttpGet("generate")]
     [HttpCacheIgnore]
     [EndpointSummary("Đừng chạy API này nha Đạt")]

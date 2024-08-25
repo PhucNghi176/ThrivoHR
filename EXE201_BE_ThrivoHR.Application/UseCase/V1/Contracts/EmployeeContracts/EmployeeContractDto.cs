@@ -40,7 +40,7 @@ public class EmployeeContractDto : IMapFrom<EmployeeContract>
              .ForMember(x => x.Position, o => o.MapFrom(src => src.Position != null ? src.Position.Name : null))
             .ForMember(x => x.Department, o => o.MapFrom(src => src.Department != null ? src.Department.Name : null))
             .ForMember(x => x.EmployeeCode, o => o.MapFrom(src => src.Employee != null ? src.Employee.EmployeeCode : null));
-        profile.CreateMap<EmployeeContractModel, EmployeeContract>();
+        profile.CreateMap<EmployeeContractBase, EmployeeContract>();
 
     }
 }

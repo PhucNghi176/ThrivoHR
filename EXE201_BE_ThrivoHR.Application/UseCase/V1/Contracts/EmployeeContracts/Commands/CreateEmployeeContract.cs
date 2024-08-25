@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts.Commands;
 
-public record CreateEmployeeContract(EmployeeContractModel EmployeeContractModel) : ICommand;
+public record CreateEmployeeContract(EmployeeContractModelCreate EmployeeContractModel) : ICommand;
 internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository employeeContractRepository, IEmployeeRepository employeeRepository, IMapper mapper) : ICommandHandler<CreateEmployeeContract>
 {
 
@@ -30,28 +30,13 @@ internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository 
         var contract = _mapper.Map<Domain.Entities.Contracts.EmployeeContract>(request.EmployeeContractModel);
 
         contract.EmployeeId = Employee.Id;
-        Employee.DepartmentId = contract.DepartmentId;
-        Employee.PositionId = contract.PositionId;
-
-        if (contract.EndDate is not null)
-        {
-            contract.Duration = (contract.EndDate.Value.Year - contract.StartDate.Year) * 12;
-
-        }
-        else
-        {
-
-            contract.IsNoExpiry = true;
-        }
-
+        Employee = EmployeesMethod.SetDepartmentAndPostionForEmployee(Employee, contract);
+        contract = EmployeeContractMethod.CalculateEndDateAndDurationAndExpiryContract(contract);
         try
         {
             await Task.WhenAll(
                     _employeeRepository.UpdateAsync(Employee),
-                    _employeeContractRepository.AddAsync(contract)
-
-
-                );
+                    _employeeContractRepository.AddAsync(contract));
             await _employeeContractRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         }

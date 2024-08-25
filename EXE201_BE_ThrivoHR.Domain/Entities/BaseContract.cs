@@ -17,7 +17,9 @@ public abstract class BaseContract : AuditableEntity<string>
 
     public bool IsNoExpiry { get; set; } = false;
 
+
     public bool IsEnded { get; set; } = false;
+    public DateOnly? DateEnded { get; set; }
     public virtual AppUser? Employee { get; set; }
     public virtual Department? Department { get; set; }
     public virtual Position? Position { get; set; }
