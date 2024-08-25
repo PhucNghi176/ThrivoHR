@@ -4,6 +4,7 @@ using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
 using EXE201_BE_ThrivoHR.Infrastructure;
 using Serilog;
+using System.Diagnostics;
 
 namespace EXE201_BE_ThrivoHR.API;
 
@@ -77,6 +78,66 @@ public static class Program
         app.MapControllers();
 
         app.UseSwashbuckle();
+        app.MapGet("/deploy", async (HttpContext context) =>
+        {
+            try
+            {
+                // Change directory
+                Directory.SetCurrentDirectory(@"C:\Users\xuanghi\Desktop\EXE201_BE_THRIVOHR");
+
+                // Execute commands
+                await ExecuteCommand("git", "pull");
+                await ExecuteCommand("dotnet", $"ef migrations add \"migration{DateTime.Now:yyyyMMdd_HHmmss}\" --startup-project \"EXE201_BE_ThrivoHR.API\" --project \"EXE201_BE_ThrivoHR.Infrastructure\"");
+                await ExecuteCommand("dotnet", "ef database update --startup-project \"EXE201_BE_ThrivoHR.API\" --project \"EXE201_BE_ThrivoHR.Infrastructure\"");
+
+                Directory.SetCurrentDirectory(@"C:\Users\xuanghi\Desktop\EXE201_BE_THRIVOHR\EXE201_BE_ThrivoHR.API");
+
+                await ExecuteCommand("dotnet", "restore EXE201_BE_ThrivoHR.API.csproj");
+                await ExecuteCommand("dotnet", "clean");
+                await ExecuteCommand("dotnet", "build --configuration release");
+                await ExecuteCommand("dotnet", "publish /p:Configuration=release /p:EnvironmentName=Production");
+
+                await ExecuteCommand(@"%windir%\system32\inetsrv\appcmd", "stop sites ThrivoHR.exe201.com");
+                await ExecuteCommand(@"%windir%\system32\inetsrv\appcmd", "stop apppool /apppool.name:ThrivoHR.exe201.com");
+
+                await Task.Delay(5000); // Simulating ping delay
+
+                await ExecuteCommand("xcopy", @"""C:\Users\xuanghi\Desktop\EXE201_BE_THRIVOHR\EXE201_BE_ThrivoHR.API\bin\release\net8.0"" ""C:\WWW\EXE201_BE_ThrivoHR\PROD"" /e /y /i /r");
+
+                await ExecuteCommand(@"%windir%\system32\inetsrv\appcmd", "start apppool /apppool.name:ThrivoHR.exe201.com");
+                await ExecuteCommand(@"%windir%\system32\inetsrv\appcmd", "start sites ThrivoHR.exe201.com");
+
+                return Results.Ok("Deployment completed successfully");
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        });
+
+        async Task ExecuteCommand(string command, string arguments)
+        {
+            using var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = command,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+
+            process.Start();
+            await process.WaitForExitAsync();
+
+            if (process.ExitCode != 0)
+            {
+                throw new Exception($"Command failed: {command} {arguments}");
+            }
+        }
 
         // Run the app
         await app.RunAsync();
