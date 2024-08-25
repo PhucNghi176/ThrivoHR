@@ -39,6 +39,6 @@ namespace EXE201_BE_ThrivoHR.API.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
-
+        //Test auto deploy
     }
 }
