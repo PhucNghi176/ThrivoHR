@@ -51,7 +51,8 @@ public class EmployeeDto : IMapFrom<AppUser>
     {
         profile.CreateMap<AppUser, EmployeeDto>()
             .ForMember(x => x.Position, o => o.MapFrom(src => src.Position != null ? src.Position.Name : null))
-            .ForMember(x => x.Department, o => o.MapFrom(src => src.Department != null ? src.Department.Name : null));
+            .ForMember(x => x.Department, o => o.MapFrom(src => src.Department != null ? src.Department.Name : null))
+            .ForMember(x => x.Manager, o => o.MapFrom(src => src.Manager != null ? src.Manager.FullName : null));
         profile.CreateMap<EmployeeModel, AppUser>();
 
 

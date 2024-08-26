@@ -1,11 +1,12 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Method;
+using EXE201_BE_ThrivoHR.Application.Common.Security;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
 
-//[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin")]
 
 public record FilterEmployee
     (
@@ -36,6 +37,7 @@ internal sealed class FilterEmployeeHandler(ApplicationDbContext context, IEmplo
 
     public async Task<Result<PagedResult<EmployeeDto>>> Handle(FilterEmployee request, CancellationToken cancellationToken)
     {
+
         IQueryable<AppUser> filter(IQueryable<AppUser> x)
         {
             // 1. Combine multiple Where clauses
