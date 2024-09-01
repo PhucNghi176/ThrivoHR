@@ -61,6 +61,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<EmployeeContract> EmployeeContracts { get; set; }
+        public virtual DbSet<TrainingHistory> TrainingHistories { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
 

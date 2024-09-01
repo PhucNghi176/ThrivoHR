@@ -24,5 +24,6 @@
   <ItemGroup>
     <Folder Include="Common\Enumerations\" />
     <Folder Include="UseCase\V1\Positions\" />
+    <Folder Include="UseCase\V1\TrainingHistories\Queries\" />
   </ItemGroup>
 </Project>

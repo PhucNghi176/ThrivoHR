@@ -6,6 +6,7 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts;
 
 public class EmployeeContractDto : IMapFrom<EmployeeContract>
 {
+    public required string Id { get; set; }
     public string? EmployeeCode { get; set; }
     public string? Department { get; set; }
     public string? Position { get; set; }
@@ -22,6 +23,7 @@ public class EmployeeContractDto : IMapFrom<EmployeeContract>
     {
         return new EmployeeContractDto
         {
+            Id = employeeContract.Id,
             EmployeeCode = employeeContract.Employee!.EmployeeCode,
             Department = employeeContract.Department!.Name,
             Position = employeeContract.Position!.Name,
