@@ -77,6 +77,7 @@ namespace EXE201_BE_ThrivoHR.API.Configuration
                     options.EnableFilter(string.Empty);
                     AddSwaggerEndpoints(app, options);
                     options.OAuthScopeSeparator(" ");
+                    options.DocExpansion(DocExpansion.None);
 
                 });
 

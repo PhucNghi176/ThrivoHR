@@ -19,5 +19,11 @@ public class TrainingHistoryController(ISender sender) : BaseController(sender)
         var result = await _sender.Send(model);
         return result.IsSuccess ? result : BadRequest(result);
     }
+    [HttpDelete]
+    public async Task<ActionResult<Result>> Delete([FromQuery] DeleteTrainingHistory model)
+    {
+        var result = await _sender.Send(model);
+        return result.IsSuccess ? result : BadRequest(result);
+    }
 }
 
