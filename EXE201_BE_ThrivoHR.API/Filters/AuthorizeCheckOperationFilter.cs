@@ -2,37 +2,36 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace EXE201_BE_ThrivoHR.API.Filters
-{
-    public class AuthorizeCheckOperationFilter : IOperationFilter
-    {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
-            if (!HasAuthorize(context))
-            {
-                return;
-            }
-            operation.Security.Add(new OpenApiSecurityRequirement
-            {
-                [new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                }] = Array.Empty<string>()
-            });
-        }
+namespace EXE201_BE_ThrivoHR.API.Filters;
 
-        private static bool HasAuthorize(OperationFilterContext context)
+public class AuthorizeCheckOperationFilter : IOperationFilter
+{
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        if (!HasAuthorize(context))
         {
-            if (context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any())
-            {
-                return true;
-            }
-            return context.MethodInfo.DeclaringType != null
-                && context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any();
+            return;
         }
+        operation.Security.Add(new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            }] = Array.Empty<string>()
+        });
+    }
+
+    private static bool HasAuthorize(OperationFilterContext context)
+    {
+        if (context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any())
+        {
+            return true;
+        }
+        return context.MethodInfo.DeclaringType != null
+            && context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any();
     }
 }

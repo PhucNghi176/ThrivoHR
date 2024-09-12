@@ -1,30 +1,29 @@
 ﻿using System.Reflection;
 
-namespace EXE201_BE_ThrivoHR.Application.Common.Mappings
+namespace EXE201_BE_ThrivoHR.Application.Common.Mappings;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
+        ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    private void ApplyMappingsFromAssembly(Assembly assembly)
+    {
+        List<Type> types = assembly.GetExportedTypes()
+            .Where(t => t.GetInterfaces().Any(i =>
+                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
+            .ToList();
+
+        foreach (Type? type in types)
         {
-            ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-        }
+            object? instance = Activator.CreateInstance(type, true);
 
-        private void ApplyMappingsFromAssembly(Assembly assembly)
-        {
-            List<Type> types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
-                .ToList();
+            MethodInfo? methodInfo = type.GetMethod("Mapping")
+                ?? type.GetInterface("IMapFrom`1")?.GetMethod("Mapping");
 
-            foreach (Type? type in types)
-            {
-                object? instance = Activator.CreateInstance(type, true);
-
-                MethodInfo? methodInfo = type.GetMethod("Mapping")
-                    ?? type.GetInterface("IMapFrom`1")?.GetMethod("Mapping");
-
-                _ = (methodInfo?.Invoke(instance, [this]));
-            }
+            _ = (methodInfo?.Invoke(instance, [this]));
         }
     }
 }

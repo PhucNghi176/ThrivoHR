@@ -32,7 +32,7 @@ public class UnitOfWorkBehaviour<TRequest, TResponse>(IUnitOfWork dataSource) : 
         // By calling SaveChanges at the last point in the transaction ensures that write-
         // locks in the database are created and then released as quickly as possible. This
         // helps optimize the application to handle a higher degree of concurrency.
-        _ = await dataSource.SaveChangesAsync(cancellationToken);
+        await dataSource.SaveChangesAsync(cancellationToken);
 
         // Commit transaction if everything succeeds, transaction will auto-rollback when
         // disposed if anything failed.

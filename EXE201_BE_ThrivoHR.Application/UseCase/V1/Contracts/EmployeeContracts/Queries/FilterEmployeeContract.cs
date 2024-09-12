@@ -9,6 +9,7 @@ public record FilterEmployeeContract(
     DateOnly? EndDate,
     string? Notes,
     decimal? Salary,
+    string? EmployeeName,
      int? Department = 0,
     int? Position = 0,
     int PageNumber = 1,
@@ -40,7 +41,9 @@ internal sealed class FilterEmployeeContractHandler : IQueryHandler<FilterEmploy
                 && (string.IsNullOrEmpty(request.Notes) || x.Notes!.Contains(request.Notes))
                 && (!request.Salary.HasValue || x.Salary == request.Salary)
                 && (request.Department == 0 || x.DepartmentId == request.Department)
-                && (request.Position == 0 || x.PositionId == request.Position));
+                && (request.Position == 0 || x.PositionId == request.Position)
+                && (string.IsNullOrEmpty(request.EmployeeName) || x.Employee!.FullName.Contains(request.EmployeeName)));
+
 
             return x;
         }
