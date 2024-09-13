@@ -23,6 +23,5 @@
 
   <ItemGroup>
     <Folder Include="UseCase\V1\Forms\ResignForms\Commands\" />
-    <Folder Include="UseCase\V1\Forms\ResignForms\Queries\" />
   </ItemGroup>
 </Project>

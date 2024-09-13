@@ -2,4 +2,4 @@
 
 namespace EXE201_BE_ThrivoHR.Domain.Repositories;
 
-public interface IResignFormRepository : IEFRepository<ResginForm, ResginForm>;
+public interface IResignFormRepository : IEFRepository<ResignForm, ResignForm>;

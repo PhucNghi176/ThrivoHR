@@ -25,7 +25,7 @@ public class ApplicationFormDto : IMapFrom<ApplicationForm>
     public int? DepartmentId { get; set; }
 
     public string? ApproverName { get; set; }
-    public ApplicationFormDto Create(ApplicationForm entity)
+    public static ApplicationFormDto Create(ApplicationForm entity)
     {
         return new ApplicationFormDto
         {
@@ -45,8 +45,6 @@ public class ApplicationFormDto : IMapFrom<ApplicationForm>
             PositionId = entity.PositionId,
             DepartmentId = entity.DepartmentId,
             ApproverName = entity.Approver?.FullName,
-
-
         };
     }
 

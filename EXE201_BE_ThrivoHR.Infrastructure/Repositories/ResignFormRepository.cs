@@ -4,4 +4,4 @@ using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories;
 
-public class ResignFormRepository(ApplicationDbContext dbContext, IMapper mapper) : RepositoryBase<ResginForm, ResginForm, ApplicationDbContext>(dbContext, mapper), IResignFormRepository;
+public class ResignFormRepository(ApplicationDbContext dbContext, IMapper mapper) : RepositoryBase<ResignForm, ResignForm, ApplicationDbContext>(dbContext, mapper), IResignFormRepository;

@@ -16,8 +16,6 @@ public class ApplicationForm : BaseForm
     public bool? Gender { get; set; } // Optional gender field
     public string? EducationLevel { get; set; } // E.g., High School, Bachelor's, Master's, etc.
     public string? EmploymentHistory { get; set; } // Could be a more detailed model or summary of employment
-
-    public ApplicationStatus Status { get; set; } // Status of the application
     public int? PositionId { get; set; } // Foreign key to Position
     public virtual Position? Position { get; set; } // Navigation property to Position
 

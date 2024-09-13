@@ -70,7 +70,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public virtual DbSet<TrainingHistory> TrainingHistories { get; set; }
 
         public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
-        public virtual DbSet<ResginForm> ResginForms { get; set; }
+        public virtual DbSet<ResignForm> ResginForms { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
 

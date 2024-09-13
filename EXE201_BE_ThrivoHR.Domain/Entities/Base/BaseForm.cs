@@ -1,4 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+﻿using EXE201_BE_ThrivoHR.Domain.Common.Status;
+using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
 namespace EXE201_BE_ThrivoHR.Domain.Entities.Base;
 
@@ -9,6 +10,8 @@ public abstract class BaseForm : AuditableEntity<string>
     public DateTime DateTime { get; set; }
     public string? Reason { get; set; }
     public string? ApproverId { get; set; }
+
+    public ApplicationStatus Status { get; set; } = ApplicationStatus.Pending;
 
 
 
