@@ -1,4 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Entities.Base.Contract;
+﻿using EXE201_BE_ThrivoHR.Domain.Entities.Base;
+using EXE201_BE_ThrivoHR.Domain.Entities.Base.Contract;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 

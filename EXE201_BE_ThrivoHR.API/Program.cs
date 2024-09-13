@@ -30,7 +30,7 @@ public static class Program
 
         builder.Services.AddApplication(); // Assuming this registers your application services
         builder.Services.ConfigureApplicationSecurity(builder.Configuration);
-        builder.Services.ConfigureProblemDetails();
+       // builder.Services.ConfigureProblemDetails();
         builder.Services.ConfigureApiVersioning();
         builder.Services.AddInfrastructure(builder.Configuration);
         builder.Services.ConfigureSwagger();

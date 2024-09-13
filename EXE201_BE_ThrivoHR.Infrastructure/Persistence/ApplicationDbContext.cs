@@ -1,7 +1,9 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Entities;
+using EXE201_BE_ThrivoHR.Domain.Entities.Base;
 using EXE201_BE_ThrivoHR.Domain.Entities.Base.Contract;
 using EXE201_BE_ThrivoHR.Domain.Entities.Contracts;
+using EXE201_BE_ThrivoHR.Domain.Entities.Forms;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Domain.Services;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +18,10 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
             modelBuilder.Entity<AppUser>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<BaseContract>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Department>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Position>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Address>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<BaseForm>().HasQueryFilter(x => !x.IsDeleted);
 
             ConfigureModel(modelBuilder);
 
@@ -62,6 +68,9 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<EmployeeContract> EmployeeContracts { get; set; }
         public virtual DbSet<TrainingHistory> TrainingHistories { get; set; }
+
+        public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
+        public virtual DbSet<ResginForm> ResginForms { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
 

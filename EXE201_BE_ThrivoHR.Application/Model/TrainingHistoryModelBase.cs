@@ -7,7 +7,7 @@ public class TrainingHistoryModelBase
     public DateOnly StartDay { get; set; }
     public string? WorkshopName { get; set; }
     public string? Content { get; set; }
-    public TrainingHistoryEnum Status { get; set; }
+    public TrainingHistory Status { get; set; }
 }
 public class TrainingHistoryModelCreate : TrainingHistoryModelBase
 {

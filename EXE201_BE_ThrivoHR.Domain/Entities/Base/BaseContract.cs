@@ -1,7 +1,6 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Entities.Base;
-using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+﻿using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
-namespace EXE201_BE_ThrivoHR.Domain.Entities;
+namespace EXE201_BE_ThrivoHR.Domain.Entities.Base;
 
 public abstract class BaseContract : AuditableEntity<string>
 {

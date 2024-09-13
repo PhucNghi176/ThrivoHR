@@ -8,7 +8,7 @@ public record FilterTrainingHistory(
     DateOnly? StartDay,
     string? WorkshopName,
     string? Content,
-    TrainingHistoryEnum? Status,
+    Domain.Common.Status.TrainingHistory? Status,
     int PageSize = 100,
     int PageNumber = 1
     ) : IQuery<PagedResult<TrainingHistoryDto>>;
@@ -26,7 +26,7 @@ internal sealed class FilterTrainingHistoryQueryHandler : IQueryHandler<FilterTr
 
     public async Task<Result<PagedResult<TrainingHistoryDto>>> Handle(FilterTrainingHistory request, CancellationToken cancellationToken)
     {
-        IQueryable<TrainingHistory> filter(IQueryable<TrainingHistory> x)
+        IQueryable<Domain.Entities.TrainingHistory> filter(IQueryable<Domain.Entities.TrainingHistory> x)
         {
 
             x = x.Where(x =>

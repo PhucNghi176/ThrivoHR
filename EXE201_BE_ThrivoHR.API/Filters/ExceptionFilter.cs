@@ -2,6 +2,7 @@
 using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace EXE201_BE_ThrivoHR.API.Filters;
@@ -25,32 +26,37 @@ public class ExceptionFilter : IExceptionFilter
                 context.Result = new ForbidResult();
                 context.ExceptionHandled = true;
                 break;
-            case UnauthorizedAccessException exception:
-                context.Result = new UnauthorizedObjectResult(new ProblemDetails
+            case UnauthorizedAccessException:
+            case NotFoundException:
+            case BadRequestException:
+                var ex = context.Exception;
+                context.Result = new ObjectResult(new ProblemDetails
                 {
-                    Detail = exception.Message
+                    Detail = ex?.Message
                 })
+                {
+                    StatusCode = context.Exception switch
+                    {
+                        UnauthorizedAccessException => 401, // Unauthorized
+                        NotFoundException => 404, // Not Found
+                        BadRequestException => 400, // Bad Request
+                        _ => 500 // Internal Server Error fallback
+                    }
+                }
                 .AddContextInformation(context);
                 context.ExceptionHandled = true;
                 break;
-            case NotFoundException exception:
-                context.Result = new NotFoundObjectResult(new ProblemDetails
+            case DbUpdateException exception:
+                context.Result = new ObjectResult(new ProblemDetails
                 {
-                    Detail = exception.Message
+                    Detail = exception.InnerException?.Message
                 })
+                {
+                    StatusCode = 422
+                }
                 .AddContextInformation(context);
                 context.ExceptionHandled = true;
                 break;
-
-            case BadRequestException exception:
-                context.Result = new BadRequestObjectResult(new ProblemDetails
-                {
-                    Detail = exception.Message
-                })
-                .AddContextInformation(context);
-                context.ExceptionHandled = true;
-                break;
-
             default:
                 context.Result = new ObjectResult(new ProblemDetails
                 {

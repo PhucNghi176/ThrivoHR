@@ -13,7 +13,7 @@ public class TrainingHistory : AuditableEntity<int>
     public DateOnly StartDay { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     public string? WorkshopName { get; set; }
     public string? Content { get; set; }
-    public TrainingHistoryEnum Status { get; set; } = TrainingHistoryEnum.NotStarted;
+    public Domain.Common.Status.TrainingHistory Status { get; set; } = Domain.Common.Status.TrainingHistory.NotStarted;
 
 
 
