@@ -11,7 +11,7 @@ public abstract class BaseForm : AuditableEntity<string>
     public string? Reason { get; set; }
     public string? ApproverId { get; set; }
 
-    public ApplicationStatus Status { get; set; } = ApplicationStatus.Pending;
+    public FormStatus Status { get; set; } = FormStatus.Pending;
 
 
 

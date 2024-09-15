@@ -50,8 +50,6 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                             auditableEntity.DeletedBy = _currentUserService.UserId;
                             auditableEntity.IsDeleted = true;
                         }
-
-
                         break;
                 }
             }

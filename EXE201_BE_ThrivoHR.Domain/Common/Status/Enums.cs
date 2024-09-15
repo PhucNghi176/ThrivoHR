@@ -7,7 +7,7 @@ public enum TrainingHistory
     NotStarted = 3,
 
 }
-public enum ApplicationStatus
+public enum FormStatus
 {
     Pending = 0,
     Approved = 1,

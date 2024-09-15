@@ -3,8 +3,8 @@
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ResignForms.Queries;
 
 public record FilterResignForms(string? FullName,int PageNumber = 1,
-    int PageSize = 100) : IQuery<PagedResult<ResginFormDto>>;
-internal sealed class FilterResignFormsHandler : IQueryHandler<FilterResignForms, PagedResult<ResginFormDto>>
+    int PageSize = 100) : IQuery<PagedResult<ResignFormDto>>;
+internal sealed class FilterResignFormsHandler : IQueryHandler<FilterResignForms, PagedResult<ResignFormDto>>
 {
     private readonly IResignFormRepository _resignFormRepository;
     private readonly IMapper _mapper;
@@ -15,7 +15,7 @@ internal sealed class FilterResignFormsHandler : IQueryHandler<FilterResignForms
         _mapper = mapper;
     }
 
-    public async Task<Result<PagedResult<ResginFormDto>>> Handle(FilterResignForms request, CancellationToken cancellationToken)
+    public async Task<Result<PagedResult<ResignFormDto>>> Handle(FilterResignForms request, CancellationToken cancellationToken)
     {
         IQueryable<ResignForm> query(IQueryable<ResignForm> x)
         {
@@ -24,6 +24,6 @@ internal sealed class FilterResignFormsHandler : IQueryHandler<FilterResignForms
             return x;
         }
         var list = await _resignFormRepository.FindAllAsync(pageNo: request.PageNumber, pageSize: request.PageSize, query, cancellationToken);
-        return Result.Success(PagedResult<ResginFormDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToResignFormListDto(_mapper)));
+        return Result.Success(PagedResult<ResignFormDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToResignFormListDto(_mapper)));
     }
 }

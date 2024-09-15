@@ -34,7 +34,7 @@ public static class Program
         builder.Services.ConfigureApiVersioning();
         builder.Services.AddInfrastructure(builder.Configuration);
         builder.Services.ConfigureSwagger();
-        builder.Services.AddResponseCaching();
+     //   builder.Services.AddResponseCaching();
         builder.Services.HttpCacheHeadersConfiguration();
         builder.Services.ConfigureRateLimit();
         builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();

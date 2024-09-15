@@ -24,12 +24,12 @@ internal sealed class LoginQueryHandler(IEmployeeRepository userRepository, ITok
             "3" => "C&B",
             _ => throw new Employee.RoleNotFoundException()
         };
-        var token = await tokenService.GenerateTokenAsync(user.EmployeeCode, RoleName);
+        var token = await tokenService.GenerateTokenAsync(user.Id, RoleName);
         user.RefreshToken = token.RefreshToken;
         user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
         await userRepository.UpdateAsync(user);
         await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-        return Result<string>.Success(token);
+        return Result.Success(token);
     }
 
 }

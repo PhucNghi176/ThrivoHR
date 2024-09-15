@@ -3,7 +3,7 @@ using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ApplicationForms.Commands;
 
-public record ChangeStatusApplicationForm(string Id, Domain.Common.Status.ApplicationStatus Status) : ICommand;
+public record ChangeStatusApplicationForm(string Id, Domain.Common.Status.FormStatus Status) : ICommand;
 internal sealed class ChangeStatusApplicationFormHanlder : ICommandHandler<ChangeStatusApplicationForm>
 {
     private readonly IApplicationFormRepository _applicationFormRepository;

@@ -15,7 +15,7 @@ public class ApplicationFormModel
     public bool? Gender { get; set; } 
     public string? EducationLevel { get; set; } 
     public string? EmploymentHistory { get; set; }
-    public ApplicationStatus Status { get; set; } 
+    public FormStatus Status { get; set; } 
     public int? PositionId { get; set; } 
     public int? DepartmentId { get; set; } 
 }
