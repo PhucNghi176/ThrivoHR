@@ -11,7 +11,7 @@ public record ImportExcel(IFormFile File) : ICommand<List<string>>;
 internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, IAddressRepository addressRepository, IEmployeeContractRepository employeeContractRepository) : ICommandHandler<ImportExcel, List<string>>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
-  
+
     private readonly IAddressRepository _addressRepository = addressRepository;
     private readonly IEmployeeContractRepository _employeeContractRepository = employeeContractRepository;
 
@@ -36,6 +36,7 @@ internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, 
                 Country = "Việt Nam"
             };
             await _addressRepository.AddAsync(address);
+
             var Employee = new AppUser
             {
                 LastName = workSheet[$"B{row}"].StringValue,
