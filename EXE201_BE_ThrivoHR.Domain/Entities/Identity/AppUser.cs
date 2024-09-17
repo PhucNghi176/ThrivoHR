@@ -2,6 +2,7 @@
 using EXE201_BE_ThrivoHR.Domain.Entities.Base.Contract;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
 namespace EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 
@@ -19,6 +20,9 @@ public class AppUser : IdentityUser<string>, IAuditableEntity
     public required string LastName { get; set; }
     public required string FullName { get; set; }
     public required string IdentityNumber { get; set; }
+    public required bool Sex { get; set; }
+    public required string Religion { get; set; }
+    public required string Ethnicity { get; set; }
     public required DateOnly? DateOfBirth { get; set; }
     public override string? PhoneNumber { get; set; }
     public required string TaxCode { get; set; }

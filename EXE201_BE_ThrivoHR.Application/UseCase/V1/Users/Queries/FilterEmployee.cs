@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Queries;
 
 
-[Authorize(Roles = "Admin")]
+//[Authorize(Roles = "Admin")]
 
 public record FilterEmployee
     (

@@ -7,6 +7,9 @@ public record EmployeeModel
     public required string LastName { get; set; }
     public required string FullName { get; set; }
     public required string IdentityNumber { get; set; }
+    public required bool Sex { get; set; }
+    public required string Religion { get; set; }
+    public required string Ethnicity { get; set; }
     public required DateOnly DateOfBirth { get; set; }
     public required string PhoneNumber { get; set; }
     public string? TaxCode { get; set; }

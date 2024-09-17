@@ -59,13 +59,6 @@ public class Employee(ISender sender) : BaseController(sender)
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-
-
-
-
-
-
-
     [HttpGet("generate")]
     [EndpointSummary("Đừng chạy API này nha Đạt")]
     [HttpCacheIgnore]

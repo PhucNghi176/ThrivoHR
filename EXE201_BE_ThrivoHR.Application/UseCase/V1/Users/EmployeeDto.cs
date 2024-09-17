@@ -13,7 +13,9 @@ public class EmployeeDto : IMapFrom<AppUser>
     public string? LastName { get; set; }
     public string? FullName { get; set; }
     public string? Email { get; set; }
-
+    public bool Sex { get; set; }
+    public string? Religion { get; set; }
+    public string? Ethnicity { get; set; }
     public string? IdentityNumber { get; set; }
     public string? PhoneNumber { get; set; }
     public string? TaxCode { get; set; }
@@ -44,6 +46,11 @@ public class EmployeeDto : IMapFrom<AppUser>
             DateOfBirth = employeeDto.DateOfBirth,
             EmployeeCode = employeeDto.EmployeeCode,
             Manager = employeeDto.Manager?.FullName,
+            Sex = employeeDto.Sex,
+            Religion = employeeDto.Religion,
+            Ethnicity = employeeDto.Ethnicity,
+
+
 
         };
     }
