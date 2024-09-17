@@ -13,7 +13,7 @@ public static class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        IronXL.License.LicenseKey = "IRONSUITE.NGHIPPSE173558.FPT.EDU.VN.14754-17AE407732-DUCJQEVEGCANXU-5SRBWUGKIDUY-UMUF2MNT2VYS-ZBJ7SOYX6QNW-LZJDAIB7FMRT-C5BDIPIMX2LS-AG6RJK-TYN7QZ6WELSNUA-DEPLOYMENT.TRIAL-5MEDKM.TRIAL.EXPIRES.17.OCT.2024";
         // Configure logging (Serilog)
         builder.Host.UseSerilog((context, services, configuration) => configuration
             .ReadFrom.Configuration(context.Configuration)
@@ -30,11 +30,11 @@ public static class Program
 
         builder.Services.AddApplication(); // Assuming this registers your application services
         builder.Services.ConfigureApplicationSecurity(builder.Configuration);
-       // builder.Services.ConfigureProblemDetails();
+        // builder.Services.ConfigureProblemDetails();
         builder.Services.ConfigureApiVersioning();
         builder.Services.AddInfrastructure(builder.Configuration);
         builder.Services.ConfigureSwagger();
-     //   builder.Services.AddResponseCaching();
+        //   builder.Services.AddResponseCaching();
         builder.Services.HttpCacheHeadersConfiguration();
         builder.Services.ConfigureRateLimit();
         builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
