@@ -32,6 +32,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure
             services.AddScoped<ITrainingHistoryRepository, TrainingHistoryRepository>();
             services.AddScoped<IApplicationFormRepository, ApplicationFormRepository>();
             services.AddScoped<IResignFormRepository, ResignFormRepository>();
+            services.AddScoped<IUnionRepository, UnionRepository>();
 
             return services;
         }

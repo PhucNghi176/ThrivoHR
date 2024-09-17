@@ -11,7 +11,7 @@ public class TrainingHistoryDto : IMapFrom<Domain.Entities.TrainingHistory>
     public string? WorkshopName { get; set; }
     public string? Content { get; set; }
     public string? Status { get; set; }
-    public required EmployeeDto Employee { get; set; }
+    public string? EmployeeCode { get; set; }
     public static TrainingHistoryDto Create(Domain.Entities.TrainingHistory trainingHistory)
     {
         return new TrainingHistoryDto
@@ -21,8 +21,8 @@ public class TrainingHistoryDto : IMapFrom<Domain.Entities.TrainingHistory>
             WorkshopName = trainingHistory.WorkshopName,
             Content = trainingHistory.Content,
             Status = trainingHistory.Status.ToString(),
-            Employee = EmployeeDto.Create(trainingHistory.Employee!),
-          
+            EmployeeCode = trainingHistory.Employee!.EmployeeCode
+
         };
     }
 
@@ -30,7 +30,7 @@ public class TrainingHistoryDto : IMapFrom<Domain.Entities.TrainingHistory>
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Domain.Entities.TrainingHistory, TrainingHistoryDto>()
-            .ForMember(x => x.Employee, o => o.MapFrom(src => EmployeeDto.Create(src.Employee!)));
+            .ForMember(x => x.EmployeeCode, o => o.MapFrom(src => src.Employee!.EmployeeCode));
 
         profile.CreateMap<TrainingHistoryModelBase, Domain.Entities.TrainingHistory>();
 

@@ -22,6 +22,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
             modelBuilder.Entity<Position>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Address>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<BaseForm>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Union>().HasQueryFilter(x => !x.IsDeleted);
 
             ConfigureModel(modelBuilder);
 
@@ -69,6 +70,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 
         public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
         public virtual DbSet<ResignForm> ResginForms { get; set; }
+        public virtual DbSet<Union> Unions { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
 
@@ -132,9 +134,9 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
                     BankAccount = "1",
                     IdentityNumber = "1",
                     PhoneNumber = "1",
-                    Religion="1",
-                    Ethnicity="1",
-                    Sex=true,
+                    Religion = "1",
+                    Ethnicity = "1",
+                    Sex = true,
                     TaxCode = "1",
                     FirstName = "Admin",
                     LastName = "Admin",
