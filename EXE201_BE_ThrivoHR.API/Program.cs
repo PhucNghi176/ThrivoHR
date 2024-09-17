@@ -73,7 +73,7 @@ public static class Program
         app.UseAuthorization();
         app.UseIpRateLimiting();
         app.UseResponseCaching();
-        app.UseHttpCacheHeaders();
+        //app.UseHttpCacheHeaders();
 
         app.MapControllers();
 
