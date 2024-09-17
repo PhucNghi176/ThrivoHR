@@ -5,12 +5,12 @@ internal sealed class GenerateEmployeeContractHandler : ICommandHandler<Generate
 {
     private readonly IEmployeeContractRepository _employeeContractRepository;
     private readonly IEmployeeRepository _employeeRepository;
-    private readonly IMapper _mapper;
+    
 
     public GenerateEmployeeContractHandler(IEmployeeContractRepository employeeContractRepository, IMapper mapper, IEmployeeRepository employeeRepository)
     {
         _employeeContractRepository = employeeContractRepository;
-        _mapper = mapper;
+        
         _employeeRepository = employeeRepository;
     }
 

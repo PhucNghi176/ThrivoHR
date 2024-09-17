@@ -8,10 +8,10 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 
 public record ImportExcel(IFormFile File) : ICommand<List<string>>;
 
-internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, IMapper mapper, IAddressRepository addressRepository, IEmployeeContractRepository employeeContractRepository) : ICommandHandler<ImportExcel, List<string>>
+internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, IAddressRepository addressRepository, IEmployeeContractRepository employeeContractRepository) : ICommandHandler<ImportExcel, List<string>>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
-    private readonly IMapper _mapper = mapper;
+  
     private readonly IAddressRepository _addressRepository = addressRepository;
     private readonly IEmployeeContractRepository _employeeContractRepository = employeeContractRepository;
 
