@@ -74,7 +74,7 @@ stages:
               inline: |
                 docker login -u phucnghi -p PhamNghi1706
                 docker pull phucnghi/ThrivoHR:$(tag)
-                docker stop thrivohr-container || true
-                docker rm thrivohr-container || true
-                docker run -d --name thrivohr-container -p 80:80 phucnghi/ThrivoHR:$(tag)
+                docker stop exe201_be_thrivohr || true
+                docker rm exe201_be_thrivohr || true
+                docker run -d --name exe201_be_thrivohr -p 80:80 phucnghi/ThrivoHR:$(tag)
                 docker image prune -f
