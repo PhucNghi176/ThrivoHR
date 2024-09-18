@@ -6,7 +6,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   dockerHubUsername: 'phucnghi'
-  dockerHubImageName: 'phucnghi/ThrivoHR'
+  dockerHubImageName: 'phucnghi/thrivoHR'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
 
