@@ -29,7 +29,7 @@ stages:
               runOptions: 'inline'
               inline: |
                 docker pull phucnghi/thrivohr:latest
-                docker stop phucnghi/thrivohr || true
-                docker rm phucnghi/thrivohr || true
-                docker run -d --name phucnghi/thrivohr -p 80:80 phucnghi/thrivohr:latest
+                docker stop thrivohr || true
+                docker rm thrivohr || true
+                docker run -d --name thrivohr -p 80:80 phucnghi/thrivohr:latest
                 docker image prune -f
