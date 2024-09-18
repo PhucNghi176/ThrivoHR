@@ -28,7 +28,6 @@ stages:
               sshEndpoint: 'vpsConnection'
               runOptions: 'inline'
               inline: |
-                echo "PhamNghi1706" | docker login --username phucnghi --password-stdin 
                 docker pull phucnghi/thrivohr:$(tag)
                 docker stop exe201_be_thrivohr || true
                 docker rm exe201_be_thrivohr || true
