@@ -11,50 +11,6 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      name: 'VPS'  # Replace 'Default' with your self-hosted agent pool name
-    steps:
-    - task: UseDotNet@2
-      inputs:
-        version: '8.x'
-        includePreviewVersions: true
-
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: '$(solution)'
-
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        command: build
-        projects: '$(solution)'
-        arguments: '--configuration $(buildConfiguration)'
-
-    - task: DotNetCoreCLI@2
-      displayName: Test
-      inputs:
-        command: test
-        projects: '**/*Tests/*.csproj'
-        arguments: '--configuration $(buildConfiguration)'
-
-    - task: Docker@2
-      displayName: Build and push Docker image
-      inputs:
-        containerRegistry: 'dockerHubConnection'
-        repository: '$(dockerHubImageName)'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: |
-          $(tag)
-          latest
-
 - stage: Deploy
   displayName: Deploy to VPS
   jobs:
