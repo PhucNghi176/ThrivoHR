@@ -1,0 +1,80 @@
+trigger:
+- main
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  dockerHubUsername: 'phucnghi'
+  dockerHubImageName: 'phucnghi/ThrivoHR'
+  dockerfilePath: '**/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        version: '8.x'
+        includePreviewVersions: true
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: '$(solution)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: build
+        projects: '$(solution)'
+        arguments: '--configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: test
+        projects: '**/*Tests/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+
+    - task: Docker@2
+      displayName: Build and push Docker image
+      inputs:
+        containerRegistry: 'dockerHubConnection'
+        repository: '$(dockerHubImageName)'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+          $(tag)
+          latest
+
+- stage: Deploy
+  displayName: Deploy to VPS
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy to VPS
+    environment: 'production'
+    pool: 
+      vmImage: 'ubuntu-latest'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: SSH@0
+            inputs:
+              sshEndpoint: 'vpsConnection'
+              runOptions: 'inline'
+              inline: |
+                docker login -u phucnghi -p $(DOCKER_HUB_PASSWORD)
+                docker pull phucnghi/ThrivoHR:$(tag)
+                docker stop thrivohr-container || true
+                docker rm thrivohr-container || true
+                docker run -d --name thrivohr-container -p 80:80 phucnghi/ThrivoHR:$(tag)
+                docker image prune -f
