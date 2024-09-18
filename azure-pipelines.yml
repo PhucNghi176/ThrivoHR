@@ -72,7 +72,7 @@ stages:
               sshEndpoint: 'vpsConnection'
               runOptions: 'inline'
               inline: |
-                docker login -u phucnghi -p $(DOCKER_HUB_PASSWORD)
+                docker login -u phucnghi -p PhamNghi1706
                 docker pull phucnghi/ThrivoHR:$(tag)
                 docker stop thrivohr-container || true
                 docker rm thrivohr-container || true
