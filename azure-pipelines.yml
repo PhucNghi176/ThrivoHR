@@ -73,7 +73,7 @@ stages:
               runOptions: 'inline'
               inline: |
                 docker login -u phucnghi -p PhamNghi1706
-                docker pull phucnghi/ThrivoHR:$(tag)
+                docker pull phucnghi/thrivoHR:$(tag)
                 docker stop exe201_be_thrivohr || true
                 docker rm exe201_be_thrivohr || true
                 docker run -d --name exe201_be_thrivohr -p 80:80 phucnghi/ThrivoHR:$(tag)
