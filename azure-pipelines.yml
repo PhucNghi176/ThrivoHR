@@ -28,7 +28,7 @@ stages:
               sshEndpoint: 'vpsConnection'
               runOptions: 'inline'
               inline: |
-                docker pull phucnghi/thrivohr:$(tag)
+                docker pull phucnghi/thrivohr:latest
                 docker stop exe201_be_thrivohr || true
                 docker rm exe201_be_thrivohr || true
                 docker run -d --name exe201_be_thrivohr -p 80:80 phucnghi/ThrivoHR:$(tag)
