@@ -72,4 +72,8 @@ stages:
               sshEndpoint: 'vpsConnection'
               runOptions: 'inline'
               inline: |
-                docker compose -f docker-compose.yml up --build -d
+                docker pull phucnghi/thrivohr:latest
+                docker stop thrivohr || true
+                docker rm thrivohr || true
+                docker run -d --name thrivohr -p 1706:8080 phucnghi/thrivohr:latest
+                docker image prune -f
