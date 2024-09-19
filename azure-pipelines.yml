@@ -75,5 +75,5 @@ stages:
                 docker pull phucnghi/thrivohr:latest
                 docker stop thrivohr || true
                 docker rm thrivohr || true
-                docker run -d --name thrivohr -p 80:80 phucnghi/thrivohr:latest
+                docker run -d --name thrivohr -p 1706:80 phucnghi/thrivohr:latest
                 docker image prune -f
