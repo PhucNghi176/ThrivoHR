@@ -24,5 +24,10 @@ namespace EXE201_BE_ThrivoHR.API.Controllers.Authenticate
             var result = await _sender.Send(new RefreshTokenQuery(tokenModel));
             return Ok(result);
         }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("Hello");
+        }
     }
 }
