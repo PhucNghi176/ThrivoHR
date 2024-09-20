@@ -29,5 +29,17 @@ namespace EXE201_BE_ThrivoHR.API.Controllers.Authenticate
         {
             return Ok("Hello");
         }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePassword changePassword, [FromQuery] string EmployeeCode)
+        {
+            if (changePassword.EmployeeCode != EmployeeCode)
+            {
+                return BadRequest("Employee code is not match");
+            }
+            var result = await _sender.Send(changePassword);
+
+            return Ok(result);
+        }
     }
 }
