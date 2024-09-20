@@ -9,18 +9,16 @@ public class CurrentUserService : ICurrentUserService
 {
     private readonly ClaimsPrincipal? _claimsPrincipal;
     private readonly IAuthorizationService _authorizationService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public CurrentUserService(IHttpContextAccessor httpContextAccessor, IAuthorizationService authorizationService)
     {
         _claimsPrincipal = httpContextAccessor?.HttpContext?.User;
         _authorizationService = authorizationService;
-        _httpContextAccessor = httpContextAccessor;
     }
 
     public string? UserId => _claimsPrincipal?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     public string? UserName => _claimsPrincipal?.FindFirst(JwtClaimTypes.Name)?.Value;
-    public string? IP => _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
+
     public async Task<bool> AuthorizeAsync(string policy)
     {
         if (_claimsPrincipal == null) return false;
