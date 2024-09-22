@@ -12,6 +12,5 @@ public class Department : AuditableEntity<int>
     public required string Description { get; set; }
 
     public string? HeadOfDepartmentId { get; set; }
-    public virtual AppUser? HeadOfDepartment { get; set; }
 
 }

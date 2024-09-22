@@ -27,7 +27,7 @@ namespace EXE201_BE_ThrivoHR.API.Controllers.Authenticate
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("Hello");
+            return Ok(DateOnly.FromDateTime(DateTime.Now.AddHours(7)));
         }
 
         [HttpPost("change-password")]
