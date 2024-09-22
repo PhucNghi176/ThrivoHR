@@ -8,25 +8,30 @@ pool:
 
 steps:
   # Pull the latest code on your VPS
+# Run docker-compose on VPS
   - task: SSH@0
     inputs:
       sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
       commands: |
-        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && git pull origin main > /dev/null 2>&1
-    displayName: 'Pull latest code from repository'
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR
+        docker-compose pull
+        docker-compose build
+        docker-compose up -d
+    displayName: 'Run docker-compose'
+
 
   # Run docker-compose on VPS
   - task: SSH@0
-  inputs:
-    sshEndpoint: 'vpsConnection'
-    runOptions: 'commands'
-    commands: |
-      cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR
-      docker-compose pull
-      docker-compose build
-      docker-compose up -d
-  displayName: 'Run docker-compose'
+    inputs:
+      sshEndpoint: 'vpsConnection'
+      runOptions: 'commands'
+      commands: |
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && \
+        docker-compose pull && \
+        docker-compose build && \
+        docker-compose up -d
+    displayName: 'Run docker-compose'
 
   # Verify if the container is running
   - task: SSH@0
