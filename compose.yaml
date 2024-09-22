@@ -3,5 +3,7 @@ services:
     build:
       context: .
       target: final
+    image: thrivohr:latest
+    container_name: thrivohr
     ports:
       - 1706:8080
