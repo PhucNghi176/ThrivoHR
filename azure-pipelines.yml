@@ -6,58 +6,14 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   dockerImageName: 'thrivohr'
-  dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
-  displayName: Build stage
+  displayName: Build and Deploy
   jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      name: 'VPS'  # Make sure this matches your self-hosted agent pool name
-    steps:
-    - task: UseDotNet@2
-      inputs:
-        version: '8.x'
-        includePreviewVersions: false # Be cautious with preview versions in production
-
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: '$(solution)'
-
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        command: build
-        projects: '$(solution)'
-        arguments: '--configuration $(buildConfiguration)'
-
-    - task: DotNetCoreCLI@2
-      displayName: Test
-      inputs:
-        command: test
-        projects: '**/*Tests/*.csproj'
-        arguments: '--configuration $(buildConfiguration)'
-
-    - task: CopyFiles@2
-      inputs:
-        contents: '**/Dockerfile'
-        targetFolder: '$(Build.ArtifactStagingDirectory)'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathToPublish: '$(Build.ArtifactStagingDirectory)'
-        artifactName: 'drop'
-
-- stage: Deploy
-  displayName: Deploy to VPS
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy to VPS
+  - deployment: BuildAndDeploy
+    displayName: Build and Deploy on VPS
     environment: 'production'
     pool:
       name: 'VPS'  # Make sure this matches your self-hosted agent pool name
@@ -65,26 +21,28 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: DownloadBuildArtifacts@0
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'drop'
-              downloadPath: '$(System.ArtifactsDirectory)'
-
           - task: SSH@0
             inputs:
               sshEndpoint: 'vpsConnection'
               runOptions: 'inline'
               inline: |
-                # Create a directory for the project if it doesn't exist
+                # Navigate to the project directory (create if it doesn't exist)
                 mkdir -p /home/phucnghi/thrivohr
-
-                # Navigate to the project directory
                 cd /home/phucnghi/thrivohr
 
-                # Copy the new Dockerfile
-                cp $(System.ArtifactsDirectory)/drop/Dockerfile .
+                # Pull the latest code from the repository
+                # Replace with your actual repository URL and branch
+                if [ -d ".git" ]; then
+                  git pull origin main
+                else
+                  git clone https://your-repo-url.git .
+                  git checkout main
+                fi
+
+                # Build the .NET application
+                dotnet restore
+                dotnet build --configuration Release
+                dotnet test
 
                 # Build the new Docker image
                 docker build -t $(dockerImageName):$(tag) -t $(dockerImageName):latest .
