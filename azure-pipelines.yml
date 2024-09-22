@@ -1,3 +1,11 @@
+trigger:
+  branches:
+    include:
+      - main  # Trigger on pushes to the main branch
+
+pool:
+  name: 'VPS'  # Ensure the correct pool name if using a self-hosted agent
+
 steps:
   # Pull the latest code on your VPS
   - task: SSH@0
