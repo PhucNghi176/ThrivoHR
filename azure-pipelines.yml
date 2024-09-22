@@ -15,22 +15,9 @@ steps:
       runOptions: 'commands'
       commands: |
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR
-        docker-compose pull
-        docker-compose build
-        docker-compose up -d
-    displayName: 'Run docker-compose'
-
-
-  # Run docker-compose on VPS
-  - task: SSH@0
-    inputs:
-      sshEndpoint: 'vpsConnection'
-      runOptions: 'commands'
-      commands: |
-        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && \
-        docker-compose pull && \
-        docker-compose build && \
-        docker-compose up -d
+        docker compose pull
+        docker compose build
+        docker compose up -d
     displayName: 'Run docker-compose'
 
   # Verify if the container is running
@@ -39,5 +26,5 @@ steps:
       sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
       commands: |
-        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && docker-compose ps
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && docker compose ps
     displayName: 'Verify running containers'
