@@ -14,7 +14,7 @@ steps:
       runOptions: 'commands'
       commands: |                   # Use 'commands' for multiple lines
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR  # Navigate to the project folder on your VPS
-        git pull origin main            # Pull the latest code from the main branch
+        git pull            # Pull the latest code from the main branch
     displayName: 'Pull latest code from repository'
 
   # Run docker-compose on VPS
