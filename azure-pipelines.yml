@@ -15,7 +15,6 @@ steps:
       runOptions: 'commands'
       commands: |
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR
-        docker compose pull
         docker compose build
         docker compose up -d
     displayName: 'Run docker-compose'
