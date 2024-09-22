@@ -12,9 +12,8 @@ steps:
     inputs:
       sshEndpoint: 'vpsConnection'  # Define your SSH connection to the VPS in Azure DevOps
       runOptions: 'commands'
-      commands: |                   # Use 'commands' for multiple lines
-        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR  # Navigate to the project folder on your VPS
-        git pull            # Pull the latest code from the main branch
+      commands: |
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && git pull origin main  # Combine commands
     displayName: 'Pull latest code from repository'
 
   # Run docker-compose on VPS
@@ -22,17 +21,18 @@ steps:
     inputs:
       sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
-      commands: |                   # Use 'commands' for multiple lines
-        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR  # Navigate to the project folder
-        docker-compose pull            # Pull any existing images if needed
-        docker-compose build           # Build the Docker image from Dockerfile
-        docker-compose up -d           # Start the container in detached mode
+      commands: |
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && \
+        docker-compose pull && \
+        docker-compose build && \
+        docker-compose up -d  # Run all commands in the same context
     displayName: 'Run docker-compose'
   
   # Verify if the container is running
   - task: SSH@0
     inputs:
-      sshEndpoint: 'vpsConnection'  # Ensure consistency in naming
+      sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
-      commands: docker-compose ps     # Check running containers
+      commands: |
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && docker-compose ps  # Check running containers
     displayName: 'Verify running containers'
