@@ -14,8 +14,8 @@ steps:
       runOptions: 'commands'
       commands: |
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR
-        docker compose down  # Stop the current container
-        docker compose build
+        docker compose down && \
+        docker compose build && \
         docker compose up -d
     displayName: 'Stop current container and run docker-compose'
 
