@@ -71,6 +71,8 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
         public virtual DbSet<ResignForm> ResginForms { get; set; }
         public virtual DbSet<Union> Unions { get; set; }
+
+        public virtual DbSet<AbsentForm> AbsentForms { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
 

@@ -6,16 +6,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Users.Commands;
 
-public record ImportExcel(IFormFile File) : ICommand<List<string>>;
+public record ImportExcel(IFormFile File) : ICommand<string>;
 
-internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, IAddressRepository addressRepository, IEmployeeContractRepository employeeContractRepository) : ICommandHandler<ImportExcel, List<string>>
+internal sealed class ImortExcelHandler(IEmployeeRepository _employeeRepository, IAddressRepository _addressRepository, IEmployeeContractRepository _employeeContractRepository, IDepartmentRepository _departmentRepository) : ICommandHandler<ImportExcel, string>
 {
-    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
 
-    private readonly IAddressRepository _addressRepository = addressRepository;
-    private readonly IEmployeeContractRepository _employeeContractRepository = employeeContractRepository;
-
-    public async Task<Result<List<string>>> Handle(ImportExcel request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(ImportExcel request, CancellationToken cancellationToken)
     {
         WorkBook workBook = WorkBook.Load(request.File.OpenReadStream());
         WorkSheet workSheet = workBook.WorkSheets[0];
@@ -23,6 +19,7 @@ internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, 
         while (!string.IsNullOrEmpty(workSheet[$"A{row}"].StringValue))
         {
             int DId = workSheet[$"S{row}"].IntValue;
+            var Manager = await _departmentRepository.FindAsync(x => x.Id == DId, cancellationToken);
             int PId = workSheet[$"U{row}"].IntValue;
             var StartDate = DateOnly.FromDateTime((DateTime)workSheet[$"W{row}"].DateTimeValue!);
             DateOnly? EndDate = DateOnly.FromDateTime((DateTime)workSheet[$"X{row}"].DateTimeValue);
@@ -53,7 +50,8 @@ internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, 
                 Ethnicity = workSheet[$"P{row}"].StringValue,
                 Religion = workSheet[$"Q{row}"].StringValue,
                 DepartmentId = DId,
-                PositionId = PId
+                PositionId = PId,
+                ManagerId = Manager?.HeadOfDepartmentId
             };
             await _employeeRepository.AddAsync(Employee);
             var employeeContract = new EmployeeContract
@@ -73,6 +71,6 @@ internal sealed class ImortExcelHandler(IEmployeeRepository employeeRepository, 
             row++;
         }
         await _employeeRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-        return Result<List<string>>.Success(new List<string> { "Import Success" });
+        return Result.Success("Import Success");
     }
 }
