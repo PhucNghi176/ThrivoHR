@@ -1,58 +1,27 @@
 trigger:
-  - main
+  branches:
+    include:
+      - main  # Trigger on pushes to the main branch
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  dockerImageName: 'thrivohr'
-  tag: '$(Build.BuildId)'
+pool:
+  name: 'VPS'  # Ensure the correct pool name if using a self-hosted agent
 
-stages:
-- stage: Build
-  displayName: Build and Deploy
-  jobs:
-  - deployment: BuildAndDeploy
-    displayName: Build and Deploy on VPS
-    environment: 'production'
-    pool:
-      name: 'VPS'  # Make sure this matches your self-hosted agent pool name
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: SSH@0
-            inputs:
-              sshEndpoint: 'vpsConnection'
-              runOptions: 'inline'
-              inline: |
-                # Navigate to the project directory (create if it doesn't exist)
-                mkdir -p /home/phucnghi/thrivohr
-                cd /home/phucnghi/thrivohr
+steps:
+  # Pull the latest code on your VPS
+# Run docker-compose on VPS
+  - task: SSH@0
+    inputs:
+      sshEndpoint: 'vpsConnection'
+      runOptions: 'commands'
+      commands: |
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR &&  docker compose build && docker compose up -d > /dev/null 2>&1
+    displayName: 'Run docker-compose'
 
-                # Pull the latest code from the repository
-                # Replace with your actual repository URL and branch
-                if [ -d ".git" ]; then
-                  git pull origin main
-                else
-                  git clone https://your-repo-url.git .
-                  git checkout main
-                fi
-
-                # Build the .NET application
-                dotnet restore
-                dotnet build --configuration Release
-                dotnet test
-
-                # Build the new Docker image
-                docker build -t $(dockerImageName):$(tag) -t $(dockerImageName):latest .
-
-                # Stop and remove the old container
-                docker stop $(dockerImageName) || true
-                docker rm $(dockerImageName) || true
-
-                # Run the new container
-                docker run -d --name $(dockerImageName) -p 1706:8080 $(dockerImageName):latest
-
-                # Remove old images
-                docker image prune -af --filter "until=24h"
+  # Verify if the container is running
+  - task: SSH@0
+    inputs:
+      sshEndpoint: 'vpsConnection'
+      runOptions: 'commands'
+      commands: |
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && docker compose ps
+    displayName: 'Verify running containers'
