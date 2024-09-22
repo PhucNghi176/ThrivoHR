@@ -14,7 +14,7 @@ steps:
       sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
       commands: |
-        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR &&  docker compose build && docker compose up -d > /dev/null 2>&1
+        cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && git pull &&  docker compose build && docker compose up -d > /dev/null 2>&1
     displayName: 'Run docker-compose'
 
   # Verify if the container is running
