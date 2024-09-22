@@ -5,14 +5,13 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  dockerHubUsername: 'phucnghi'
-  dockerHubImageName: 'phucnghi/thrivohr'
+  dockerImageName: 'thrivohr'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
-  displayName: Build and push stage
+  displayName: Build stage
   jobs:
   - job: Build
     displayName: Build
@@ -44,16 +43,15 @@ stages:
         projects: '**/*Tests/*.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
-    - task: Docker@2
-      displayName: Build and push Docker image
+    - task: CopyFiles@2
       inputs:
-        containerRegistry: 'dockerHubConnection'
-        repository: '$(dockerHubImageName)'
-        command: 'buildAndPush'
-        Dockerfile: '$(dockerfilePath)'
-        tags: |
-          $(tag)
-          latest
+        contents: '**/Dockerfile'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
 
 - stage: Deploy
   displayName: Deploy to VPS
@@ -67,26 +65,36 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'drop'
+              downloadPath: '$(System.ArtifactsDirectory)'
+
           - task: SSH@0
             inputs:
               sshEndpoint: 'vpsConnection'
               runOptions: 'inline'
               inline: |
-                # Pull the latest image
-                docker pull $(dockerHubImageName):latest
+                # Create a directory for the project if it doesn't exist
+                mkdir -p /home/phucnghi/thrivohr
+
+                # Navigate to the project directory
+                cd /home/phucnghi/thrivohr
+
+                # Copy the new Dockerfile
+                cp $(System.ArtifactsDirectory)/drop/Dockerfile .
+
+                # Build the new Docker image
+                docker build -t $(dockerImageName):$(tag) -t $(dockerImageName):latest .
 
                 # Stop and remove the old container
-                docker stop thrivohr || true
-                docker rm thrivohr || true
+                docker stop $(dockerImageName) || true
+                docker rm $(dockerImageName) || true
 
                 # Run the new container
-                docker run -d --name thrivohr -p 1706:8080 $(dockerHubImageName):latest
+                docker run -d --name $(dockerImageName) -p 1706:8080 $(dockerImageName):latest
 
-                # Remove the old image
-                OLD_IMAGE=$(docker images -q $(dockerHubImageName) | sed -n 2p)
-                if [ ! -z "$OLD_IMAGE" ]; then
-                  docker rmi $OLD_IMAGE || true
-                fi
-
-                # Prune unused images
-                docker image prune -f
+                # Remove old images
+                docker image prune -af --filter "until=24h"
