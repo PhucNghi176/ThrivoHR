@@ -7,17 +7,17 @@ pool:
   name: 'VPS'  # Ensure the correct pool name if using a self-hosted agent
 
 steps:
-  # Pull the latest code on your VPS
-# Run docker-compose on VPS
+  # Stop the current Docker container and pull the latest code on your VPS
   - task: SSH@0
     inputs:
       sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
       commands: |
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR
+        docker compose down  # Stop the current container
         docker compose build
         docker compose up -d
-    displayName: 'Run docker-compose'
+    displayName: 'Stop current container and run docker-compose'
 
   # Verify if the container is running
   - task: SSH@0
