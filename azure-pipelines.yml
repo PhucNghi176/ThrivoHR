@@ -7,7 +7,7 @@ steps:
   # Pull the latest code in your VPS
   - task: SSH@0
     inputs:
-      sshEndpoint: 'myVpsConnection'  # Define your SSH connection to the VPS in Azure DevOps
+      sshEndpoint: 'vpsConnection'  # Define your SSH connection to the VPS in Azure DevOps
       runOptions: 'commands'
       command: |
         cd /thrivohr/EXE201_BE_THRIVOHR  # Navigate to the project folder on your VPS
@@ -17,7 +17,7 @@ steps:
   # Run docker-compose on VPS
   - task: SSH@0
     inputs:
-      sshEndpoint: 'myVpsConnection'
+      sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
       command: |
         cd /thrivohr/EXE201_BE_THRIVOHR  # Navigate to the project folder
