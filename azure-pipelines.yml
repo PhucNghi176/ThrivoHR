@@ -4,16 +4,17 @@ trigger:
       - main  # Trigger on pushes to the main branch
 
 pool:
-  name : VPS
+  name: 'VPS'  # Ensure the correct pool name if using a self-hosted agent
+
 steps:
-  # Pull the latest code in your VPS
+  # Pull the latest code on your VPS
   - task: SSH@0
     inputs:
       sshEndpoint: 'vpsConnection'  # Define your SSH connection to the VPS in Azure DevOps
       runOptions: 'commands'
-      command: |
+      commands: |                   # Use 'commands' for multiple lines
         cd /thrivohr/EXE201_BE_THRIVOHR  # Navigate to the project folder on your VPS
-        git pull origin main       # Pull the latest code from the main branch
+        git pull origin main            # Pull the latest code from the main branch
     displayName: 'Pull latest code from repository'
 
   # Run docker-compose on VPS
@@ -21,17 +22,17 @@ steps:
     inputs:
       sshEndpoint: 'vpsConnection'
       runOptions: 'commands'
-      command: |
+      commands: |                   # Use 'commands' for multiple lines
         cd /thrivohr/EXE201_BE_THRIVOHR  # Navigate to the project folder
-        docker-compose pull       # Pull any existing images if needed
-        docker-compose build      # Build the Docker image from Dockerfile
-        docker-compose up -d      # Start the container in detached mode
+        docker-compose pull            # Pull any existing images if needed
+        docker-compose build           # Build the Docker image from Dockerfile
+        docker-compose up -d           # Start the container in detached mode
     displayName: 'Run docker-compose'
   
   # Verify if the container is running
   - task: SSH@0
     inputs:
-      sshEndpoint: 'VpsConnection'
+      sshEndpoint: 'vpsConnection'  # Ensure consistency in naming
       runOptions: 'commands'
-      command: docker-compose ps
+      commands: docker-compose ps     # Check running containers
     displayName: 'Verify running containers'
