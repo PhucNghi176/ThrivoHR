@@ -1,5 +1,5 @@
 trigger:
-- main
+  - main
 
 variables:
   solution: '**/*.sln'
@@ -17,12 +17,12 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      name: 'VPS'  # Replace 'Default' with your self-hosted agent pool name
+      name: 'VPS'  # Make sure this matches your self-hosted agent pool name
     steps:
     - task: UseDotNet@2
       inputs:
         version: '8.x'
-        includePreviewVersions: true
+        includePreviewVersions: false # Be cautious with preview versions in production
 
     - task: DotNetCoreCLI@2
       displayName: Restore
@@ -50,11 +50,11 @@ stages:
         containerRegistry: 'dockerHubConnection'
         repository: '$(dockerHubImageName)'
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: '$(dockerfilePath)'
         tags: |
           $(tag)
           latest
-          
+
 - stage: Deploy
   displayName: Deploy to VPS
   jobs:
@@ -62,7 +62,7 @@ stages:
     displayName: Deploy to VPS
     environment: 'production'
     pool:
-      name: 'VPS'  # Replace 'Default' with your self-hosted agent pool name
+      name: 'VPS'  # Make sure this matches your self-hosted agent pool name
     strategy:
       runOnce:
         deploy:
@@ -72,8 +72,21 @@ stages:
               sshEndpoint: 'vpsConnection'
               runOptions: 'inline'
               inline: |
-                docker pull phucnghi/thrivohr:latest
+                # Pull the latest image
+                docker pull $(dockerHubImageName):latest
+
+                # Stop and remove the old container
                 docker stop thrivohr || true
                 docker rm thrivohr || true
-                docker run -d --name thrivohr -p 1706:8080 phucnghi/thrivohr:latest
+
+                # Run the new container
+                docker run -d --name thrivohr -p 1706:8080 $(dockerHubImageName):latest
+
+                # Remove the old image
+                OLD_IMAGE=$(docker images -q $(dockerHubImageName) | sed -n 2p)
+                if [ ! -z "$OLD_IMAGE" ]; then
+                  docker rmi $OLD_IMAGE || true
+                fi
+
+                # Prune unused images
                 docker image prune -f
