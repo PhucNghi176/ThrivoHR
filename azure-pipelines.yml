@@ -3,6 +3,8 @@ trigger:
     include:
       - main  # Trigger on pushes to the main branch
 
+pool:
+  name : VPS
 steps:
   # Pull the latest code in your VPS
   - task: SSH@0
