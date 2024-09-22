@@ -29,7 +29,7 @@ steps:
   # Verify if the container is running
   - task: SSH@0
     inputs:
-      sshEndpoint: 'myVpsConnection'
+      sshEndpoint: ''VpsConnection''
       runOptions: 'commands'
       command: docker-compose ps
     displayName: 'Verify running containers'
