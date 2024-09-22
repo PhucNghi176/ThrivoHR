@@ -10,7 +10,7 @@ steps:
   # Pull the latest code on your VPS
   - task: SSH@0
     inputs:
-      sshEndpoint: 'vpsConnection'  # Define your SSH connection to the VPS in Azure DevOps 
+      sshEndpoint: 'vpsConnection'  # Define your SSH connection to the VPS in Azure DevOps
       runOptions: 'commands'
       commands: |
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && git pull origin main  # Combine commands
@@ -25,7 +25,7 @@ steps:
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR && \
         docker-compose pull && \
         docker-compose build && \
-        docker-compose up -d  # Run all commands in the same context
+        docker-compose up -d  # Start the container in detached mode
     displayName: 'Run docker-compose'
   
   # Verify if the container is running
