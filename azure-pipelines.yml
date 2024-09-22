@@ -11,12 +11,11 @@ steps:
   - task: SSH@0
     inputs:
       sshEndpoint: 'vpsConnection'
-      runOptions: 'commands'
-      commands: |
+      runOptions: 'inline'
+      inline: |
         cd /home/phucnghi/thrivohr/EXE201_BE_THRIVOHR
-        docker compose down && \
-        docker compose build && \
-        docker compose up -d
+        ls -la  # Confirm the presence of docker-compose.yml
+        docker compose down && docker compose build && docker compose up -d
     displayName: 'Stop current container and run docker-compose'
 
   # Verify if the container is running
