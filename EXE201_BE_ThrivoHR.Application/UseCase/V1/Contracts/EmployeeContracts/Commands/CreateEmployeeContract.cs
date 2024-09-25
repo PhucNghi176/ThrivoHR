@@ -10,24 +10,19 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts.
 public record CreateEmployeeContract(EmployeeContractModelCreate EmployeeContractModel) : ICommand;
 internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository employeeContractRepository, IEmployeeRepository employeeRepository, IMapper mapper) : ICommandHandler<CreateEmployeeContract>
 {
-
-    private readonly IEmployeeContractRepository _employeeContractRepository = employeeContractRepository;
-    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
-    private readonly IMapper _mapper = mapper;
-
     public async Task<Result> Handle(CreateEmployeeContract request, CancellationToken cancellationToken)
     {
         // Check if the employee exists
-        var Employee = await _employeeRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeContractModel.EmployeeCode), cancellationToken) ?? throw new Employee.NotFoundException(request.EmployeeContractModel.EmployeeCode);
+        var Employee = await employeeRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeContractModel.EmployeeCode), cancellationToken) ?? throw new Employee.NotFoundException(request.EmployeeContractModel.EmployeeCode);
 
 
         // check if the employee has an existing contract
-        var EmployeeCurrentContract = await _employeeContractRepository.FindAsync(x => x.EmployeeId == Employee.Id, cancellationToken);
+        var EmployeeCurrentContract = await employeeContractRepository.FindAsync(x => x.EmployeeId == Employee.Id, cancellationToken);
         if (EmployeeCurrentContract != null && !EmployeeCurrentContract.IsEnded)
         {
             throw new EmployeeContractExceptions.CurrentContractNotEndedException("Employee Contract", request.EmployeeContractModel.EmployeeCode);
         }
-        var contract = _mapper.Map<Domain.Entities.Contracts.EmployeeContract>(request.EmployeeContractModel);
+        var contract = mapper.Map<Domain.Entities.Contracts.EmployeeContract>(request.EmployeeContractModel);
 
         contract.EmployeeId = Employee.Id;
         Employee = EmployeesMethod.SetDepartmentAndPostionForEmployee(Employee, contract);
@@ -35,9 +30,9 @@ internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository 
         try
         {
             await Task.WhenAll(
-                    _employeeRepository.UpdateAsync(Employee),
-                    _employeeContractRepository.AddAsync(contract));
-            await _employeeContractRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                    employeeRepository.UpdateAsync(Employee),
+                    employeeContractRepository.AddAsync(contract));
+            await employeeContractRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         }
         catch (DbUpdateException ex)//Handle dupplication exception

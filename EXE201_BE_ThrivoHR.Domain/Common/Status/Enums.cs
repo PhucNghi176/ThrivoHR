@@ -13,3 +13,16 @@ public enum FormStatus
     Approved = 1,
     Rejected = 2,
 }
+
+public enum FormOfAction
+{
+    Warning = 0,
+    Dismissal = 1,
+    Promotion = 2,
+    Demotion = 3,
+    Suspension = 4,
+    Bonus = 5,
+    Fine = 6,
+    SalaryIncrease = 7,
+
+}

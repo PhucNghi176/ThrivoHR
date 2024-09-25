@@ -23,7 +23,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
             modelBuilder.Entity<Address>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<BaseForm>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Union>().HasQueryFilter(x => !x.IsDeleted);
-
+            modelBuilder.Entity<RewardsAndDisciplinary>().HasQueryFilter(x => !x.IsDeleted);
             ConfigureModel(modelBuilder);
 
         }
@@ -71,6 +71,7 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
         public virtual DbSet<ResignForm> ResginForms { get; set; }
         public virtual DbSet<Union> Unions { get; set; }
+        public virtual DbSet<RewardsAndDisciplinary> RewardsAndDisciplinaries { get; set; }
 
         public virtual DbSet<AbsentForm> AbsentForms { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)

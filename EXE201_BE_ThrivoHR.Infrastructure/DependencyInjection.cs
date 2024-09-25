@@ -36,6 +36,7 @@ public static class DependencyInjection
         services.AddScoped<IResignFormRepository, ResignFormRepository>();
         services.AddScoped<IUnionRepository, UnionRepository>();
         services.AddScoped<IAbsentFormRepository, AbsentFormRepository>();
+        services.AddScoped<IRewardAndDisciplinaryRepository, RewardAndDisciplinaryRepository>();
 
         return services;
     }
@@ -47,6 +48,7 @@ public static class DependencyInjection
             var jobKey = new JobKey(nameof(IncreaseLeaveDayBackgroundJob));
             q.AddJob<IncreaseLeaveDayBackgroundJob>(jobKey).AddTrigger(t => t.ForJob(jobKey).WithCronSchedule("0 0 12 1 1/1 ? *"));
             q.UseMicrosoftDependencyInjectionJobFactory();
+            
         });
         services.AddQuartzHostedService();
     }
