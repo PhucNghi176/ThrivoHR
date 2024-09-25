@@ -24,7 +24,7 @@ public class EmployeeDto : IMapFrom<AppUser>
     public string? Department { get; set; }
     public string? Position { get; set; }
     public DateOnly? DateOfBirth { get; set; }
-    public int NumberOfLeave { get; set; }
+    public double NumberOfLeave { get; set; }
 
     public string? Manager { get; set; }
 

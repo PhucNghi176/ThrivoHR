@@ -38,7 +38,7 @@ public class AppUser : IdentityUser<string>, IAuditableEntity
     public DateTime? LastModifiedOn { get; set; } = DateTime.UtcNow.AddHours(7);
     public DateTime? DeletedOn { get; set; }
     public string? DeletedBy { get; set; }
-    public int NumberOfLeave { get; set; } = 0;
+    public double NumberOfLeave { get; set; } = 0;
 
     public bool IsDeleted { get; set; }
     public string? ManagerId { get; set; }
