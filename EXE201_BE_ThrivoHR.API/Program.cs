@@ -38,7 +38,7 @@ public static class Program
         //builder.Services.HttpCacheHeadersConfiguration();
         builder.Services.ConfigureRateLimit();
         builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
-
+        builder.Services.AddQuartInfrastructure();
         // Allow all CORS
         builder.Services.AddCors(options =>
         {
