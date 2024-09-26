@@ -13,12 +13,12 @@ public class RewardAndDisciplinaryDto : IMapFrom<RewardsAndDisciplinary>
     public string? EmployeeId { get; set; }
     public string? EmployeeName { get; set; }
     public DateOnly Date { get; set; }
-    public FormOfAction FormOfAction { get; set; }
+    public string FormOfAction { get; set; }
     [Column(TypeName = "decimal(18, 2)")]
     public decimal? Amount { get; set; }
     public string? Reason { get; set; }
     public string? ApproverName { get; set; }
-    public FormStatus Status { get; set; }
+    public string Status { get; set; }
 
     public static RewardAndDisciplinaryDto Create(RewardAndDisciplinaryDto rewardAndDisciplinaryDto, IMapper mapper)
     {
@@ -28,7 +28,13 @@ public class RewardAndDisciplinaryDto : IMapFrom<RewardsAndDisciplinary>
     {
         profile.CreateMap<RewardsAndDisciplinary, RewardAndDisciplinaryDto>()
             .ForMember(d => d.EmployeeName, opt => opt.MapFrom(s => s.Employee.FullName))
-            .ForMember(d => d.ApproverName, opt => opt.MapFrom(s => s.Approver.FullName)).ReverseMap();
+            .ForMember(d => d.ApproverName, opt => opt.MapFrom(s => s.Approver.FullName))
+            .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Status.ToString()))
+            .ForMember(d => d.FormOfAction, opt => opt.MapFrom(s => s.FormOfAction.ToString()))
+
+
+            .ReverseMap();
+
         profile.CreateMap<RewardAndDisciplinaryModel, RewardsAndDisciplinary>();
 
 

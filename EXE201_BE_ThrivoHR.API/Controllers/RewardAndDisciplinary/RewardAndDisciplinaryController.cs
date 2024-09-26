@@ -27,4 +27,9 @@ public class RewardAndDisciplinaryController(ISender sender) : BaseController(se
         
         return Ok(await _sender.Send(command));
     }
+    [HttpPut("status")]
+    public async Task<IActionResult> ChangeStatus([FromBody] ChangeStatus command)
+    {
+        return Ok(await _sender.Send(command));
+    }
 }
