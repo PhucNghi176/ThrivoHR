@@ -10,9 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Action = EXE201_BE_ThrivoHR.Domain.Entities.Identity.Action;
 namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService) : DbContext(options), IUnitOfWork
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService _currentUserService) : DbContext(options), IUnitOfWork
     {
-        private readonly ICurrentUserService _currentUserService = currentUserService;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
@@ -24,6 +23,8 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
             modelBuilder.Entity<BaseForm>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Union>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<RewardsAndDisciplinary>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<TrainingHistory>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Overtime>().HasQueryFilter(x => !x.IsDeleted);
             ConfigureModel(modelBuilder);
 
         }
@@ -67,13 +68,12 @@ namespace EXE201_BE_ThrivoHR.Infrastructure.Persistence
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<EmployeeContract> EmployeeContracts { get; set; }
         public virtual DbSet<TrainingHistory> TrainingHistories { get; set; }
-
         public virtual DbSet<ApplicationForm> ApplicationForms { get; set; }
         public virtual DbSet<ResignForm> ResginForms { get; set; }
         public virtual DbSet<Union> Unions { get; set; }
         public virtual DbSet<RewardsAndDisciplinary> RewardsAndDisciplinaries { get; set; }
-
         public virtual DbSet<AbsentForm> AbsentForms { get; set; }
+        public virtual DbSet<Overtime> Overtimes { get; set; }
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
 

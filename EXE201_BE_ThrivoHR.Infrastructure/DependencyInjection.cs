@@ -37,6 +37,7 @@ public static class DependencyInjection
         services.AddScoped<IUnionRepository, UnionRepository>();
         services.AddScoped<IAbsentFormRepository, AbsentFormRepository>();
         services.AddScoped<IRewardAndDisciplinaryRepository, RewardAndDisciplinaryRepository>();
+        services.AddScoped<IOvertimeRepository, OvertimeRepository>();
 
         return services;
     }
