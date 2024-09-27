@@ -8,13 +8,14 @@ using Microsoft.EntityFrameworkCore;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts.Commands;
 
 public record CreateEmployeeContract(EmployeeContractModelCreate EmployeeContractModel) : ICommand;
-internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository employeeContractRepository, IEmployeeRepository employeeRepository, IMapper mapper) : ICommandHandler<CreateEmployeeContract>
+internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository employeeContractRepository, IEmployeeRepository employeeRepository, IMapper mapper, IDepartmentRepository departmentRepository) : ICommandHandler<CreateEmployeeContract>
 {
     public async Task<Result> Handle(CreateEmployeeContract request, CancellationToken cancellationToken)
     {
         // Check if the employee exists
         var Employee = await employeeRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeContractModel.EmployeeCode), cancellationToken) ?? throw new Employee.NotFoundException(request.EmployeeContractModel.EmployeeCode);
 
+        var HeadDepartment = await departmentRepository.FindAsync(x => x.Id==request.EmployeeContractModel.DepartmentId, cancellationToken);
 
         // check if the employee has an existing contract
         var EmployeeCurrentContract = await employeeContractRepository.FindAsync(x => x.EmployeeId == Employee.Id, cancellationToken);
@@ -26,6 +27,7 @@ internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository 
 
         contract.EmployeeId = Employee.Id;
         Employee = EmployeesMethod.SetDepartmentAndPostionForEmployee(Employee, contract);
+        Employee.ManagerId = HeadDepartment.HeadOfDepartmentId;
         contract = EmployeeContractMethod.CalculateEndDateAndDurationAndExpiryContract(contract);
         try
         {
