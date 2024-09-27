@@ -25,7 +25,7 @@ public class EmployeeDto : IMapFrom<AppUser>
     public string? Position { get; set; }
     public DateOnly? DateOfBirth { get; set; }
     public double NumberOfLeave { get; set; }
-
+    public string? ImageUrl { get; set; }   
     public string? Manager { get; set; }
 
     public static EmployeeDto Create(AppUser employee, IMapper mapper)

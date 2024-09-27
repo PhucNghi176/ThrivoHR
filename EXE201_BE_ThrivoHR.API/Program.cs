@@ -39,6 +39,7 @@ public static class Program
         builder.Services.ConfigureRateLimit();
         builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
         builder.Services.AddQuartInfrastructure();
+        builder.Services.AddCloudinaryInfrastructure(builder.Configuration);
         // Allow all CORS
         builder.Services.AddCors(options =>
         {

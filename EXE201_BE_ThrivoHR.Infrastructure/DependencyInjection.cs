@@ -1,4 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
+﻿using CloudinaryDotNet;
+using EXE201_BE_ThrivoHR.Domain.Common.Interfaces;
 using EXE201_BE_ThrivoHR.Domain.Repositories;
 using EXE201_BE_ThrivoHR.Infrastructure.BackgroundJobs;
 using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
@@ -38,7 +39,7 @@ public static class DependencyInjection
         services.AddScoped<IAbsentFormRepository, AbsentFormRepository>();
         services.AddScoped<IRewardAndDisciplinaryRepository, RewardAndDisciplinaryRepository>();
         services.AddScoped<IOvertimeRepository, OvertimeRepository>();
-
+        services.AddScoped<Cloudinary>();
         return services;
     }
 
@@ -52,5 +53,11 @@ public static class DependencyInjection
             
         });
         services.AddQuartzHostedService();
+    }
+    public static void AddCloudinaryInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    {
+        Cloudinary cloudinary = new(configuration.GetSection("CLOUDINARY_URL").Value);
+        cloudinary.Api.Secure = true;
+        services.AddSingleton(cloudinary);
     }
 }
