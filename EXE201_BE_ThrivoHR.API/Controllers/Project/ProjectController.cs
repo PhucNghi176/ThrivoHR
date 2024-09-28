@@ -17,12 +17,22 @@ public class ProjectController(ISender sender) : BaseController(sender)
         return Ok(await _sender.Send(query));
     }
     [HttpPut("change-status")]
-    public async Task<IActionResult> ChangeStatus([FromQuery]ChangeStatus command)
+    public async Task<IActionResult> ChangeStatus([FromQuery] ChangeStatus command)
     {
         return Ok(await _sender.Send(command));
     }
     [HttpPut]
     public async Task<IActionResult> Update(UpdateProject command)
+    {
+        return Ok(await _sender.Send(command));
+    }
+    [HttpPut("edit-member")]
+    public async Task<IActionResult> GetProjectDetail([FromQuery] EditMemberInProject command)
+    {
+        return Ok(await _sender.Send(command));
+    }
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromQuery] Delete command)
     {
         return Ok(await _sender.Send(command));
     }
