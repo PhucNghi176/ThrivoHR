@@ -39,7 +39,7 @@ public static class DependencyInjection
         services.AddScoped<IAbsentFormRepository, AbsentFormRepository>();
         services.AddScoped<IRewardAndDisciplinaryRepository, RewardAndDisciplinaryRepository>();
         services.AddScoped<IOvertimeRepository, OvertimeRepository>();
-        services.AddScoped<IProjectRepository,ProjectRepository>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<ITaskHistoryRepository, TaskHistoryRepository>();
         services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
         services.AddScoped<IEmployeesProjectMappingRepository, EmployeesProjectMappingRepository>();

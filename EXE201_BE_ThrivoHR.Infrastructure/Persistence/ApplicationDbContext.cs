@@ -29,6 +29,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<Project>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<TaskHistory>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<EmployeesProjectMapping>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<ProjectTask>().ToTable(x => x.HasTrigger("UpdateProjectProgress"));
+        modelBuilder.Entity<ProjectTask>().ToTable(x => x.HasTrigger("TrackTaskHistory"));
         ConfigureModel(modelBuilder);
 
     }

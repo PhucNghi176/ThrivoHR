@@ -1,10 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
 using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.ProjectTasks.Commands;
 
@@ -15,7 +10,7 @@ internal sealed class ChangeAssigneeHandler(IProjectTaskRepository projectTaskRe
     {
         var task = await projectTaskRepository.FindAsync(x => x.Id == request.TaskId, cancellationToken) ?? throw new NotFoundException("Task not found");
         var employee = await employeeRepository.FindByEmployeeCode(request.AssigneeCode, cancellationToken) ?? throw new Employee.NotFoundException(request.AssigneeCode);
-        task.Id = employee.Id;
+        task.AssigneeId = employee.Id;
         await projectTaskRepository.UpdateAsync(task);
         await projectTaskRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();

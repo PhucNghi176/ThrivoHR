@@ -4,7 +4,7 @@ using EXE201_BE_ThrivoHR.Domain.Entities;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Projects;
 public class ProjectDto : IMapFrom<Project>
 {
-    public new string Id { get; set; }
+    public string Id { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
     public string? LeaderName { get; set; }
@@ -23,8 +23,8 @@ public class ProjectDto : IMapFrom<Project>
         profile.CreateMap<Project, ProjectDto>()
             .ForMember(d => d.LeaderName, opt => opt.MapFrom(s => s.Leader.FullName))
             .ForMember(d => d.SubLeaderName, opt => opt.MapFrom(s => s.SubLeader.FullName))
-            .ForMember(d => d.TotalEmployee, opt => opt.MapFrom(s => s.ProjectEmployees.Where(x => !x.IsDeleted).Count()))
-            .ForMember(d => d.TotalTask, opt => opt.MapFrom(s => s.Tasks.Count))
+            .ForMember(d => d.TotalEmployee, opt => opt.MapFrom(s => s.ProjectEmployees.Count(x => !x.IsDeleted)))
+            .ForMember(d => d.TotalTask, opt => opt.MapFrom(s => s.Tasks.Count(x => x.Status.ToString() != "3")))
             .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Status.ToString())).ReverseMap();
         profile.CreateMap<ProjectModel, Project>().ReverseMap();
     }
