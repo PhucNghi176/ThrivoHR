@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="UseCase\V1\Images\Queries\" />
-    <Folder Include="UseCase\V1\Projects\Commands\" />
     <Folder Include="UseCase\V1\Projects\Queries\" />
   </ItemGroup>
 </Project>

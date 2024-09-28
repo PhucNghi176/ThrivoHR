@@ -9,11 +9,11 @@ public class Project : AuditableEntity<string>
     public string? Name { get; set; }
     public string? Description { get; set; }
     public string? LeaderId { get; set; }
-    public ICollection<AppUser> Employees { get; set; } = [];
-    public ICollection<ProjectTask> Tasks { get; set; } = [];
     public string? SubLeaderId { get; set; }
-    public double Progress { get; set; }
+    public double Progress { get; set; } = 0;
     public virtual AppUser? Leader { get; set; }
     public virtual AppUser? SubLeader { get; set; }
-    public TaskStatus Status { get; set; }
+    public virtual ICollection<AppUser> EmployeeIds { get; set; } = [];
+    public virtual ICollection<ProjectTask> Tasks { get; set; } = [];
+    public TaskStatus Status { get; set; } = TaskStatus.NotStarted;
 }
