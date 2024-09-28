@@ -39,7 +39,7 @@ public static class DependencyInjection
         services.AddScoped<IAbsentFormRepository, AbsentFormRepository>();
         services.AddScoped<IRewardAndDisciplinaryRepository, RewardAndDisciplinaryRepository>();
         services.AddScoped<IOvertimeRepository, OvertimeRepository>();
-        services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IProjectRepository,ProjectRepository>();
         services.AddScoped<ITaskHistoryRepository, TaskHistoryRepository>();
         services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
         services.AddScoped<IEmployeesProjectMappingRepository, EmployeesProjectMappingRepository>();
@@ -51,9 +51,7 @@ public static class DependencyInjection
         services.AddQuartz(q =>
         {
             var jobKey = new JobKey(nameof(IncreaseLeaveDayBackgroundJob));
-            // q.AddJob<IncreaseLeaveDayBackgroundJob>(jobKey).AddTrigger(t => t.ForJob(jobKey).WithCronSchedule("0 0 12 1 1/1 ? *"));
-            //run job every 30s
-            q.AddJob<IncreaseLeaveDayBackgroundJob>(jobKey).AddTrigger(t => t.ForJob(jobKey).WithCronSchedule("0/30 * * * * ?"));
+            q.AddJob<IncreaseLeaveDayBackgroundJob>(jobKey).AddTrigger(t => t.ForJob(jobKey).WithCronSchedule("0 0 12 1 1/1 ? *"));
             q.UseMicrosoftDependencyInjectionJobFactory();
 
         });
