@@ -39,7 +39,9 @@ public static class DependencyInjection
         services.AddScoped<IAbsentFormRepository, AbsentFormRepository>();
         services.AddScoped<IRewardAndDisciplinaryRepository, RewardAndDisciplinaryRepository>();
         services.AddScoped<IOvertimeRepository, OvertimeRepository>();
-        services.AddScoped<Cloudinary>();
+        services.AddScoped<IProjectRepository,ProjectRepository>();
+        services.AddScoped<ITaskHistoryRepository, TaskHistoryRepository>();
+        services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
         return services;
     }
 
