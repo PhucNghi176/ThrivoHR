@@ -36,4 +36,9 @@ public class ProjectController(ISender sender) : BaseController(sender)
     {
         return Ok(await _sender.Send(command));
     }
+    [HttpGet("get-all-member")]
+    public async Task<IActionResult> GetAllMember([FromQuery] GetAllMember query)
+    {
+        return Ok(await _sender.Send(query));
+    }
 }
