@@ -15,7 +15,7 @@ internal sealed class CreateEmployeeContractHandler(IEmployeeContractRepository 
         // Check if the employee exists
         var Employee = await employeeRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeContractModel.EmployeeCode), cancellationToken) ?? throw new Employee.NotFoundException(request.EmployeeContractModel.EmployeeCode);
 
-        var HeadDepartment = await departmentRepository.FindAsync(x => x.Id==request.EmployeeContractModel.DepartmentId, cancellationToken);
+        var HeadDepartment = await departmentRepository.FindAsync(x => x.Id == request.EmployeeContractModel.DepartmentId, cancellationToken);
 
         // check if the employee has an existing contract
         var EmployeeCurrentContract = await employeeContractRepository.FindAsync(x => x.EmployeeId == Employee.Id, cancellationToken);

@@ -4,4 +4,4 @@ using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
 
 namespace EXE201_BE_ThrivoHR.Infrastructure.Repositories;
 
-public class RewardAndDisciplinaryRepository(ApplicationDbContext dbContext, IMapper mapper) : RepositoryBase<RewardsAndDisciplinary, RewardsAndDisciplinary, ApplicationDbContext>(dbContext, mapper),IRewardAndDisciplinaryRepository;
+public class RewardAndDisciplinaryRepository(ApplicationDbContext dbContext, IMapper mapper) : RepositoryBase<RewardsAndDisciplinary, RewardsAndDisciplinary, ApplicationDbContext>(dbContext, mapper), IRewardAndDisciplinaryRepository;

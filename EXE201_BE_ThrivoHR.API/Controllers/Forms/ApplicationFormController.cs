@@ -1,5 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ApplicationForms.Queries;
-using EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ApplicationForms.Commands;
+﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ApplicationForms.Commands;
+using EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ApplicationForms.Queries;
 
 namespace EXE201_BE_ThrivoHR.API.Controllers.Forms;
 

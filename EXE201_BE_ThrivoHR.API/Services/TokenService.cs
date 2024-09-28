@@ -82,7 +82,7 @@ public class TokenService(IConfiguration configuration, IEmployeeRepository user
         new Claim(ClaimTypes.NameIdentifier, EmployeeCode),
         new Claim(ClaimTypes.Role, RoleName),
         new Claim("EmployeeId", EmployeesMethod.ConvertEmployeeCodeToId(EmployeeCode).ToString()),
-       
+
     ];
 
     private string GenerateEncryptedToken(SigningCredentials signingCredentials, IEnumerable<Claim> claims)

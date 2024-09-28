@@ -2,7 +2,7 @@
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ResignForms.Queries;
 
-public record FilterResignForms(string? FullName,int PageNumber = 1,
+public record FilterResignForms(string? FullName, int PageNumber = 1,
     int PageSize = 100) : IQuery<PagedResult<ResignFormDto>>;
 internal sealed class FilterResignFormsHandler : IQueryHandler<FilterResignForms, PagedResult<ResignFormDto>>
 {

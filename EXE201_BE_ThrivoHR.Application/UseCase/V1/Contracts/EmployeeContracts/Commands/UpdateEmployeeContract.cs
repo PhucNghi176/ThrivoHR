@@ -20,7 +20,7 @@ internal sealed class UpdateEmployeeContractHandler(IEmployeeContractRepository 
         // Check if the employee exists
         var Employee = await _employeeRepository.FindAsync(x => x.Id == ContractCorresponseEmployee.EmployeeId, cancellationToken) ?? throw new EmployeeContractExceptions.ContractWithEmployeeNotFoundException();
         Employee = EmployeesMethod.SetDepartmentAndPostionForEmployee(Employee, ContractCorresponseEmployee);
-        ContractCorresponseEmployee = EmployeeContractMethod.CalculateEndDateAndDurationAndExpiryContract(ContractCorresponseEmployee,request.EmployeeContractModel);
+        ContractCorresponseEmployee = EmployeeContractMethod.CalculateEndDateAndDurationAndExpiryContract(ContractCorresponseEmployee, request.EmployeeContractModel);
         _mapper.Map(request.EmployeeContractModel, ContractCorresponseEmployee);
         await _employeeContractRepository.UpdateAsync(ContractCorresponseEmployee);
         await _employeeRepository.UpdateAsync(Employee);

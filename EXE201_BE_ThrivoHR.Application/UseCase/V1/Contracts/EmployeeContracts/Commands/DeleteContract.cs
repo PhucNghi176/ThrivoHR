@@ -1,5 +1,4 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
-using EXE201_BE_ThrivoHR.Application.Common.Method;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Contracts.EmployeeContracts.Commands;
 

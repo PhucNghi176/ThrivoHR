@@ -16,7 +16,7 @@ internal sealed class CreateAbsentFormHandler(IAbsentFormRepository absentFormRe
         {
             throw new AbsentFormException.InvalidHoursException();
         }
-        else if (Days > Employee.NumberOfLeave )
+        else if (Days > Employee.NumberOfLeave)
         {
             throw new AbsentFormException.ExceedLeaveException();
         }

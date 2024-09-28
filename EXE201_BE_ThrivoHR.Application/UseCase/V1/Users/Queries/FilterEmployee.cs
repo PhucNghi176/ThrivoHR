@@ -1,5 +1,4 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Method;
-using EXE201_BE_ThrivoHR.Application.Common.Security;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using EXE201_BE_ThrivoHR.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

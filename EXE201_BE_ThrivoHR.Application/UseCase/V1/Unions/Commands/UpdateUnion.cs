@@ -1,7 +1,4 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Application.Common.Exceptions;
-using EXE201_BE_ThrivoHR.Application.Common.Method;
-using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Unions.Commands;

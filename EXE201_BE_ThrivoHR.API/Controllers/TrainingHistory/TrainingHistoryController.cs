@@ -1,6 +1,4 @@
-﻿
-using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Application.UseCase.V1.TrainingHistories.Commands;
+﻿using EXE201_BE_ThrivoHR.Application.UseCase.V1.TrainingHistories.Commands;
 using EXE201_BE_ThrivoHR.Application.UseCase.V1.TrainingHistories.Queries;
 
 namespace EXE201_BE_ThrivoHR.API.Controllers.TrainingHistory;

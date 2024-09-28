@@ -6,7 +6,7 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities.Base;
 public abstract class BaseForm : AuditableEntity<string>
 {
     public new string Id { get; set; } = Guid.NewGuid().ToString();
-    public  string? EmployeeId { get; set; }
+    public string? EmployeeId { get; set; }
     public DateTime DateTime { get; set; } = DateTime.Now;
     public string? Reason { get; set; }
     public string? ApproverId { get; set; }

@@ -2,4 +2,4 @@
 
 namespace EXE201_BE_ThrivoHR.Domain.Repositories;
 
-public interface IOvertimeRepository :IEFRepository<Overtime,Overtime>;
+public interface IOvertimeRepository : IEFRepository<Overtime, Overtime>;

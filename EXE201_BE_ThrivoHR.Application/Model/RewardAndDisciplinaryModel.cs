@@ -10,6 +10,6 @@ public class RewardAndDisciplinaryModel
     public FormOfAction FormOfAction { get; set; }
     public decimal? Amount { get; set; }
     public string? Reason { get; set; }
-    
+
     public FormStatus Status { get; set; } = FormStatus.Pending;
 }

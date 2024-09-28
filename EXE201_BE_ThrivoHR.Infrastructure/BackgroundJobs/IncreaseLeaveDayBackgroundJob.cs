@@ -7,7 +7,7 @@ public class IncreaseLeaveDayBackgroundJob(IEmployeeRepository employeeRepositor
 {
     public async Task Execute(IJobExecutionContext context)
     {
-        var employees = await employeeRepository.FindAsync(x=>x.EmployeeId==1);
+        var employees = await employeeRepository.FindAsync(x => x.EmployeeId == 1);
         //foreach (var employee in employees)
         //{
         //    employee.NumberOfLeave += 1;

@@ -25,8 +25,8 @@ internal sealed class UploadHandler : ICommandHandler<Upload, string>
             File = new FileDescription(request.EmployeeCode, request.FormFile.OpenReadStream()),
             DisplayName = request.EmployeeCode,
             Overwrite = true,
-            Transformation = new Transformation().Width(400).Height(400).Crop("fill")          
-           
+            Transformation = new Transformation().Width(400).Height(400).Crop("fill")
+
         };
         var result = cloudinary.UploadAsync(upload);
         if (result.Result.StatusCode != System.Net.HttpStatusCode.OK)

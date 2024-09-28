@@ -1,6 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Mappings;
 using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Domain.Common.Status;
 using EXE201_BE_ThrivoHR.Domain.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 

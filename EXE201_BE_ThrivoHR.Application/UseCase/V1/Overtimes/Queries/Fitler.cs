@@ -20,10 +20,10 @@ internal sealed class FitlerHandler(IOvertimeRepository overtimeRepository, IMap
 {
     public async Task<Result<PagedResult<OvertimeDto>>> Handle(Fitler request, CancellationToken cancellationToken)
     {
-       
+
         IQueryable<Overtime> filter(IQueryable<Overtime> x)
         {
-            x=x.Where(x =>
+            x = x.Where(x =>
                 (string.IsNullOrEmpty(request.EmployeeId) || x.EmployeeId == request.EmployeeId)
                 && (!request.Date.HasValue || x.Date == request.Date)
                 && (!request.From.HasValue || x.From == request.From)
@@ -34,13 +34,13 @@ internal sealed class FitlerHandler(IOvertimeRepository overtimeRepository, IMap
                 && (!request.Amount.HasValue || x.Amount == request.Amount));
 
             return x;
-            
+
         }
-        var list = await overtimeRepository.FindAllAsync(request.PageNumber, request.PageSize, filter,cancellationToken);
+        var list = await overtimeRepository.FindAllAsync(request.PageNumber, request.PageSize, filter, cancellationToken);
         var page = PagedResult<OvertimeDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToListOvertimeDto(mapper));
         return Result.Success(page);
 
-        
+
     }
 }
 

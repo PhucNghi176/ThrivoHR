@@ -2,7 +2,6 @@
 using EXE201_BE_ThrivoHR.Application.Model;
 using EXE201_BE_ThrivoHR.Domain.Common.Status;
 using EXE201_BE_ThrivoHR.Domain.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Overtimes;
 

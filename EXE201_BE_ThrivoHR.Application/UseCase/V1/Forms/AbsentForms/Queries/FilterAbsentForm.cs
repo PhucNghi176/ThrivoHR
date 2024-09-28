@@ -15,7 +15,7 @@ internal sealed class FilterAbsentFormHandler(IAbsentFormRepository _absentFormR
             //x = x.Where(x => string.IsNullOrEmpty(request.EmployeeCode) || x.EmployeeId.Contains(request.EmployeeCode));
             return x;
         }
-        var list = await _absentFormRepository.FindAllAsync(request.PageNumber,request.PageSize,filter,cancellationToken);
-        return Result.Success(PagedResult<AbsentFormDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo,list.MapToAbsentFormListDto(_mapper)));
+        var list = await _absentFormRepository.FindAllAsync(request.PageNumber, request.PageSize, filter, cancellationToken);
+        return Result.Success(PagedResult<AbsentFormDto>.Create(list.TotalCount, list.PageCount, list.PageSize, list.PageNo, list.MapToAbsentFormListDto(_mapper)));
     }
 }

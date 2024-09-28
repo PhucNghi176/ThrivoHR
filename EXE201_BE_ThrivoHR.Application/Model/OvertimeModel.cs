@@ -2,7 +2,7 @@
 
 namespace EXE201_BE_ThrivoHR.Application.Model;
 
-public class OvertimeModel 
+public class OvertimeModel
 {
     public string? EmployeeId { get; set; }
     public DateOnly Date { get; set; }

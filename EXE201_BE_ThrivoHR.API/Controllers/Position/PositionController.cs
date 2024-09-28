@@ -6,7 +6,7 @@ namespace EXE201_BE_ThrivoHR.API.Controllers.Position;
 
 public class PositionController(ISender sender) : BaseController(sender)
 {
-    [HttpGet]   
+    [HttpGet]
     public async Task<IActionResult> Get()
     {
         var result = await _sender.Send(new Get());

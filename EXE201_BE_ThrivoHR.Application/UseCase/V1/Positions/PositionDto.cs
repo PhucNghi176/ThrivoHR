@@ -1,6 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Mappings;
 using EXE201_BE_ThrivoHR.Domain.Entities;
-using System.Runtime.InteropServices;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Positions;
 

@@ -1,5 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Common.Status;
-using EXE201_BE_ThrivoHR.Domain.Entities.Base;
+﻿using EXE201_BE_ThrivoHR.Domain.Entities.Base;
 using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 

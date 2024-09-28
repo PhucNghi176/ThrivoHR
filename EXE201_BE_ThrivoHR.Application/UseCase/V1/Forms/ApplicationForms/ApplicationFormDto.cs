@@ -1,7 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Mappings;
 using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Domain.Common.Status;
-using EXE201_BE_ThrivoHR.Domain.Entities;
 using EXE201_BE_ThrivoHR.Domain.Entities.Forms;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.ApplicationForms;

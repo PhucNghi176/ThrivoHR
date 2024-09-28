@@ -6,7 +6,7 @@ namespace EXE201_BE_ThrivoHR.API.Controllers.RewardAndDisciplinary;
 public class RewardAndDisciplinaryController(ISender sender) : BaseController(sender)
 {
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery]FilterRewardAndDisciplinary filter)
+    public async Task<IActionResult> Get([FromQuery] FilterRewardAndDisciplinary filter)
     {
 
         return Ok(await _sender.Send(filter));
@@ -22,9 +22,9 @@ public class RewardAndDisciplinaryController(ISender sender) : BaseController(se
         return Ok(await _sender.Send(new Delete(id)));
     }
     [HttpPut]
-    public async Task<IActionResult> Update( [FromBody] Update command)
+    public async Task<IActionResult> Update([FromBody] Update command)
     {
-        
+
         return Ok(await _sender.Send(command));
     }
     [HttpPut("status")]

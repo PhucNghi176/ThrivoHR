@@ -15,7 +15,7 @@ public class UnionDto : IMapFrom<Union>
         return new UnionDto
         {
             Id = union.Id,
-            EmployeeCode =union.Employee!.EmployeeCode,
+            EmployeeCode = union.Employee!.EmployeeCode,
             Title = union.Title,
             DateJoined = union.DateJoined
         };

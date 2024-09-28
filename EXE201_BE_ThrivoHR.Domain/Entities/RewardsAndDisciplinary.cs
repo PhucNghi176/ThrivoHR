@@ -8,7 +8,7 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities;
 public class RewardsAndDisciplinary : AuditableEntity<string>
 {
     public new string Id { get; set; } = Guid.NewGuid().ToString();
-    public bool IsRewards { get; set; }=false;
+    public bool IsRewards { get; set; } = false;
     public string? EmployeeId { get; set; }
     public DateOnly Date { get; set; }
     public FormOfAction FormOfAction { get; set; }

@@ -5,7 +5,7 @@ using static EXE201_BE_ThrivoHR.Application.Common.Exceptions.Employee;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Forms.AbsentForms.Commands;
 
 public record UpdateStatusAbsentForm(string ID, FormStatus Status) : ICommand;
-internal sealed class UpdateStatusAbsentFormHandler(IAbsentFormRepository _absentFormRepository,ICurrentUserService _currentUserService) : ICommandHandler<UpdateStatusAbsentForm>
+internal sealed class UpdateStatusAbsentFormHandler(IAbsentFormRepository _absentFormRepository, ICurrentUserService _currentUserService) : ICommandHandler<UpdateStatusAbsentForm>
 {
     public async Task<Result> Handle(UpdateStatusAbsentForm request, CancellationToken cancellationToken)
     {

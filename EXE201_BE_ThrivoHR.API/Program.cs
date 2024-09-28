@@ -4,7 +4,6 @@ using EXE201_BE_ThrivoHR.API.Filters;
 using EXE201_BE_ThrivoHR.Application;
 using EXE201_BE_ThrivoHR.Infrastructure;
 using Serilog;
-using System.Diagnostics;
 
 namespace EXE201_BE_ThrivoHR.API;
 
@@ -34,7 +33,7 @@ public static class Program
         builder.Services.ConfigureApiVersioning();
         builder.Services.AddInfrastructure(builder.Configuration);
         builder.Services.ConfigureSwagger();
-          builder.Services.AddResponseCaching();
+        builder.Services.AddResponseCaching();
         //builder.Services.HttpCacheHeadersConfiguration();
         builder.Services.ConfigureRateLimit();
         builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();

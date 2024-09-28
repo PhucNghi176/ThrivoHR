@@ -1,6 +1,5 @@
 ﻿using EXE201_BE_ThrivoHR.Application.Common.Mappings;
 using EXE201_BE_ThrivoHR.Application.Model;
-using EXE201_BE_ThrivoHR.Application.UseCase.V1.Users;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.TrainingHistories;
 

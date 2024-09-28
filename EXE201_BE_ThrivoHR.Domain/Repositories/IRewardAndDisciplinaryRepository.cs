@@ -2,4 +2,4 @@
 
 namespace EXE201_BE_ThrivoHR.Domain.Repositories;
 
-public interface IRewardAndDisciplinaryRepository : IEFRepository<RewardsAndDisciplinary,RewardsAndDisciplinary>;
+public interface IRewardAndDisciplinaryRepository : IEFRepository<RewardsAndDisciplinary, RewardsAndDisciplinary>;

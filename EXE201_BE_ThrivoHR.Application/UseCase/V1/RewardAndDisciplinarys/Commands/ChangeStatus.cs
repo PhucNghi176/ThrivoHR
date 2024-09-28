@@ -3,7 +3,7 @@ using EXE201_BE_ThrivoHR.Domain.Common.Status;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.RewardAndDisciplinarys.Commands;
 
-public record ChangeStatus(string Id,FormStatus FormStatus) : ICommand;
+public record ChangeStatus(string Id, FormStatus FormStatus) : ICommand;
 internal sealed class ChangeStatusHandler(IRewardAndDisciplinaryRepository rewardAndDisciplinaryRepository) : ICommandHandler<ChangeStatus>
 {
     public async Task<Result> Handle(ChangeStatus request, CancellationToken cancellationToken)

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EXE201_BE_ThrivoHR.Application.Model;
+﻿namespace EXE201_BE_ThrivoHR.Application.Model;
 
 public class UnionModel
 {

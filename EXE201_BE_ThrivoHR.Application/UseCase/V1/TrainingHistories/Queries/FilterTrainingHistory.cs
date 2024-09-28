@@ -1,7 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Common.Status;
-using EXE201_BE_ThrivoHR.Domain.Entities;
-
-namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.TrainingHistories.Queries;
+﻿namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.TrainingHistories.Queries;
 
 public record FilterTrainingHistory(
     string? EmployeeCode,

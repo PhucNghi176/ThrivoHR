@@ -1,9 +1,4 @@
 ﻿using EXE201_BE_ThrivoHR.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.RewardAndDisciplinarys;
 

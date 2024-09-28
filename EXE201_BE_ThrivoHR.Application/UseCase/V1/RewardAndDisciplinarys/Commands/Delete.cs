@@ -1,5 +1,4 @@
-﻿
-using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
+﻿using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.RewardAndDisciplinarys.Commands;
 

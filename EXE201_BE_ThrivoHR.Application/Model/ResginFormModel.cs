@@ -1,6 +1,4 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Common.Status;
-
-namespace EXE201_BE_ThrivoHR.Application.Model;
+﻿namespace EXE201_BE_ThrivoHR.Application.Model;
 
 public class ResginFormModel
 {

@@ -60,7 +60,7 @@ public class Employee(ISender sender) : BaseController(sender)
     }
 
     [HttpPost("import")]
-    public async Task<IActionResult> ImportExcel([FromForm]ImportExcel importExcel, CancellationToken cancellationToken)
+    public async Task<IActionResult> ImportExcel([FromForm] ImportExcel importExcel, CancellationToken cancellationToken)
     {
         var result = await _sender.Send(importExcel, cancellationToken);
         return result.IsSuccess ? Ok(result) : BadRequest(result);

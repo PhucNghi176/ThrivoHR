@@ -6,5 +6,5 @@ public class AbsentForm : BaseForm
 {
     public DateTime From { get; set; }
     public DateTime To { get; set; }
-    
+
 }
