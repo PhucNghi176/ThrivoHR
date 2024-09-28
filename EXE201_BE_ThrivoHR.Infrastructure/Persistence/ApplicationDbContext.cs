@@ -28,6 +28,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<ProjectTask>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<Project>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<TaskHistory>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<EmployeesProjectMapping>().HasQueryFilter(x => !x.IsDeleted);
         ConfigureModel(modelBuilder);
 
     }
@@ -80,6 +81,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public virtual DbSet<Project> Projects { get; set; }
     public virtual DbSet<ProjectTask> ProjectTasks { get; set; }
     public virtual DbSet<TaskHistory> TaskHistories { get; set; }
+    public virtual DbSet<EmployeesProjectMapping> EmployeesProjectMappings { get; set; }
     private static void ConfigureModel(ModelBuilder modelBuilder)
     {
 

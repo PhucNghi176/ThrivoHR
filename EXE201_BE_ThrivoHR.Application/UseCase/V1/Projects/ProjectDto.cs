@@ -23,9 +23,9 @@ public class ProjectDto : IMapFrom<Project>
         profile.CreateMap<Project, ProjectDto>()
             .ForMember(d => d.LeaderName, opt => opt.MapFrom(s => s.Leader.FullName))
             .ForMember(d => d.SubLeaderName, opt => opt.MapFrom(s => s.SubLeader.FullName))
-            .ForMember(d => d.TotalEmployee, opt => opt.MapFrom(s => s.EmployeeIds.Count))
+            .ForMember(d => d.TotalEmployee, opt => opt.MapFrom(s => s.ProjectEmployees.Count))
             .ForMember(d => d.TotalTask, opt => opt.MapFrom(s => s.Tasks.Count))
             .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Status.ToString())).ReverseMap();
-        profile.CreateMap<ProjectModel,Project>().ReverseMap();
+        profile.CreateMap<ProjectModel, Project>().ReverseMap();
     }
 }

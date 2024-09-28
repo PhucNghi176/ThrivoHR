@@ -13,7 +13,7 @@ public class Project : AuditableEntity<string>
     public double Progress { get; set; } = 0;
     public virtual AppUser? Leader { get; set; }
     public virtual AppUser? SubLeader { get; set; }
-    public virtual ICollection<AppUser> EmployeeIds { get; set; } = [];
+    public virtual ICollection<EmployeesProjectMapping> ProjectEmployees { get; set; } = [];
     public virtual ICollection<ProjectTask> Tasks { get; set; } = [];
     public TaskStatus Status { get; set; } = TaskStatus.NotStarted;
 }
