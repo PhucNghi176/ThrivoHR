@@ -22,6 +22,9 @@ namespace EXE201_BE_ThrivoHR.Domain.Entities
         public string? OldAssigneeId { get; set; }
         public string? NewAssigneeId { get; set; }
 
+        public virtual AppUser? OldAssignee { get; set; }
+        public virtual AppUser? NewAssignee { get; set; }
+
         public DateTime? OldDueDate { get; set; }
         public DateTime? NewDueDate { get; set; }
 
