@@ -248,4 +248,11 @@ public class RepositoryBase<TDomain, TPersistence, TDbContext>(TDbContext dbCont
         var projection = queryable.ProjectTo<TProjection>(_mapper.ConfigurationProvider);
         return await projection.FirstOrDefaultAsync(cancellationToken);
     }
+
+    public Task AddRangeAsync(IEnumerable<TDomain> entities)
+    {
+        GetSet().AddRange(entities.Cast<TPersistence>());
+        return Task.CompletedTask;
+        
+    }
 }

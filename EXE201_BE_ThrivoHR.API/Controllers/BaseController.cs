@@ -6,6 +6,5 @@
     {
         protected readonly ISender _sender = sender;
 
-
     }
 }

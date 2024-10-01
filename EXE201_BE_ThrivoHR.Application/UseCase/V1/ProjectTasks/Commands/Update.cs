@@ -4,7 +4,7 @@ using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.ProjectTasks.Commands;
 [Authorize]
 public record Update(string TaskId, string? Name, string? Description) : ICommand;
-internal sealed class UpdateHandler(IProjectTaskRepository projectTaskRepository, IMapper mapper, IEmployeeRepository employeeRepository) : ICommandHandler<Update>
+internal sealed class UpdateHandler(IProjectTaskRepository projectTaskRepository) : ICommandHandler<Update>
 {
     public async Task<Result> Handle(Update request, CancellationToken cancellationToken)
     {

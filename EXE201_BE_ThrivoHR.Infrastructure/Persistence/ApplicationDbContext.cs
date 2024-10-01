@@ -31,6 +31,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<EmployeesProjectMapping>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<ProjectTask>().ToTable(x => x.HasTrigger("UpdateProjectProgress"));
         modelBuilder.Entity<ProjectTask>().ToTable(x => x.HasTrigger("TrackTaskHistory"));
+        modelBuilder.Entity<Salary>().HasQueryFilter(x => !x.IsDeleted);
         ConfigureModel(modelBuilder);
 
     }
@@ -84,6 +85,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public virtual DbSet<ProjectTask> ProjectTasks { get; set; }
     public virtual DbSet<TaskHistory> TaskHistories { get; set; }
     public virtual DbSet<EmployeesProjectMapping> EmployeesProjectMappings { get; set; }
+    public virtual DbSet<Salary> Salaries { get; set; }
+    public virtual DbSet<SystemConfig> SystemConfig { get; set; }
     private static void ConfigureModel(ModelBuilder modelBuilder)
     {
 
@@ -165,6 +168,36 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<IdentityUserRole<string>>().HasData(
             new IdentityUserRole<string> { RoleId = "1", UserId = "1" }
         );
+        modelBuilder.Entity<SystemConfig>().HasData(
+            new SystemConfig { Key = "SocialInsurance", Value = 0.08M },
+            new SystemConfig { Key = "HealthInsurance", Value = 0.015M },
+            new SystemConfig { Key = "UnemploymentInsurance", Value = 0.01M },
+            new SystemConfig { Key = "PersonalDeduction", Value = 11000000M },
+            new SystemConfig { Key = "SingleDependence", Value = 4400000M },
+            new SystemConfig { Key = "TaxabeLevel1Income", Value = 5000000M },
+            new SystemConfig { Key = "TaxLevel1", Value = 0.05M },
+            new SystemConfig { Key = "TaxLevel1Minus", Value = 0M },
+            new SystemConfig { Key = "TaxabeLevel2Income", Value = 10000000M },
+            new SystemConfig { Key = "TaxLevel2", Value = 0.1M },
+            new SystemConfig { Key = "TaxLevel2Minus", Value = 250000M },
+            new SystemConfig { Key = "TaxabeLevel3Income", Value = 18000000M },
+            new SystemConfig { Key = "TaxLevel3", Value = 0.15M },
+            new SystemConfig { Key = "TaxLevel3Minus", Value = 750000M },
+            new SystemConfig { Key = "TaxabeLevel4Income", Value = 32000000M },
+            new SystemConfig { Key = "TaxLevel4", Value = 0.2M },
+            new SystemConfig { Key = "TaxLevel4Minus", Value = 1650000M },
+            new SystemConfig { Key = "TaxabeLevel5Income", Value = 52000000M },
+            new SystemConfig { Key = "TaxLevel5", Value = 0.25M },
+            new SystemConfig { Key = "TaxLevel5Minus", Value = 3250000M },
+            new SystemConfig { Key = "TaxabeLevel6Income", Value = 8000000M },
+            new SystemConfig { Key = "TaxLevel6", Value = 0.3M },
+            new SystemConfig { Key = "TaxLevel6Minus", Value = 5850000M },
+            new SystemConfig { Key = "TaxabeLevel7Income", Value = 80000001M },
+            new SystemConfig { Key = "TaxLevel7", Value = 0.35M },
+            new SystemConfig { Key = "TaxLevel7Minus", Value = 9850000M },
+            new SystemConfig { Key = "BasicSalary", Value = 2340000M },
+            new SystemConfig { Key = "MinimumSalaryRegion1", Value = 4680000 }
+            );
 
 
     }

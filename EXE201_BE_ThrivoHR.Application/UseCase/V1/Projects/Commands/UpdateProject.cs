@@ -5,12 +5,12 @@ using EXE201_BE_ThrivoHR.Domain.Common.Exceptions;
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Projects.Commands;
 
 public record UpdateProject (string Id, ProjectModel ProjectModel) : ICommand;
-internal sealed class UpdateProjectHandler(IProjectRepository projectRepository, IMapper mapper, IEmployeeRepository employeeRepository) : ICommandHandler<UpdateProject>
+internal sealed class UpdateProjectHandler(IProjectRepository projectRepository, IEmployeeRepository employeeRepository) : ICommandHandler<UpdateProject>
 {
     public async Task<Result> Handle(UpdateProject request, CancellationToken cancellationToken)
     {
         var project = await projectRepository.FindAsync(x => x.Id == request.Id, cancellationToken) ?? throw new NotFoundException(request.Id);
-        var leader = await employeeRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.ProjectModel.LeaderCode), cancellationToken) ?? throw new Common.Exceptions.Employee.NotFoundException(request.ProjectModel.LeaderCode);
+        var leader = await employeeRepository.FindAsync(x => x.EmployeeId == EmployeesMethod.ConvertEmployeeCodeToId(request.ProjectModel.LeaderCode!), cancellationToken) ?? throw new Common.Exceptions.Employee.NotFoundException(request.ProjectModel.LeaderCode!);
         project.LeaderId = leader.Id;
         if (!string.IsNullOrEmpty(request.ProjectModel.SubLeaderCode))
         {

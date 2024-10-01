@@ -7,7 +7,7 @@ namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Overtimes;
 
 public class OvertimeDto : IMapFrom<Overtime>
 {
-    public new string Id { get; set; }
+    public string? Id { get; set; }
     public string? EmployeeId { get; set; }
     public string? EmployeeName { get; set; }
     public DateOnly Date { get; set; }
