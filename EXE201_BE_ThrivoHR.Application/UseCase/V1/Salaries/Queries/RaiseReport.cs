@@ -1,4 +1,7 @@
 ﻿
+using EXE201_BE_ThrivoHR.Application.Common.Method;
+using EXE201_BE_ThrivoHR.Domain.Entities.Identity;
+
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Salaries.Queries;
 
 public record RaiseReport(string? EmployeeCode, string? EmployeeName, int PageSize = 100, int PageNumber = 1) : ICommand<List<RaiseDto>>;
@@ -15,9 +18,18 @@ internal sealed class RaiseReportHandler : ICommandHandler<RaiseReport, List<Rai
 
     public async Task<Result<List<RaiseDto>>> Handle(RaiseReport request, CancellationToken cancellationToken)
     {
-        var employees = await _employeeRepository.FindAllAsync(request.PageNumber, request.PageSize, cancellationToken);
 
-        List<RaiseDto> result = new List<RaiseDto>();
+        IQueryable<AppUser> query(IQueryable<AppUser> x)
+        {
+            x = x.Where(x =>
+            (string.IsNullOrEmpty(request.EmployeeName) || x.FullName.Contains(request.EmployeeName))
+            && (string.IsNullOrEmpty(request.EmployeeCode) || x.EmployeeId.Equals(EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode)))
+            );
+            return x;
+        }
+        var employees = await _employeeRepository.FindAllAsync(request.PageNumber, request.PageSize, query, cancellationToken);
+
+        List<RaiseDto> result = [];
         foreach (var item in employees)
         {
             var employee = item;

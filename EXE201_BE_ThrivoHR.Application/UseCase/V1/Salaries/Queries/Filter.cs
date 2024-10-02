@@ -1,4 +1,5 @@
-﻿using EXE201_BE_ThrivoHR.Domain.Entities;
+﻿using EXE201_BE_ThrivoHR.Application.Common.Method;
+using EXE201_BE_ThrivoHR.Domain.Entities;
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Salaries.Queries;
 
@@ -11,8 +12,9 @@ internal sealed class FilterHandler(ISalaryRepository salaryRepository, IMapper 
 
         IQueryable<Salary> query(IQueryable<Salary> x)
         {
-            x = x.Where(x => (string.IsNullOrEmpty(request.EmployeeName) || x.Employee.FullName.Contains(request.EmployeeName))
-            && (string.IsNullOrEmpty(request.EmployeeCode) || x.Employee.EmployeeCode.Contains(request.EmployeeCode))
+            x = x.Where(x =>
+            (string.IsNullOrEmpty(request.EmployeeName) || x.Employee.FullName.Contains(request.EmployeeName))
+            && (string.IsNullOrEmpty(request.EmployeeCode) || x.Employee.EmployeeId.Equals(EmployeesMethod.ConvertEmployeeCodeToId(request.EmployeeCode)))
 
             );
             return x;
