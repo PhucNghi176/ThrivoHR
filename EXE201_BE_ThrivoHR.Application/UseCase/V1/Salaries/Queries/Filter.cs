@@ -2,7 +2,7 @@
 
 namespace EXE201_BE_ThrivoHR.Application.UseCase.V1.Salaries.Queries;
 
-public record Filter(string EmployeeName, string EmployeeCode, int PageSize = 100, int PageNumber = 1) : ICommand<PagedResult<SalaryDto>>;
+public record Filter(string? EmployeeName, string? EmployeeCode, int PageSize = 100, int PageNumber = 1) : ICommand<PagedResult<SalaryDto>>;
 internal sealed class FilterHandler(ISalaryRepository salaryRepository, IMapper mapper) : ICommandHandler<Filter, PagedResult<SalaryDto>>
 {
     public async Task<Result<PagedResult<SalaryDto>>> Handle(Filter request, CancellationToken cancellationToken)
