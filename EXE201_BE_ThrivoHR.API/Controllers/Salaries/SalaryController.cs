@@ -16,4 +16,14 @@ public class SalaryController(ISender sender) : BaseController(sender)
     {
         return Ok(await _sender.Send(query));
     }
+    [HttpGet("raise")]
+    public async Task<IActionResult> Raise([FromQuery] RaiseReport query)
+    {
+        return Ok(await _sender.Send(query));
+    }
+    [HttpGet("deduction")]
+    public async Task<IActionResult> Deduction([FromQuery] DeductionReport query)
+    {
+        return Ok(await _sender.Send(query));
+    }
 }
