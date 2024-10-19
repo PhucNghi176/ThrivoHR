@@ -16,7 +16,9 @@ RUN apk add icu-libs
 WORKDIR /app
 
 COPY --from=build /app .
-
+RUN mkdir -p /app/TrainedFaces \
+    && chmod -R 777 /app/TrainedFaces
+    
 USER $APP_UID
 
 ENTRYPOINT ["dotnet", "EXE201_BE_ThrivoHR.API.dll"]

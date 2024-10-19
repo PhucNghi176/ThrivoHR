@@ -33,4 +33,11 @@
     <ProjectReference Include="..\EXE201_BE_ThrivoHR.Infrastructure\EXE201_BE_ThrivoHR.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="haarcascade_frontalface_default.xml" />
+    <Content Include="haarcascade_frontalface_default.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

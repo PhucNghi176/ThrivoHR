@@ -597,3 +597,5 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,sonarqube,csharp
 /DeerCoffeeShop.API/TrainedFaces
 /DeerCoffeeShop.API/UnknowEmployeeFolder
+/EXE201_BE_ThrivoHR.API/TrainedFaces/1
+/EXE201_BE_ThrivoHR.API/UnknownEmployeeFolder

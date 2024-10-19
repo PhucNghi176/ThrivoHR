@@ -45,6 +45,7 @@ public static class DependencyInjection
         services.AddScoped<IEmployeesProjectMappingRepository, EmployeesProjectMappingRepository>();
         services.AddScoped<ISalaryRepository, SalaryRepository>();
         services.AddScoped<ISystemConfigRepository, SystemConfigRepository>();
+        services.AddScoped<IFaceDetectionRepository, FaceDetectionRepository>();
         return services;
     }
 
