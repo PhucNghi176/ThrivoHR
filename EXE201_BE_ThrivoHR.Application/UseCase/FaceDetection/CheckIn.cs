@@ -28,7 +28,7 @@ internal sealed class DetectFaceFromImageHandler(
         content.Add(imageContent, "image", request.Image.FileName);
 
         // Send the POST request to the face detection API
-        var response = await httpClient.PostAsync("https://localhost:7246/api/v1/face-recognition/detect",
+        var response = await httpClient.PostAsync("https://owl-touched-slug.ngrok-free.app/api/v1/face-recognition/detect",
             content, cancellationToken);
 
         if (!response.IsSuccessStatusCode)
