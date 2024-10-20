@@ -46,9 +46,11 @@ public static class DependencyInjection
         services.AddScoped<ISalaryRepository, SalaryRepository>();
         services.AddScoped<ISystemConfigRepository, SystemConfigRepository>();
         services.AddScoped<IFaceDetectionRepository, FaceDetectionRepository>();
+        services.AddScoped<IAttendanceRepository, AttendanceRepository>();
         return services;
     }
 
+    [Obsolete("Obsolete")]
     public static void AddQuartInfrastructure(this IServiceCollection services)
     {
         services.AddQuartz(q =>
@@ -62,8 +64,13 @@ public static class DependencyInjection
     }
     public static void AddCloudinaryInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        Cloudinary cloudinary = new(configuration.GetSection("CLOUDINARY_URL").Value);
-        cloudinary.Api.Secure = true;
+        Cloudinary cloudinary = new(configuration.GetSection("CLOUDINARY_URL").Value)
+        {
+            Api =
+            {
+                Secure = true
+            }
+        };
         services.AddSingleton(cloudinary);
     }
 }

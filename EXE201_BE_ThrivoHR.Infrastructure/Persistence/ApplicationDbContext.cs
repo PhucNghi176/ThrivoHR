@@ -32,6 +32,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<ProjectTask>().ToTable(x => x.HasTrigger("UpdateProjectProgress"));
         modelBuilder.Entity<ProjectTask>().ToTable(x => x.HasTrigger("TrackTaskHistory"));
         modelBuilder.Entity<Salary>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<Attendance>().HasQueryFilter(x=>!x.IsDeleted);
         ConfigureModel(modelBuilder);
 
     }
@@ -60,6 +61,14 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                         auditableEntity.IsDeleted = true;
                     }
                     break;
+                case EntityState.Detached:
+                    break;
+                case EntityState.Unchanged:
+                    break;
+                case EntityState.Deleted:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -87,6 +96,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public virtual DbSet<EmployeesProjectMapping> EmployeesProjectMappings { get; set; }
     public virtual DbSet<Salary> Salaries { get; set; }
     public virtual DbSet<SystemConfig> SystemConfig { get; set; }
+    public virtual DbSet<Attendance> Attendances { get; set; }
     private static void ConfigureModel(ModelBuilder modelBuilder)
     {
 

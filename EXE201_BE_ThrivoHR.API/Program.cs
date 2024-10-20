@@ -39,6 +39,7 @@ public static class Program
         builder.Services.AddSingleton<IRateLimitConfiguration, AspNetCoreRateLimit.RateLimitConfiguration>();
         builder.Services.AddQuartInfrastructure();
         builder.Services.AddCloudinaryInfrastructure(builder.Configuration);
+        builder.Services.AddHttpClient();
         // Allow all CORS
         builder.Services.AddCors(options =>
         {
@@ -64,6 +65,7 @@ public static class Program
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
+        
         app.UseSerilogRequestLogging();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
