@@ -9,11 +9,18 @@ public class Face(ISender sender) : BaseController(sender)
         var result = await sender.Send(request);
         return Ok(result);
     }
+
     [HttpGet]
     public async Task<IActionResult> GetAttendance([FromQuery] Filter request)
     {
         var result = await sender.Send(request);
         return Ok(result);
     }
-   
+
+    [HttpPost("register")]
+    public async Task<IActionResult> RegisterFace([FromForm] FaceRegister request)
+    {
+        var result = await sender.Send(request);
+        return Ok(result);
+    }
 }

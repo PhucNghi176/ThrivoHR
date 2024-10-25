@@ -28,7 +28,8 @@ internal sealed class DetectFaceFromImageHandler(
         content.Add(imageContent, "image", request.Image.FileName);
 
         // Send the POST request to the face detection API
-        var response = await httpClient.PostAsync("https://owl-touched-slug.ngrok-free.app/api/v1/face-recognition/detect",
+        var response = await httpClient.PostAsync(
+            "https://owl-touched-slug.ngrok-free.app/api/v1/face-recognition/detect",
             content, cancellationToken);
 
         if (!response.IsSuccessStatusCode)
@@ -52,6 +53,7 @@ internal sealed class DetectFaceFromImageHandler(
         if (IsAlreadyCheckIn != null)
         {
             IsAlreadyCheckIn.CheckOut = TimeOnly.FromDateTime(DateTime.UtcNow.AddHours(7));
+            IsAlreadyCheckIn.Note += " Checked-out";
             await attendanceRepository.UpdateAsync(IsAlreadyCheckIn);
         }
         else
